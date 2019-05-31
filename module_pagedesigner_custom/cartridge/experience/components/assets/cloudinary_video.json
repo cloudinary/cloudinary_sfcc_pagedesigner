@@ -1,0 +1,92 @@
+{
+  "name": "Cloudinary Video",
+  "group": "Cloudinary",
+  "attribute_definition_groups": [
+    {
+      "id": "group_video",
+      "name": "Video Settings",
+      "attribute_definitions": [
+        {
+          "id": "video_selection",
+          "type": "custom",
+          "required": true,
+          "editor_definition": {
+            "type": "cloudinary.video_selector"
+          }
+        }
+      ]
+    },
+    {
+      "id": "group_options",
+      "name": "Presentation Options",
+      "attribute_definitions": [
+        {
+          "id": "options_instagram_ready",
+          "name": "Make Instagram Ready?",
+          "description": "Image will be cropped to 1080 pixels wide and 1920 pixels in height, aspect ratio of 9:16",
+          "type": "boolean",
+          "default_value": false,
+          "required": false
+        },
+        {
+          "id": "options_captions",
+          "name": "Show Transcript and Captions?",
+          "description": "Display transcript and captions. Requires a VTT file.",
+          "type": "boolean",
+          "default_value": false,
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "group_overlay",
+      "name": "Overlay",
+      "attribute_definitions": [
+        {
+          "id": "overlay_selection",
+          "type": "custom",
+          "required": false,
+          "editor_definition": {
+            "type": "cloudinary.overlay_selector"
+          }
+        }
+      ]
+    },
+    {
+      "id": "group_controls",
+      "name": "Player Controls",
+      "attribute_definitions": [
+        {
+          "id": "controls_showcontrols",
+          "name": "Show Controls",
+          "type": "boolean",
+          "default_value": false
+        },
+        {
+          "id": "controls_autoplay",
+          "name": "Auto Play",
+          "type": "boolean",
+          "default_value": false
+        },
+        {
+          "id": "controls_loopvideo",
+          "name": "Loop Video",
+          "type": "boolean",
+          "default_value": false
+        },
+        {
+          "id": "controls_theme",
+          "name": "Select Theme",
+          "type": "enum",
+          "values": [
+            "Dark",
+            "Light"
+          ],
+          "default_value": "Dark",
+          "required": false
+        }
+      ]
+    }
+  ],
+  "region_definitions": []
+}
