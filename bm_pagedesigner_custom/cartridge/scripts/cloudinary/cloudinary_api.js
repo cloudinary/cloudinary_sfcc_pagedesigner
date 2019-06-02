@@ -1,6 +1,6 @@
 'use strict';
 
-var server = require('server');
+//var server = require('server');
 var Logger = require('dw/system/Logger');
 
 var LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
