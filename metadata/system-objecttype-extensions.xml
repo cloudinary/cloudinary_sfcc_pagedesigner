@@ -2,7 +2,7 @@
 <metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
     <type-extension type-id="SitePreferences">
         <custom-attribute-definitions>
-            <attribute-definition attribute-id="CloudinaryAPIkey">
+            <attribute-definition attribute-id="CloudinaryPageDesignerAPIkey">
                 <display-name xml:lang="x-default">Cloudinary API Key</display-name>
                 <description xml:lang="x-default">The API Key of your Cloudiary account</description>
                 <type>string</type>
@@ -10,7 +10,7 @@
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
             </attribute-definition>
-            <attribute-definition attribute-id="CloudinaryCNAME">
+            <attribute-definition attribute-id="CloudinaryPageDesignerCNAME">
                 <display-name xml:lang="x-default">Cloudinary CNAME</display-name>
                 <description xml:lang="x-default">The CNAME of your Cloudiary account</description>
                 <type>string</type>
@@ -18,7 +18,7 @@
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
             </attribute-definition>
-            <attribute-definition attribute-id="CloudinaryCloudName">
+            <attribute-definition attribute-id="CloudinaryPageDesignerCloudName">
                 <display-name xml:lang="x-default">Cloudinary Cloud Name</display-name>
                 <description xml:lang="x-default">The Cloud Name of your Cloudiary account</description>
                 <type>string</type>
@@ -26,15 +26,7 @@
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
             </attribute-definition>
-            <attribute-definition attribute-id="CloudinaryEnabled">
-                <display-name xml:lang="x-default">Cloudinary Enable</display-name>
-                <description xml:lang="x-default">Enable or disable the Cloudinary cartridge</description>
-                <type>boolean</type>
-                <mandatory-flag>false</mandatory-flag>
-                <externally-managed-flag>false</externally-managed-flag>
-				<default-value>false</default-value>
-            </attribute-definition>
-            <attribute-definition attribute-id="CloudinarySecretKey">
+            <attribute-definition attribute-id="CloudinaryPageDesignerSecretKey">
                 <display-name xml:lang="x-default">Cloudinary API Secret</display-name>
                 <description xml:lang="x-default">The API Secret of your Cloudiary account</description>
                 <type>string</type>
@@ -44,13 +36,12 @@
             </attribute-definition>
         </custom-attribute-definitions>
         <group-definitions>
-            <attribute-group group-id="Cloudinary">
-                <display-name xml:lang="x-default">Cloudinary</display-name>
-                <attribute attribute-id="CloudinaryEnabled"/>
-                <attribute attribute-id="CloudinaryCloudName"/>
-				<attribute attribute-id="CloudinaryCNAME"/>
-                <attribute attribute-id="CloudinaryAPIkey"/>
-                <attribute attribute-id="CloudinarySecretKey"/>
+            <attribute-group group-id="CloudinaryPageDesigner">
+                <display-name xml:lang="x-default">Cloudinary Page Designer</display-name>
+                <attribute attribute-id="CloudinaryPageDesignerCloudName"/>
+				<attribute attribute-id="CloudinaryPageDesignerCNAME"/>
+                <attribute attribute-id="CloudinaryPageDesignerAPIkey"/>
+                <attribute attribute-id="CloudinaryPageDesignerSecretKey"/>
             </attribute-group>
         </group-definitions>
     </type-extension>

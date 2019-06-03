@@ -7,29 +7,25 @@ var LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
 var currentSite = require('dw/system/Site').getCurrent();
 
 var data = {
-    isCloudinaryEnabled: function () {
-        return currentSite.getCustomPreferenceValue('CloudinaryEnabled');
-    },
-
     getAPIKey: function () {
-        return currentSite.getCustomPreferenceValue('CloudinaryAPIkey');
+        return currentSite.getCustomPreferenceValue('CloudinaryPageDesignerAPIkey');
     },
 
     getSecretKey: function () {
-        return currentSite.getCustomPreferenceValue('CloudinarySecretKey');
+        return currentSite.getCustomPreferenceValue('CloudinaryPageDesignerSecretKey');
     },
 
     getCloudinaryCNAME: function () {
-        return currentSite.getCustomPreferenceValue('CloudinaryCNAME');
+        return currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCNAME');
     },
 
     getCloudName: function () {
-        return currentSite.getCustomPreferenceValue('CloudinaryCloudName');
+        return currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCloudName');
     }
 };
 
 // define service
-var cloudinaryService = LocalServiceRegistry.createService("cloudinaryAPI", {
+var cloudinaryService = LocalServiceRegistry.createService("cloudinaryPageDesignerAPI", {
 	createRequest: function (service, param) {
 		service.setAuthentication('NONE');
 		return param || null;
