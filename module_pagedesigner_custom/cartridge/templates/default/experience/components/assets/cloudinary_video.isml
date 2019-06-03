@@ -1,15 +1,14 @@
 <isscript>
     var assets = require('*/cartridge/scripts/assets.js');
-    // assets.addCss('/css/headlinebanner.css');
 
+    assets.addCss('//unpkg.com/cloudinary-video-player@1.1.3/dist/cld-video-player.min.css');
     assets.addCss('/css/cloudinary.css');
-    assets.addCss('/css/cld-video-player.min.css');
 
     assets.addJs('/js/jquery-3.3.1.min.js');
 
-    assets.addJs('/js/cloudinary-core-shrinkwrap.min.js');
-    assets.addJs('/js/cld-video-player.min.js');
-
+	assets.addJs('//unpkg.com/cloudinary-core@2.6.2/cloudinary-core-shrinkwrap.min.js');
+	assets.addJs('//unpkg.com/cloudinary-video-player@1.1.3/dist/cld-video-player.min.js');
+    	
     assets.addJs('/js/cloudinary.js');
 </isscript>
 <iscomment>

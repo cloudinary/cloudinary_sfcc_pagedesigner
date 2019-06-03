@@ -1,3 +1,5 @@
+// Cloudinary Page Designer
+
 $(document).ready(function() {
     function init() {
         console.log('Initialize Cloudinary Player');
@@ -6,23 +8,23 @@ $(document).ready(function() {
             var $videoElement = $(this);
             var id = $videoElement.attr('id');
 
-            var cloudname = $videoElement.data("cloudname");
+            var cloudname = $videoElement.data('cloudname');
 
-            var publicId = $videoElement.data("cldPublicId");
-            var autoplay = $videoElement.attr("autoplay") !== undefined;
-            var controls = $videoElement.attr("controls") !== undefined;
-            var loop = $videoElement.attr("loop") !== undefined;
+            var publicId = $videoElement.data('cldPublicId');
+            var autoplay = $videoElement.attr('autoplay') !== undefined;
+            var controls = $videoElement.attr('controls') !== undefined;
+            var loop = $videoElement.attr('loop') !== undefined;
 
-            var overlay_id = $videoElement.data("overlayId");
-            var overlay_opacity = $videoElement.data("overlayOpacity");
-            var overlay_scale = $videoElement.data("overlayScale");
-            var overlay_position = $videoElement.data("overlayPosition");
+            var overlay_id = $videoElement.data('overlayId');
+            var overlay_opacity = $videoElement.data('overlayOpacity');
+            var overlay_scale = $videoElement.data('overlayScale');
+            var overlay_position = $videoElement.data('overlayPosition');
 
             var secure = location.protocol === 'https:';
 
-            var options_captions = $videoElement.data("optionsCaptions");
+            var options_captions = $videoElement.data('optionsCaptions');
 
-            var options_instagram = $videoElement.data("optionsInstagramReady");
+            var options_instagram = $videoElement.data('optionsInstagramReady');
 
             var source = {
                 publicId: publicId,
@@ -35,7 +37,7 @@ $(document).ready(function() {
             if (overlay_id) {
                 overlay.overlay = new cloudinary.Layer().publicId(overlay_id);
                 if (overlay_scale) {
-                    overlay.crop = "scale";
+                    overlay.crop = 'scale';
                     overlay.width = overlay_scale;
                 }
                 if (overlay_position) {
@@ -46,6 +48,12 @@ $(document).ready(function() {
                 }
             }
 
+			// Instagram Ready
+			// ---------------
+			// Need to set scaling to: w_1920,h_1280,c_fill,f_auto
+			//
+			// URL output should look like:
+			// https://cloudinary-naveen-res.cloudinary.com/video/upload/w_1920,h_1280,c_fill,f_auto/Mercedes_Cars_Road_Trip.mp4
 			var scaling = {}; // gravity: 'auto'
             if (options_instagram) {
     			scaling = {
@@ -73,16 +81,14 @@ $(document).ready(function() {
                 'scaling', scaling
             );
 
-			// Instagram Ready
-			// w_1920,h_1280,c_fill,f_auto
-			// https://cloudinary-naveen-res.cloudinary.com/video/upload/w_1920,h_1280,c_fill,f_auto/Mercedes_Cars_Road_Trip.mp4
-
 			// This is the URL that is being generated:
 			// https://res.cloudinary.com/cloudinary-naveen/video/upload/c_fill,f_auto,g_auto,h_1280,w_1920/v1/videos/outdoors.mp4?_s=vp-1.1.3
 
 			// Should look like this with a custom CNAME
 			// https://cloudinary-naveen-res.cloudinary.com/video/upload/w_1920,h_1280,c_fill,f_auto/Mercedes_Cars_Road_Trip.mp4
-
+			
+			// var cld = cloudinary.Cloudinary.new({ cloud_name: ‘asisayagcloudinary’, secure: ‘true’, secure_distribution: “your.cname.com”});
+			// important to have both secure=true and secure_distribution
             var cld = cloudinary.Cloudinary.new({
                 cloud_name: cloudname,
                 secure: secure
@@ -103,8 +109,8 @@ $(document).ready(function() {
             player.source(source);
 
             if (options_captions) {
-                var cc_url = cld.url(publicId, {format: "vtt", resource_type:"raw"});
-                console.log("cc:",cc_url);
+                var cc_url = cld.url(publicId, {format: 'vtt', resource_type: 'raw'});
+                console.log('Caption URL:', cc_url);
 
                 var captionOption = {
                     kind: 'subtitles',
@@ -118,6 +124,9 @@ $(document).ready(function() {
         });
     };
 
+	// Page Designer does not become active until document.ready. Because if this
+	// it waits until streaming videos fully load. We need to delay initializing
+	// Cloudinary video player a little bit.
     setTimeout(function(){
         console.log('Cloudinary: Waiting 0.5 seconds');
         init();
