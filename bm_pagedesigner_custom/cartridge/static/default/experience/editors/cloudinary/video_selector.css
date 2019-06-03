@@ -10,6 +10,47 @@ body {
 	font-size: .8125rem;
 }
 
+.video_selector__header {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	margin-bottom: 0.5rem;
+	margin-top: 0.25rem;
+}
+
+.video_selector__header__icon {
+	display: block;
+	text-indent: -9999px;
+	width: 44px;
+	height: 29px;
+	background: url(../../../experience/components/assets/coudinary_video.svg) no-repeat;
+	background-size: 50px 50px;
+	background-position: -2px -6px;
+}
+
+.video_selector__header__text {
+	color: #3e3e3c;
+	font-size: .75rem;
+	font-weight: 700;
+	padding-left: 0.5rem;
+}
+
+/*
+overflow-wrap: break-word;
+word-wrap: break-word;
+-webkit-hyphens: auto;
+-ms-hyphens: auto;
+hyphens: auto;
+display: inline-block;
+color: #3e3e3c;
+font-size: .75rem;
+padding-right: .5rem;
+padding-top: .25rem;
+margin-bottom: .125rem;
+font-weight: 700;
+float: left;
+*/
+
 .video_selector__container {
 	position: relative;
 	border: 1px #ccc solid;

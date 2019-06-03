@@ -16,8 +16,7 @@
         var selected = '';
         var url;
 
-        // str += 'ICON WILL BE HERE';
-
+		str += '<div class="video_selector__header"><div class="video_selector__header__icon"></div><div class="video_selector__header__text">Powered by Cloudinary</div></div>';
         str += '<div class="video_selector__container">';
         for (var i=0; i < optionArray.length; i++) {
             selected = '';
