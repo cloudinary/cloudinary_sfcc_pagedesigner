@@ -1,4 +1,6 @@
 (() => {
+
+	// Create an image URL with formatting options for thumbnails
 	const imageTransform = function(public_id, version, secure_url, settings, format) {
     	var url_arr = secure_url.split('v' + version); // Remove version number
     	url_arr.splice(1, 0, settings); // Inject settings
@@ -7,19 +9,8 @@
     	return url_str;
 	}
 
-	const inputCheckbox = function(idname, label, checked) {
-		var str = '';
-        str += '<div class="video_selector__checkbox">';
-        str += '<label class="video_selector__checkbox__label">';
-        str += '<input id="' + idname + '" name="' + idname + '" class="video_selector__checkbox__input" type="checkbox"' + (checked ? ' checked' : '') + ' />';
-        str += '<span class="video_selector__checkbox__text">' + label + '</span>';
-        str += '</label>';
-		str += '</div>';
-
-		return str;
-	}
-
-	const thumbnailTemplate = function(optionArray, selected_video_id) { // checked_accessible, checked_crop, checked_sharpen
+	// Output HTML for video selector interface
+	const videoSelectorTemplate = function(optionArray, selected_video_id) { 
         const template = document.createElement('template');
         var str = '';
         var selected = '';
@@ -56,6 +47,7 @@
         return template;
 	};
 
+	// Page Designer ready event
 	subscribe('sfcc:ready', async ({ value, config, isDisabled, isRequired, dataLocale, displayLocale }) => {
 		console.log('Video, sfcc:ready', dataLocale, displayLocale, value, config);
 
@@ -64,16 +56,15 @@
 		    selected_video_id = value.video_id != undefined ? value.video_id : selected_video_id;
 		}
 
-		// Append basic DOM
         var jsonObject = JSON.parse(config.fileData);
 
         console.log('jsonObject.resources', jsonObject.resources);
 
-        template = thumbnailTemplate(jsonObject.resources, selected_video_id); // checked_accessible, checked_crop, checked_sharpen
+        template = videoSelectorTemplate(jsonObject.resources, selected_video_id);
 		clone = document.importNode(template.content, true);
 		document.body.appendChild(clone);
 
-        // Video Selection
+        // Video Selection event
 		$('.video_selector__container .video_selector__item').on('click', function(e) {
 			$('.video_selector__container .video_selector__item').removeClass('selected');
 			$(this).addClass('selected');
@@ -84,27 +75,11 @@
 			    'video_id', video_id
 			);
 
+			// Send Page Designer event to update the selection
 			emit({
 				type: 'sfcc:value',
 				payload: {
 					video_id: ( video_id ? video_id : null )
-				}
-			});
-		});
-
-		// Checkboxes
-		$('#video_options_accessible, #video_options_crop, #video_options_sharpen').on('change', function(e) {
-			var video_id = $('.video_selector__container .video_selector__item.selected').data('value');
-			video_id = video_id ? video_id : null;
-
-			console.log(
-			    'video_id', video_id
-			);
-
-			emit({
-				type: 'sfcc:value',
-				payload: {
-					video_id: video_id
 				}
 			});
 		});

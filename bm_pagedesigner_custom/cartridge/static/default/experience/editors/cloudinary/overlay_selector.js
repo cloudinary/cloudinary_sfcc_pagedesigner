@@ -1,5 +1,6 @@
 (() => {
 
+	// Create an image URL with formatting options for thumbnails
 	const imageTransform = function(public_id, version, secure_url, settings, format) {
     	var url_arr = secure_url.split('v' + version); // Remove version number
     	url_arr.splice(1, 0, settings); // Inject settings
@@ -8,6 +9,7 @@
     	return url_str;
 	}
 
+	// Create HTML for a checkbox
 	const inputCheckbox = function(idname, label, checked) {
 		var str = '';
         str += '<div class="video_selector__checkbox">';
@@ -20,6 +22,7 @@
 		return str;
 	}
 
+	// Create HTML for a alignment selector
 	const alignmentSelector = function(idname, label, selectedValue) {
 	    var alignmentCell = function(value, selectedValue) {
 	        return '<a class="aligner__col' + (value == selectedValue ? ' selected' : '') + '" href="#" data-value="' + value + '"></a>';
@@ -52,6 +55,7 @@
 		return str;
 	}
 
+	// Create HTML for an input field
 	const inputField = function(idname, label, value) {
 		var str = '';
 
@@ -62,7 +66,6 @@
                     str += '<label class="video_selector__input__label slds-form-element__label" for="' + idname + '">';
                         str += label;
                     str += '</label>';
-
 
                     str += '<div class="slds-form-element__control">';
                         str += '<input id="' + idname + '" name="' + idname + '" value="' + value + '" class="video_selector__input__input slds-input" type="text" />';
@@ -75,7 +78,7 @@
 		return str;
 	}
 
-	const thumbnailTemplate = function(optionArray, selected_overlay_id, checked_overlay, value_opacity, value_width, value_position) {
+	const overlaySelectorTemplate = function(optionArray, selected_overlay_id, checked_overlay, value_opacity, value_width, value_position) {
         const template = document.createElement('template');
         var str = '';
         var selected = '';
@@ -127,7 +130,8 @@
 
         return template;
 	};
-
+	
+	// Send Page Designer event to update the selection
 	const emitUpdatedValues = function() {
         var overlay_id = $('.video_selector__container .video_selector__item.selected').data('value');
         overlay_id = overlay_id ? overlay_id : null;
@@ -157,6 +161,7 @@
         });
 	}
 
+	// Page Designer ready event
 	subscribe('sfcc:ready', async ({ value, config, isDisabled, isRequired, dataLocale, displayLocale }) => {
 		console.log('Overlay, sfcc:ready', dataLocale, displayLocale, value, config);
 
@@ -178,11 +183,11 @@
 
         console.log('jsonObject.resources', jsonObject.resources);
 
-        var template = thumbnailTemplate(jsonObject.resources, selected_overlay_id, checked_overlay, value_opacity, value_width, value_position);
+        var template = overlaySelectorTemplate(jsonObject.resources, selected_overlay_id, checked_overlay, value_opacity, value_width, value_position);
 		var clone = document.importNode(template.content, true);
 		document.body.appendChild(clone);
 
-        // Video Selection
+        // Video Selection event
 		$('.video_selector__container .video_selector__item').on('click', function(e) {
 			$('.video_selector__container .video_selector__item').removeClass('selected');
 			$(this).addClass('selected');
@@ -190,7 +195,7 @@
 			emitUpdatedValues();
 		});
 
-		// Checkboxes
+		// Checkbox change events
 		$('#video_options_overlay_enable').on('change', function(e) {
 		    var overlay_enable = $('#video_options_overlay_enable').is(":checked");
 
@@ -203,7 +208,7 @@
 			emitUpdatedValues();
 		});
 
-		// Alignment
+		// Alignment selector click event
         $('.video_selector__alignment .aligner__col').on('click', function(e) {
             e.preventDefault();
             var parents = $(this).parents('.video_selector__alignment');
