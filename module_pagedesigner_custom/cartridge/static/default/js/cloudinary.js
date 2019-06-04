@@ -4,7 +4,7 @@ $(document).ready(function() {
     function init() {
         console.log('Initialize Cloudinary Player');
 
-        $('.cloudinary-video').each(function() {
+        $('.cloudinary-video-container .cloudinary-video').each(function() {
             var $videoElement = $(this);
             var id = $videoElement.attr('id');
 

@@ -1,14 +1,23 @@
 <isscript>
     var assets = require('*/cartridge/scripts/assets.js');
 
-    assets.addCss('//unpkg.com/cloudinary-video-player@1.1.3/dist/cld-video-player.min.css');
+	// SFRA has a logic bug where full urls are added
+	// twice so we need to check for duplicates first
+	var src = 'https://unpkg.com/cloudinary-video-player/dist/cld-video-player.min.css';
+    if (assets.styles.lastIndexOf(src) < 0) {
+    	assets.addCss(src);
+	}
     assets.addCss('/css/cloudinary.css');
-
+    
     assets.addJs('/js/jquery-3.3.1.min.js');
-
-	assets.addJs('//unpkg.com/cloudinary-core@2.6.2/cloudinary-core-shrinkwrap.min.js');
-	assets.addJs('//unpkg.com/cloudinary-video-player@1.1.3/dist/cld-video-player.min.js');
-    	
+	src = 'https://unpkg.com/cloudinary-core/cloudinary-core-shrinkwrap.min.js';
+    if (assets.scripts.lastIndexOf(src) < 0) {
+    	assets.addJs(src);
+	}
+	src = 'https://unpkg.com/cloudinary-video-player/dist/cld-video-player.min.js';
+    if (assets.scripts.lastIndexOf(src) < 0) {
+    	assets.addJs(src);
+	}	
     assets.addJs('/js/cloudinary.js');
 </isscript>
 <iscomment>
@@ -16,7 +25,6 @@
 		${JSON.stringify(pdict.viewmodel)}<br />
 	</div>
 </iscomment>
-
 <div class="cloudinary-video-container">
     <video
         id="cloudinary-video-${pdict.viewmodel.id}"
