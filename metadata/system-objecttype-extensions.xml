@@ -34,6 +34,15 @@
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
             </attribute-definition>
+            <attribute-definition attribute-id="CloudinaryPageDesignerTag">
+                <display-name xml:lang="x-default">Tag Name for Fetching Assets</display-name>
+                <description xml:lang="x-default">Defaults to "/tags/SFCCPageDesigner" which is appended to the end of the list call: cloudName + '/resources/' + resourceType + '/tags/SFCCPageDesigner'</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>/tags/SFCCPageDesigner</default-value>
+            </attribute-definition>
         </custom-attribute-definitions>
         <group-definitions>
             <attribute-group group-id="CloudinaryPageDesigner">
@@ -42,6 +51,7 @@
 				<attribute attribute-id="CloudinaryPageDesignerCNAME"/>
                 <attribute attribute-id="CloudinaryPageDesignerAPIkey"/>
                 <attribute attribute-id="CloudinaryPageDesignerSecretKey"/>
+                <attribute attribute-id="CloudinaryPageDesignerTag"/>
             </attribute-group>
         </group-definitions>
     </type-extension>

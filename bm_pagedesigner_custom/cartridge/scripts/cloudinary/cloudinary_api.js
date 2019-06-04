@@ -21,6 +21,11 @@ var data = {
 
     getCloudName: function () {
         return currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCloudName');
+    },
+
+    getTagName: function () {
+		// Should be "/tags/SFCCPageDesigner"
+        return currentSite.getCustomPreferenceValue('CloudinaryPageDesignerTag');
     }
 };
 
@@ -93,7 +98,8 @@ function getResourceList(resourceType) {
 
 	try {
 		service.setRequestMethod('GET');
-		service.setURL('https://' + data.getAPIKey() + ':' + data.getSecretKey() + '@api.cloudinary.com/v1_1/' + data.getCloudName() + '/resources/' + resourceType + '/tags/SFCCPageDesigner');
+		var src = 'https://' + data.getAPIKey() + ':' + data.getSecretKey() + '@api.cloudinary.com/v1_1/' + data.getCloudName() + '/resources/' + resourceType + data.getTagName();
+		service.setURL(src);
 		service.addHeader('Content-Type', 'application/json');
 		serviceResponse = service.call();
 
@@ -110,6 +116,7 @@ function getResourceList(resourceType) {
 				}
 			} else {
 				cloudinaryResponse = serviceResponse.object.text;
+				cloudinaryResponse.src = src;
 			}
 		}
 		return cloudinaryResponse;
