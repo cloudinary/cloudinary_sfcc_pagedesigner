@@ -1,8 +1,13 @@
+<iscomment>
+	Cloudinary Video Component Template:
+	This document renders an instance of the component. Multiple instances can be placed on the page.
+	
+	Refer to module_pagedesigner_custom/cartridge/experience/components/assets/cloudinary_video.js
+</iscomment>
 <isscript>
     var assets = require('*/cartridge/scripts/assets.js');
 
-	// SFRA has a logic bug where full urls are added
-	// twice so we need to check for duplicates first
+	// SFRA has a logic bug where full urls are added twice, so we need to check for duplicates before adding.
 	var src = 'https://unpkg.com/cloudinary-video-player/dist/cld-video-player.min.css';
     if (assets.styles.lastIndexOf(src) < 0) {
     	assets.addCss(src);
@@ -21,6 +26,7 @@
     assets.addJs('/js/cloudinary.js');
 </isscript>
 <iscomment>
+	Uncomment this to expose the raw view model for debugging:
 	<div style="font-size: 11px; word-break: break-all;">
 		${JSON.stringify(pdict.viewmodel)}<br />
 	</div>
@@ -46,3 +52,4 @@
         </isif>
     ></video>
 </div>
+

@@ -1,9 +1,0 @@
-<iscontent type="application/json" charset="UTF-8" compact="true"/>
-<iscomment>
-	Empty template for emails that don't need body or other purposes.
-</iscomment>
-
-	<isprint value="${JSON.stringify(pdict.videoJSON)}" encoding="off">
-
-
-	<isprint value="${JSON.stringify(pdict.imageJSON)}" encoding="off">
