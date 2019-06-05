@@ -23,7 +23,7 @@
     if (assets.scripts.lastIndexOf(src) < 0) {
     	assets.addJs(src);
 	}	
-    assets.addJs('/js/cloudinary.js');
+    assets.addJs('/js/cloudinary-pd-video.js');
 </isscript>
 <iscomment>
 	Uncomment this to expose the raw view model for debugging:
