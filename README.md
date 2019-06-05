@@ -57,7 +57,7 @@ Get your cloudname, api_key and api_secret from your Cloudinary account [as desc
 ### Update site preferences
 
 * Navigate to "Merchant Tools > Site Preferences"
-* Select "Cloudinary"
+* Select "Cloudinary PageDesigner API"
 * Cloudinary enable "Yes"
 * Cloudinary cloud name.  Provide your Cloudinary cloud name from your Cloudinary account
 * Cloudinary CNAME. If a special cname was setup from your Cloudinary account, provide it.
