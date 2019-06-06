@@ -21,15 +21,15 @@ To install the Cloudinary page designer cartridges :
 * Verify that these two cartridges are deployed on your Commerce Cloud sandbox.
 
 
-## Get your Cloudinary account information 
+### Get your Cloudinary account information 
 
 If you don’t have a Cloudinary account, sign up for a [free account](https://cloudinary.com/users/register/free) so you can try out image and video transformations and seamless delivery through CDN.
 
 Get your cloudname, api_key and api_secret from your Cloudinary account [as described here](https://cloudinary.com/documentation/solution_overview#access_identifiers) 
 
-## Configuring the cartridges
+### Configuring the cartridges
 
-### Import meta data
+#### Import meta data
 
 * The meta data is available in your local git project after you cloned the repo.
 * In the Commerce Cloud Business Manager, navigate To "Administration > Site Development > Import & Export"
@@ -37,7 +37,7 @@ Get your cloudname, api_key and api_secret from your Cloudinary account [as desc
 * Upload and import "metadata/services.xml" from your local git project 
 
 
-### Update business manager cartridge path
+#### Update business manager cartridge path
 
 * Navigate To "Administration > Sites > Manage Sites"
 * Click "Business Manager"
@@ -45,7 +45,7 @@ Get your cloudname, api_key and api_secret from your Cloudinary account [as desc
 * Disable and reset cache for the business manager site.
 
 
-### Update site cartridge path
+#### Update site cartridge path
 
 * Navigate to "Administration > Sites > Manage Sites"
 * Select "Sitegenesis" (or other site)
@@ -54,7 +54,7 @@ Get your cloudname, api_key and api_secret from your Cloudinary account [as desc
 
 
 
-### Update site preferences
+#### Update site preferences
 
 * Navigate to "Merchant Tools > Site Preferences"
 * Select "Cloudinary PageDesigner API"
@@ -63,6 +63,14 @@ Get your cloudname, api_key and api_secret from your Cloudinary account [as desc
 * Cloudinary CNAME. If a special cname was setup from your Cloudinary account, provide it.
 * Cloudinary Api Key.  Provide the api key from your Cloudinary account
 * Cloudinary Api Secret.   Provide the api secret from your Cloudinary account
+
+## Using the cartridge ######################################################################
+
+### Tagging content in Cloudinary
+* Login to your cloudinary account and upload some videos and images to use as overlay logos.
+* Make sure you add a tag called "SFCCPageDesigner" to these videos and images.  
+* * This tag is used by default, but you can use any tag you want to.  But make sure you use this tag in the custom site preferences. 
+* Any assets with this tag will now be available inside the page designer interface.
 
 
 ## Additional resources ##########################################################
