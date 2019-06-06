@@ -72,6 +72,20 @@ Get your cloudname, api_key and api_secret from your Cloudinary account [as desc
 * * This tag is used by default, but you can use any tag you want to.  But make sure you use this tag in the custom site preferences. 
 * Any assets with this tag will now be available inside the page designer interface.
 
+### Using the Cloudinary Video component
+* In the page designer, browse the availalbe components, pick the Cloudinary Video component and place it on the page. 
+* Open up the properties pane for the component.  
+* * Pick the video you want to use.
+* * Pick any presentation options you want to use.
+* * For overlays, choose to insert overlays and then select the image you want to overlay.
+* * Finally, chose options for the video player.
+* Save the settings and preview the page with gorgeous video
+
+
+
+* Any assets with this tag will now be available inside the page designer interface.
+
+
 
 ## Additional resources ##########################################################
 
