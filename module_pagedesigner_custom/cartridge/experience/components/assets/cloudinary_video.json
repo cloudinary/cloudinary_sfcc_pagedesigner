@@ -22,16 +22,16 @@
       "attribute_definitions": [
         {
           "id": "options_instagram_ready",
-          "name": "Make Instagram Ready?",
-          "description": "Image will be cropped to 1080 pixels wide and 1920 pixels in height, aspect ratio of 9:16",
+          "name": "Make vertical for mobile",
+          "description": "Crop video to fit mobile screens in portrait mode.  Cloudinary AI will ensure that the most interesting objects in your video are retained in the center of the frame",
           "type": "boolean",
           "default_value": false,
           "required": false
         },
         {
           "id": "options_captions",
-          "name": "Show Transcript and Captions?",
-          "description": "Display transcript and captions. Requires a VTT file.",
+          "name": "Show subtitles",
+          "description": "Display subtitles for accessibility or mobile usecases.  Using Cloudinary AI, subtitles can be automatically generated",
           "type": "boolean",
           "default_value": false,
           "required": false
@@ -40,7 +40,7 @@
     },
     {
       "id": "group_overlay",
-      "name": "Overlay",
+      "name": "Overlay a picture",
       "attribute_definitions": [
         {
           "id": "overlay_selection",
