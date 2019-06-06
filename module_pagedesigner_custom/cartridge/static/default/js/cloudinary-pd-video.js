@@ -101,7 +101,8 @@ $(document).ready(function() {
             	],
             	posterOptions: {
 					transformation: [
-					    scaling
+					    scaling,
+					    overlay
 					]
         		}
         	});

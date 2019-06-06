@@ -39,9 +39,9 @@
                         str += alignmentCell('north_east', selectedValue);
                     str += '</div>';
                     str += '<div class="aligner__row">';
-                        str += alignmentCell('east', selectedValue);
-                        str += alignmentCell('center', selectedValue);
                         str += alignmentCell('west', selectedValue);
+                        str += alignmentCell('center', selectedValue);
+                        str += alignmentCell('east', selectedValue);
                     str += '</div>';
                     str += '<div class="aligner__row">';
                         str += alignmentCell('south_west', selectedValue);
