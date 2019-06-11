@@ -1,10 +1,14 @@
 // Cloudinary Page Designer
-
 $(document).ready(function() {
     function init() {
-        console.log('Initialize Cloudinary Player');
+        console.log('Cloudinary Init');
+        
+        var $videoElements = $('.cloudinary-video-container video.cloudinary-video');
+        console.log('There are ' + $videoElements.length + ' video elements');
+        
+        document.cloudinaryPlayers = {};
 
-        $('.cloudinary-video-container .cloudinary-video').each(function() {
+        $videoElements.each(function() {
             var $videoElement = $(this);
             var id = $videoElement.attr('id');
 
@@ -20,7 +24,7 @@ $(document).ready(function() {
             var overlay_scale = $videoElement.data('overlayScale');
             var overlay_position = $videoElement.data('overlayPosition');
 
-            var secure = location.protocol === 'https:';
+            var secure = true; // location.protocol === 'https:';
 
             var options_captions = $videoElement.data('optionsCaptions');
 
@@ -47,6 +51,13 @@ $(document).ready(function() {
                     overlay.opacity = overlay_opacity;
                 }
             }
+            
+            // Parent container div for width and height
+            $container = $videoElement.parents('.cloudinary-video-container').first();
+            var width = Math.round($container.width());
+            var height = Math.round($container.height());
+            
+            console.log('Video Dimensions: ' + width + ' x ' + height);
 
 			// Instagram Ready
 			// ---------------
@@ -63,8 +74,18 @@ $(document).ready(function() {
 				    // fetch_format: 'auto',
     				gravity: 'auto'
 	    		}
+	    	} else {
+    			scaling = {
+	    			width: width,
+		    		height: height,
+			    	crop: 'fill',
+			    	
+				    // fetch_format: 'auto',
+    				gravity: 'auto'
+	    		}
 	    	}
 
+			/*
             console.log(
                 'publicId = ' + publicId +
                 '\n' + 'loop = ' + loop +
@@ -80,72 +101,98 @@ $(document).ready(function() {
                 'overlay', overlay,
                 'scaling', scaling
             );
+            */
 
-			// This is the URL that is being generated:
-			// https://res.cloudinary.com/cloudinary-naveen/video/upload/c_fill,f_auto,g_auto,h_1280,w_1920/v1/videos/outdoors.mp4?_s=vp-1.1.3
-
-			// Should look like this with a custom CNAME
-			// https://cloudinary-naveen-res.cloudinary.com/video/upload/w_1920,h_1280,c_fill,f_auto/Mercedes_Cars_Road_Trip.mp4
-			
-			// var cld = cloudinary.Cloudinary.new({ cloud_name: ‘asisayagcloudinary’, secure: ‘true’, secure_distribution: “your.cname.com”});
-			// important to have both secure=true and secure_distribution
             var cld = cloudinary.Cloudinary.new({
                 cloud_name: cloudname,
-                secure: secure
+                secure: secure,
+                secure_distribution: 'cloudinary-naveen-res.cloudinary.com',
+                private_cdn: true
             });
 
-            var player = cld.videoPlayer(id, {
-            	transformation: [
-            	    scaling,
-            	    overlay
-            	],
-            	posterOptions: {
+			try {
+				var player = cld.videoPlayer(id, {
 					transformation: [
-					    scaling,
-					    overlay
-					]
-        		}
-        	});
+						scaling,
+						overlay
+					],
+					posterOptions: {
+						transformation: [
+							scaling,
+							overlay
+						]
+					}
+				});
 
-            player.source(source);
+				player.source(source);
+				// player.fluid(true);
 
-            if (options_captions) {
-                var cc_url = cld.url(publicId, {format: 'vtt', resource_type: 'raw'});
-                console.log('Caption URL:', cc_url);
+				var outputUrl = cld.url(publicId, {
+					transformation: [
+						scaling,
+						// {gravity: 'auto'},
+						overlay
+					], resource_type: 'video'
+				});
+			
+				console.log('Video URL: ', outputUrl);
 
-                var captionOption = {
-                    kind: 'subtitles',
-                    srclang: 'en',
-                    label: 'English',
-                    src: cc_url,
-                    default: true
-                };
-                player.videojs.addRemoteTextTrack(captionOption);
-            };
+				if (options_captions) {
+					var cc_url = cld.url(publicId, {format: 'vtt', resource_type: 'raw'});
+					console.log('Caption URL:', cc_url);
+
+					var captionOption = {
+						kind: 'subtitles',
+						srclang: 'en',
+						label: 'English',
+						src: cc_url,
+						default: true
+					};
+					player.videojs.addRemoteTextTrack(captionOption);
+				};
+				
+				document.cloudinaryPlayers[id] = player; // Store reference to player object
+				
+        	} catch(e) {
+        		console.log('Player Error', e);
+        	}
         });
+        
+		var resizeTimer;
+		$(window).on('resize', function(e) {
+			clearTimeout(resizeTimer);
+			resizeTimer = setTimeout(function() {
+				console.log('Cloudinary resize');
+				
+				var $playerElements = $('.cloudinary-video-container div.cloudinary-video');
+				$playerElements.each(function() {
+					var $playerElement = $(this);
+					var id = $playerElement.attr('id');
+					
+					var width = Math.round($playerElement.width());
+					var height = Math.round($playerElement.height());
+					
+					var player = document.cloudinaryPlayers[id];
+					if (player !== undefined) {
+			            console.log('Setting ' + id + ' Dimensions: ' + width + ' x ' + height, player);
+						player.width(width);
+						player.height(height);						
+					}
+				});
+			}, 250);
+		});
     };
 
 	// Page Designer does not become active until document.ready. Because if this
 	// it waits until streaming videos fully load. We need to delay initializing
 	// Cloudinary video player a little bit.
-    setTimeout(function(){
-        console.log('Cloudinary: Waiting 0.5 seconds');
-        init();
-    }, 500);
+	if (!document.cloudinaryInit) {
+		document.cloudinaryInit = true;
+		setTimeout(function(){
+			console.log('Cloudinary: Waiting 0.5 seconds');
+			init();
+		}, 500);
+	} else {
+		console.log('Cloudinary: Timeout already set...');
+	}
 });
-
-/*
-#2:  To add the video “woman_coat_orig” as a pre-roll to the previous step, add the following to the url:
-https://cloudinary-naveen-res.cloudinary.com/video/upload/w_1920,h_1280,c_fill,f_auto,e_fade:1000/l_video:woman_coat_orig,w_1920,h_1280,c_fill,so_0,fl_splice,e_fade:-1000/Mercedes_Cars_Road_Trip.mp4
-
-#3:  To Make instagram ready:  https://cloudinary-naveen-res.cloudinary.com/video/upload/w_1920,h_1280,c_fill,f_auto/l_video:woman_coat_orig,w_1920,h_1280,c_fill,so_0,fl_splice/g_auto,w_1080,h_1920,c_fill/Mercedes_Cars_Road_Trip.mp4
-
-#4:  To Add an overlay, in this example an image called “cloudinary-logo”  :
-https://cloudinary-naveen-res.cloudinary.com/video/upload/w_1920,h_1280,c_fill,f_auto/l_video:woman_coat_orig,w_1920,h_1280,c_fill,so_0,fl_splice/g_auto,w_1080,h_1920,c_fill/l_cloudinary_icon_for_dark_bg_print,o_90,g_north_east/Mercedes_Cars_Road_Trip.mp4
-
-https://cloudinary-naveen-res.cloudinary.com/video/upload/w_1920,h_1280,c_fill,f_auto,l_cloudinary_icon_for_dark_bg_print,o_90,g_north_east/Mercedes_Cars_Road_Trip.mp4
-
-#5:  If user only chose “Make instagram ready” then :
-https://cloudinary-naveen-res.cloudinary.com/video/upload/g_auto,w_1080,h_1920,c_fill,f_auto/Mercedes_Cars_Road_Trip.mp4
-Note, this same transformation can be used for mobile with the appropriate width (w_) and height (h_) values.
-*/

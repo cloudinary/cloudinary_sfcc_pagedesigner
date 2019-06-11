@@ -5,39 +5,59 @@
 	Refer to module_pagedesigner_custom/cartridge/experience/components/assets/cloudinary_video.js
 </iscomment>
 <isscript>
+	// SFRA has a logic bug where full urls are added twice, so we need to check for duplicates before adding.
     var assets = require('*/cartridge/scripts/assets.js');
 
-	// SFRA has a logic bug where full urls are added twice, so we need to check for duplicates before adding.
-	var src = 'https://unpkg.com/cloudinary-video-player/dist/cld-video-player.min.css';
+	// Video Player CSS
+	// var src = 'https://unpkg.com/cloudinary-video-player/dist/cld-video-player.min.css';
+	var src = 'https://unpkg.com/cloudinary-video-player@1.1.3/dist/cld-video-player.min.css';
     if (assets.styles.lastIndexOf(src) < 0) {
     	assets.addCss(src);
 	}
+
+	// Cloudinary PD Component CSS
     assets.addCss('/css/cloudinary.css');
     
+    // Jquery
     assets.addJs('/js/jquery-3.3.1.min.js');
+
+	// Cloudinary Core JS
 	src = 'https://unpkg.com/cloudinary-core/cloudinary-core-shrinkwrap.min.js';
     if (assets.scripts.lastIndexOf(src) < 0) {
     	assets.addJs(src);
 	}
+
+	// Cloudinary Video Player JS	
 	src = 'https://unpkg.com/cloudinary-video-player/dist/cld-video-player.min.js';
     if (assets.scripts.lastIndexOf(src) < 0) {
-    	assets.addJs(src);
-	}	
+		assets.addJs(src);
+	}
+	
     assets.addJs('/js/cloudinary-pd-video.js');
 </isscript>
+
 <iscomment>
 	Uncomment this to expose the raw view model for debugging:
 	<div style="font-size: 11px; word-break: break-all;">
 		${JSON.stringify(pdict.viewmodel)}<br />
+	
+		<isloop items="${ require('*/cartridge/scripts/assets.js').styles }" var="style">
+		${style}<br />
+		</isloop>
+
+		<isloop items="${ require('*/cartridge/scripts/assets.js').scripts }" var="script">
+		${script}<br />
+		</isloop>
 	</div>
 </iscomment>
+
 <div class="cloudinary-video-container">
     <video
         id="cloudinary-video-${pdict.viewmodel.id}"
         ${pdict.viewmodel.controls_showcontrols === true ? 'controls' : ''}
         ${pdict.viewmodel.controls_autoplay === true ? 'autoplay' : ''}
         ${pdict.viewmodel.controls_loopvideo === true ? 'loop' : ''}
-        class="cloudinary-video cld-video-player ${pdict.viewmodel.controls_theme === 'Dark' ? 'cld-video-player-skin-dark' : 'cld-video-player-skin-light'} cld-fluid"
+        class="cloudinary-video cld-video-player ${pdict.viewmodel.controls_theme === 'Dark' ? 'cld-video-player-skin-dark' : 'cld-video-player-skin-light'}"
         data-cld-public-id="${pdict.viewmodel.video_id}"
         data-cloudname="${pdict.viewmodel.cloudname}"
 
