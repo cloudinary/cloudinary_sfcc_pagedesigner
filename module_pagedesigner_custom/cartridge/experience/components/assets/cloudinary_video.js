@@ -1,5 +1,5 @@
 /**
- * 
+ * Cloudinary Video Component
  */
 'use strict';
 
@@ -14,12 +14,14 @@ module.exports.render = function (context) {
     var component = context.component;
     var content = context.content;
 
+	// Component Instance Information
     viewmodel.id = component.ID;
     viewmodel.name = component.name;
     viewmodel.type = component.typeID;
 
-	// Config
+	// Cloudinary Configuration
     viewmodel.cloudname = Site.getCurrent().getCustomPreferenceValue('CloudinaryPageDesignerCloudName');
+    viewmodel.cname = Site.getCurrent().getCustomPreferenceValue('CloudinaryPageDesignerCNAME') ? Site.getCurrent().getCustomPreferenceValue('CloudinaryPageDesignerCNAME') : '';
 
     // Video Options
     viewmodel.video_id = '';
@@ -46,7 +48,7 @@ module.exports.render = function (context) {
     viewmodel.controls_loopvideo = content.controls_loopvideo;
     viewmodel.controls_theme = content.controls_theme;
 
-    // Other Options
+    // Additional Options
     viewmodel.options_instagram_ready = content.options_instagram_ready;
     viewmodel.options_captions = content.options_captions;
 

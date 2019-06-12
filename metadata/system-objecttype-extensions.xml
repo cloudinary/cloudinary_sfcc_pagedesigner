@@ -11,8 +11,8 @@
                 <min-length>0</min-length>
             </attribute-definition>
             <attribute-definition attribute-id="CloudinaryPageDesignerCNAME">
-                <display-name xml:lang="x-default">Cloudinary CNAME</display-name>
-                <description xml:lang="x-default">The CNAME of your Cloudiary account</description>
+                <display-name xml:lang="x-default">Cloudinary CNAME (Optional)</display-name>
+                <description xml:lang="x-default">CNAME of your Cloudinary account: custom-res.cloudinary.com</description>
                 <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>

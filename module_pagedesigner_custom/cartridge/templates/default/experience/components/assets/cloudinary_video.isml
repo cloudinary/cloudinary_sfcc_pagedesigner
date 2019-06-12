@@ -9,8 +9,7 @@
     var assets = require('*/cartridge/scripts/assets.js');
 
 	// Video Player CSS
-	// var src = 'https://unpkg.com/cloudinary-video-player/dist/cld-video-player.min.css';
-	var src = 'https://unpkg.com/cloudinary-video-player@1.1.3/dist/cld-video-player.min.css';
+	var src = 'https://unpkg.com/cloudinary-video-player/dist/cld-video-player.min.css';
     if (assets.styles.lastIndexOf(src) < 0) {
     	assets.addCss(src);
 	}
@@ -37,20 +36,11 @@
 </isscript>
 
 <iscomment>
-	Uncomment this to expose the raw view model for debugging:
+	<!-- Uncomment this to expose the raw view model for debugging: -->
 	<div style="font-size: 11px; word-break: break-all;">
 		${JSON.stringify(pdict.viewmodel)}<br />
-	
-		<isloop items="${ require('*/cartridge/scripts/assets.js').styles }" var="style">
-		${style}<br />
-		</isloop>
-
-		<isloop items="${ require('*/cartridge/scripts/assets.js').scripts }" var="script">
-		${script}<br />
-		</isloop>
 	</div>
 </iscomment>
-
 <div class="cloudinary-video-container">
     <video
         id="cloudinary-video-${pdict.viewmodel.id}"
@@ -60,6 +50,7 @@
         class="cloudinary-video cld-video-player ${pdict.viewmodel.controls_theme === 'Dark' ? 'cld-video-player-skin-dark' : 'cld-video-player-skin-light'}"
         data-cld-public-id="${pdict.viewmodel.video_id}"
         data-cloudname="${pdict.viewmodel.cloudname}"
+        data-cname="${pdict.viewmodel.cname}"
 
         <isif condition="${!empty(pdict.viewmodel.options_captions)}">data-options-captions="${pdict.viewmodel.options_captions}"</isif>
         <isif condition="${!empty(pdict.viewmodel.options_instagram_ready)}">data-options-instagram-ready="${pdict.viewmodel.options_instagram_ready}"</isif>
@@ -72,5 +63,4 @@
         </isif>
     ></video>
 </div>
-
 
