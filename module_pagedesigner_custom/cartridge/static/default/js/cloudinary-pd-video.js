@@ -57,7 +57,9 @@ $(document).ready(function() {
             var width = Math.round($container.width());
             var height = Math.round($container.height());
             
+            console.log('Container: ' + JSON.stringify($container));
             console.log('Video Dimensions: ' + width + ' x ' + height);
+            console.log('Parent Containers: ' + JSON.stringify($videoElement.parents('.cloudinary-video-container')));
 
 			// Instagram Ready
 			// ---------------
@@ -158,6 +160,7 @@ $(document).ready(function() {
         	}
         });
         
+		/*
 		var resizeTimer;
 		$(window).on('resize', function(e) {
 			clearTimeout(resizeTimer);
@@ -167,6 +170,7 @@ $(document).ready(function() {
 				var $playerElements = $('.cloudinary-video-container div.cloudinary-video');
 				$playerElements.each(function() {
 					var $playerElement = $(this);
+					console.log('Player Element: ' + JSON.stringify($playerElement));
 					var id = $playerElement.attr('id');
 					
 					var width = Math.round($playerElement.width());
@@ -181,6 +185,41 @@ $(document).ready(function() {
 				});
 			}, 250);
 		});
+		*/
+		var resizeTimer;
+		$(window).on('resize', function(e) {
+			clearTimeout(resizeTimer);
+			resizeTimer = setTimeout(function() {
+				console.log('Cloudinary resize');
+				
+				var $playerElements = $('.cloudinary-video-container div.cloudinary-video');
+				$playerElements.each(function() {
+					var $playerElement = $(this);
+					console.log('Player Element: ' + JSON.stringify($playerElement));
+					var id = $playerElement.attr('id');
+					
+					//var width = Math.round($playerElement.width());
+					//var height = Math.round($playerElement.height());
+		            // Parent container div for width and height
+		            var $container = $playerElement.parents('.cloudinary-video-container').first();
+		            var width = Math.round($container.width());
+		            var height = Math.round($container.height());
+		            
+		            console.log('Container: ' + JSON.stringify($container));
+		            console.log('Video Dimensions: ' + width + ' x ' + height);
+					
+					var player = document.cloudinaryPlayers[id];
+					if (player !== undefined) {
+			            console.log('Setting ' + id + ' Dimensions: ' + width + ' x ' + height, player);
+						player.width(width);
+						player.height(height);						
+					}
+				});
+			}, 250);
+		});
+
+    
+    
     };
 
 	// Page Designer does not become active until document.ready. Because if this
