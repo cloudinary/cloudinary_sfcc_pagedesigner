@@ -84,6 +84,12 @@
           ],
           "default_value": "Dark",
           "required": false
+        },
+        {
+          "id": "controls_cropresize",
+          "name": "Auto Crop and Resize",
+          "type": "boolean",
+          "default_value": true
         }
       ]
     }

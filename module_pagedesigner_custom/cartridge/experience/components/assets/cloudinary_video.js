@@ -47,6 +47,7 @@ module.exports.render = function (context) {
     viewmodel.controls_autoplay = content.controls_autoplay;
     viewmodel.controls_loopvideo = content.controls_loopvideo;
     viewmodel.controls_theme = content.controls_theme;
+    viewmodel.controls_cropresize = content.controls_cropresize;
 
     // Additional Options
     viewmodel.options_instagram_ready = content.options_instagram_ready;

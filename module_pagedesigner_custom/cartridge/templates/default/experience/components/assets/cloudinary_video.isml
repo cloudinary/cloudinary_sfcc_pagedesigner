@@ -51,6 +51,7 @@
         data-cld-public-id="${pdict.viewmodel.video_id}"
         data-cloudname="${pdict.viewmodel.cloudname}"
         data-cname="${pdict.viewmodel.cname}"
+        data-autocropresize="${pdict.viewmodel.controls_cropresize}"
 
         <isif condition="${!empty(pdict.viewmodel.options_captions)}">data-options-captions="${pdict.viewmodel.options_captions}"</isif>
         <isif condition="${!empty(pdict.viewmodel.options_instagram_ready)}">data-options-instagram-ready="${pdict.viewmodel.options_instagram_ready}"</isif>

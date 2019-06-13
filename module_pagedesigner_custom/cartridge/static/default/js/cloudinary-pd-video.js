@@ -5,18 +5,21 @@
 var resizeCloudinaryPlayers = function () {
 	var $playerElements = $('.cloudinary-video-container div.cloudinary-video');
 	$playerElements.each(function() {
-		var $playerElement = $(this);
-		var id = $playerElement.attr('id');
+		var autocropresize = $(this).data('autocropresize');
+		if (autocropresize) {
+			var $playerElement = $(this);
+			var id = $playerElement.attr('id');
 
-		$container = $playerElement.parents('.cloudinary-video-container').first();
-		var width = Math.round($container.width());
-		var height = Math.round($container.height());
+			$container = $playerElement.parents('.cloudinary-video-container').first();
+			var width = Math.round($container.width());
+			var height = Math.round($container.height());
 
-		var player = document.cloudinaryPlayers[id];
-		if (player !== undefined) {
-			// console.log('Setting ' + id + ' Dimensions: ' + width + ' x ' + height);
-			player.width(width);
-			player.height(height);
+			var player = document.cloudinaryPlayers[id];
+			if (player !== undefined) {
+				// console.log('Setting ' + id + ' Dimensions: ' + width + ' x ' + height);
+				player.width(width);
+				player.height(height);
+			}
 		}
 	});
 };
@@ -42,6 +45,7 @@ function initializeCloudinaryPlayers () {
 		var autoplay = $videoElement.attr('autoplay') !== undefined;
 		var controls = $videoElement.attr('controls') !== undefined;
 		var loop = $videoElement.attr('loop') !== undefined;
+		var autocropresize = $videoElement.data('autocropresize');
 
 	    // Overlay Options
 		var overlay_id = $videoElement.data('overlayId');
@@ -92,7 +96,7 @@ function initializeCloudinaryPlayers () {
 				// fetch_format: 'auto',
 				gravity: 'auto'
 			}
-		} else {
+		} else if (autocropresize) {
 			scaling = {
 				width: width,
 				height: height,
@@ -154,9 +158,12 @@ function initializeCloudinaryPlayers () {
 			});
 
 			player.source(source);
-			player.width(width);
-			player.height(height);
-			// player.fluid(true);
+			if (autocropresize) {
+				player.width(width);
+				player.height(height);
+			} else {
+				player.fluid(true);
+			}
 
 			/*
 			var outputUrl = cld.url(publicId, {
