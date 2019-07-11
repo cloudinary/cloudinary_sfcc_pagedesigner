@@ -12,7 +12,7 @@ Cloudinary offers a video component for the Salesforce B2C Commerce Page Designe
 ## Setup ######################################################################
 
 ### Installing the video component 
-You will have to install the Cloudinary page designer cartridges into your Salesforce Commerce Cloud/Demandware Sandbox:
+You will have to install the Cloudinary Page Designer cartridges into your Salesforce Commerce Cloud/Demandware Sandbox:
 
 * Clone this repository 
 * There are two projects representing two cartridges:  module_pagedesigner_custom and bm_pagedesigner_custom
@@ -48,7 +48,7 @@ Get your cloudname, api_key and api_secret from your Cloudinary account [as desc
 #### Update site cartridge path
 
 * Navigate to "Administration > Sites > Manage Sites"
-* Select "Sitegenesis" (or other site)
+* Select "SiteGenesis" (or other site)
 * Cartridge path should look similar to "plugin_pagedesigner_sfra:app_storefront_base:module_pagedesigner_custom:module_pagedesigner"
 * Disable and reset cache
 
@@ -56,8 +56,8 @@ Get your cloudname, api_key and api_secret from your Cloudinary account [as desc
 
 #### Update site preferences
 
-* Navigate to "Merchant Tools > Site Preferences"
-* Select "Cloudinary PageDesigner" and set these values and save.
+* Navigate to "Merchant Tools > Site Preferences > Custom Preferences"
+* Select "Cloudinary Page Designer" and set these values and save.
   - Cloudinary Cloud Name.  Provide your Cloudinary cloud name from your Cloudinary account
   - Cloudinary CNAME. If a special cname was setup from your Cloudinary account, provide it.
   - Cloudinary Api Key.  Provide the api key from your Cloudinary account
@@ -66,13 +66,13 @@ Get your cloudname, api_key and api_secret from your Cloudinary account [as desc
 ## Using the cartridge ######################################################################
 
 ### Tagging content in Cloudinary
-* Login to your cloudinary account and upload some videos and images to use as overlay logos.
+* Login to your Cloudinary account and upload some videos and images to use as overlay logos.
 * Make sure you add a tag called "SFCCPageDesigner" to these videos and images.  
   - This tag is used by default, but you can use any tag you want to.  But make sure you use this tag in the custom site preferences. 
-* Any assets with this tag will now be available inside the page designer interface.
+* Any assets with this tag will now be available inside the Page Designer interface.
 
 ### Using the Cloudinary Video component
-* In the page designer, browse the availalbe components, pick the Cloudinary Video component and place it on the page. 
+* In the Page Designer, browse the available components, pick the Cloudinary Video component and place it on the page. 
 * Open up the properties pane for the component.  
   - Pick the video you want to use.
   - Pick any presentation options you want to use.
