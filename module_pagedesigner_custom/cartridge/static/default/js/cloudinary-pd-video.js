@@ -17,8 +17,9 @@ var resizeCloudinaryPlayers = function () {
 			var player = document.cloudinaryPlayers[id];
 			if (player !== undefined) {
 				// console.log('Setting ' + id + ' Dimensions: ' + width + ' x ' + height);
-				player.width(width);
-				player.height(height);
+				//player.width(width);
+				//player.height(height);
+				player.videojs.fill(true);
 			}
 		}
 	});
@@ -105,7 +106,6 @@ function initializeCloudinaryPlayers () {
 				gravity: 'auto'
 			}
 		}
-
 		/*
 		console.log(
 			'publicId = ' + publicId +
@@ -159,8 +159,9 @@ function initializeCloudinaryPlayers () {
 
 			player.source(source);
 			if (autocropresize) {
-				player.width(width);
-				player.height(height);
+				//player.width(width);
+				//player.height(height);
+				player.videojs.fill(true);
 			} else {
 				player.fluid(true);
 			}
