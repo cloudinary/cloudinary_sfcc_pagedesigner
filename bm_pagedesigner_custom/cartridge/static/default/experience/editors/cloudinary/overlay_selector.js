@@ -218,6 +218,20 @@
 			emitUpdatedValues();
         });
 
+		// Opacity change event
+        $("#video_options_overlay_opacity").on('change', function(e) {
+        	e.preventDefault();
+        	console.log('Opacity changed');
+			emitUpdatedValues();
+        });
+        
+        // Scale/pixels change event
+        $("#video_options_overlay_scale").on('change', function(e) {
+        	e.preventDefault();
+        	console.log('Scale changed');
+        	emitUpdatedValues();
+        });
+        
 	});
 })();
 
