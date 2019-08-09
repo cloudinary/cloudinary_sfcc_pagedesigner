@@ -4,7 +4,7 @@
         <custom-attribute-definitions>
             <attribute-definition attribute-id="CloudinaryPageDesignerAPIkey">
                 <display-name xml:lang="x-default">Cloudinary API Key</display-name>
-                <description xml:lang="x-default">The API Key of your Cloudiary account</description>
+                <description xml:lang="x-default">The API Key of your Cloudinary account</description>
                 <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
@@ -12,15 +12,16 @@
             </attribute-definition>
             <attribute-definition attribute-id="CloudinaryPageDesignerCNAME">
                 <display-name xml:lang="x-default">Cloudinary CNAME (Optional)</display-name>
-                <description xml:lang="x-default">CNAME of your Cloudinary account: custom-res.cloudinary.com</description>
+                <description xml:lang="x-default">The CNAME from your Cloudinary account.  Defaults to res.cloudinary.com</description>
                 <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
-            </attribute-definition>
+                <default-value>res.cloudinary.com</default-value>
+           </attribute-definition>
             <attribute-definition attribute-id="CloudinaryPageDesignerCloudName">
                 <display-name xml:lang="x-default">Cloudinary Cloud Name</display-name>
-                <description xml:lang="x-default">The Cloud Name of your Cloudiary account</description>
+                <description xml:lang="x-default">The Cloud Name of your Cloudinary account</description>
                 <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
@@ -28,7 +29,7 @@
             </attribute-definition>
             <attribute-definition attribute-id="CloudinaryPageDesignerSecretKey">
                 <display-name xml:lang="x-default">Cloudinary API Secret</display-name>
-                <description xml:lang="x-default">The API Secret of your Cloudiary account</description>
+                <description xml:lang="x-default">The API Secret of your Cloudinary account</description>
                 <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
@@ -36,12 +37,12 @@
             </attribute-definition>
             <attribute-definition attribute-id="CloudinaryPageDesignerTag">
                 <display-name xml:lang="x-default">Tag Name for Fetching Assets</display-name>
-                <description xml:lang="x-default">Defaults to "/tags/SFCCPageDesigner" which is appended to the end of the list call: cloudName + '/resources/' + resourceType + '/tags/SFCCPageDesigner'</description>
+                <description xml:lang="x-default">The tag used in your Cloudinary account for assets to be used in Page Designer.  Defaults to "SFCCPageDesigner"</description>
                 <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
-                <default-value>/tags/SFCCPageDesigner</default-value>
+                <default-value>SFCCPageDesigner</default-value>
             </attribute-definition>
         </custom-attribute-definitions>
         <group-definitions>
