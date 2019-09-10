@@ -6,6 +6,7 @@
 var Template = require('dw/util/Template');
 var HashMap = require('dw/util/HashMap');
 var Site = require('dw/system/Site');
+var DEFAULT_CNAME = 'res.cloudinary.com';
 
 module.exports.render = function (context) {
     var model = new HashMap();
@@ -22,7 +23,13 @@ module.exports.render = function (context) {
 	// Cloudinary Configuration
     viewmodel.cloudname = Site.getCurrent().getCustomPreferenceValue('CloudinaryPageDesignerCloudName');
     viewmodel.cname = Site.getCurrent().getCustomPreferenceValue('CloudinaryPageDesignerCNAME') ? Site.getCurrent().getCustomPreferenceValue('CloudinaryPageDesignerCNAME') : '';
-
+    
+    //Because SFCC gives back the default cname if empty.
+    if (viewmodel.cname === DEFAULT_CNAME){
+    	viewmodel.cname = '';
+    }
+   
+    
     // Video Options
     viewmodel.video_id = '';
     if (typeof content.video_selection === 'object') {

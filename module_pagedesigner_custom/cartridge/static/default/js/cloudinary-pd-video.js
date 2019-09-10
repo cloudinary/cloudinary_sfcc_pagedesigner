@@ -106,7 +106,6 @@ function initializeCloudinaryPlayers () {
 				gravity: 'auto'
 			}
 		}
-		/*
 		console.log(
 			'publicId = ' + publicId +
 			'\n' + 'cname = ' + cname +
@@ -125,7 +124,6 @@ function initializeCloudinaryPlayers () {
 			'\n' + 'overlay', overlay,
 			'\n' + 'scaling', scaling
 		);
-		*/
 
 		var cld;
 		if (cname === '') {
