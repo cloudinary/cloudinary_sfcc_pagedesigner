@@ -1,0 +1,29 @@
+{
+  "name": "Media Library",
+  "description": "Cloudinary Media Library",
+  "group": "Cloudinary",
+  "attribute_definition_groups": [
+    {
+      "id": "Image",
+      "name": "Cloudinary image Configuration",
+      "attribute_definitions": [
+        {
+          "id": "alt",
+          "name": "Image Alt Text test 123",
+          "description": "The image alt text",
+          "type": "string",
+          "required": false
+        },
+        {
+          "id": "asset_sel",
+          "type": "custom",
+          "required": false,
+          "editor_definition": {
+            "type": "cloudinary.video_selector_trigger"
+            }
+        }
+     ]
+    }
+  ],
+  "region_definitions": []
+}

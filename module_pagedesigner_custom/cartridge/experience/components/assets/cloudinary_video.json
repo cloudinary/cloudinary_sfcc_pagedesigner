@@ -9,9 +9,9 @@
         {
           "id": "video_selection",
           "type": "custom",
-          "required": true,
+          "required": false,
           "editor_definition": {
-            "type": "cloudinary.video_selector"
+            "type": "cloudinary.video_selector_trigger"
           }
         }
       ]

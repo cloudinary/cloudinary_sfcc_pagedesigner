@@ -23,16 +23,8 @@ module.exports.render = function (context) {
     viewmodel.cloudname = Site.getCurrent().getCustomPreferenceValue('CloudinaryPageDesignerCloudName');
     viewmodel.cname = Site.getCurrent().getCustomPreferenceValue('CloudinaryPageDesignerCNAME') ? Site.getCurrent().getCustomPreferenceValue('CloudinaryPageDesignerCNAME') : '';
 
-    // Video Options
-    viewmodel.video_id = '';
-    if (typeof content.video_selection === 'object') {
-    	viewmodel.video_id = content.video_selection.video_id;
-	}
-
-    // Additional Options
-    viewmodel.options_instagram_ready = content.options_instagram_ready;
 
     model.viewmodel = viewmodel;
 
-    return new Template('experience/components/assets/cloudinary_video').render(model).text;
+    return new Template('experience/components/assets/cloudinary_image').render(model).text;
 };

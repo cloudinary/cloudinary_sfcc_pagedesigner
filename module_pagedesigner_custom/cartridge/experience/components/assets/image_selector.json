@@ -1,0 +1,29 @@
+{
+  "name": "Image Selector",
+  "description": "Cloudinary Image _selector",
+  "group": "Cloudinary",
+  "attribute_definition_groups": [
+    {
+      "id": "Image",
+      "name": "Cloudinary image Configuration",
+      "attribute_definitions": [
+        {
+          "id": "alt",
+          "name": "Image Alt Text test 123",
+          "description": "The image alt text",
+          "type": "string",
+          "required": false
+        },
+        {
+          "id": "image_sel",
+          "type": "custom",
+          "required": false,
+          "editor_definition": {
+            "type": "cloudinary.image_selector_trigger"
+            }
+        }
+     ]
+    }
+  ],
+  "region_definitions": []
+}

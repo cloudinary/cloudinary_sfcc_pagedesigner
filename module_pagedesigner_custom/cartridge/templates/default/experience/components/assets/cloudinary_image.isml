@@ -1,0 +1,34 @@
+<iscomment>
+	Cloudinary Video Component Template:
+	This document renders an instance of the component. Multiple instances can be placed on the page.
+	
+	Refer to module_pagedesigner_custom/cartridge/experience/components/assets/cloudinary_video.js
+</iscomment>
+<isscript>
+	// SFRA has a logic bug where full urls are added twice, so we need to check for duplicates before adding.
+    var assets = require('*/cartridge/scripts/assets.js');
+
+
+	// Cloudinary PD Component CSS
+    assets.addCss('/css/cloudinary.css');
+    
+	// Cloudinary Core JS
+	src = 'https://unpkg.com/cloudinary-core/cloudinary-core-shrinkwrap.min.js';
+    if (assets.scripts.lastIndexOf(src) < 0) {
+    	assets.addJs(src);
+	}
+
+	
+    assets.addJs('/js/cloudinary-pd-video.js');
+</isscript>
+
+<iscomment>
+	<!-- Uncomment this to expose the raw view model for debugging: -->
+	<div style="font-size: 11px; word-break: break-all;">
+		${JSON.stringify(pdict.viewmodel)}<br />
+	</div>
+</iscomment>
+<div class="cloudinary-video-container">
+<img alt="pdict.viewmodel.alt" src="pdict.viewmodel.src">
+</div>
+

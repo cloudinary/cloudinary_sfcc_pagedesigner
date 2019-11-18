@@ -23,9 +23,8 @@ body {
 	text-indent: -9999px;
 	width: 44px;
 	height: 29px;
-	background: url(../../../experience/components/assets/coudinary_video.svg) no-repeat;
+	background: url(../../../experience/components/assets/coudinary_video.svg) no-repeat -2px -6px;
 	background-size: 50px 50px;
-	background-position: -2px -6px;
 }
 
 .video_selector__header__text {
@@ -35,27 +34,10 @@ body {
 	padding-left: 0.5rem;
 }
 
-/*
-overflow-wrap: break-word;
-word-wrap: break-word;
--webkit-hyphens: auto;
--ms-hyphens: auto;
-hyphens: auto;
-display: inline-block;
-color: #3e3e3c;
-font-size: .75rem;
-padding-right: .5rem;
-padding-top: .25rem;
-margin-bottom: .125rem;
-font-weight: 700;
-float: left;
-*/
-
 .video_selector__container {
 	position: relative;
 	border: 1px #ccc solid;
 	width: 100%;
-	max-height: 300px;
 	overflow-x: hidden;
 	overflow-y: visible;
 	margin-bottom: 0.5rem;
@@ -78,8 +60,7 @@ float: left;
 }
 
 .video_selector__image {
-	padding: 0;
-	padding-right: 10px;
+	padding: 0 10px 0 0;
 }
 
 .video_selector__image img {
@@ -102,7 +83,7 @@ float: left;
 }
 
 .video_selector__data__format {
-	text-transform; uppercase;
+	text-transform: uppercase;
 }
 
 .video_selector__data__size {}
@@ -147,7 +128,6 @@ float: left;
     width: 100%;
 }
 
-// Alignment
 .video_selector__alignment {}
 
 .aligner__label {}

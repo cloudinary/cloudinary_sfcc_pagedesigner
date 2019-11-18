@@ -1,0 +1,45 @@
+.video_selector__item {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	border: 1px #ccc solid;
+	padding: 10px;
+}
+
+.video_selector__image {
+	padding: 0 10px 0 0;
+}
+
+.video_selector__image img {
+	display: block;
+	border: 1px #ccc solid;
+	opacity: 0.6;
+}
+
+.video_selector__image:hover img {
+	opacity: 1;
+}
+
+.video_selector__data {
+	color: #91918b;
+	font-size: 0.7rem;
+}
+
+.video_selector__data__id {
+	font-size: 0.9rem;
+	color: #080707;
+}
+
+.video_selector__data__type {
+	text-transform: capitalize;
+}
+
+.video_selector__data__format {
+	text-transform: uppercase;
+}
+
+.video_selector__data__size {}
+
+.video_selector__action {
+	padding: 0 0 0 10px;
+}

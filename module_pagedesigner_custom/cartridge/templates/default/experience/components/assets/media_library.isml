@@ -1,0 +1,35 @@
+<iscomment>
+	Cloudinary Media Library Template:
+	This document renders an instance of the component. Multiple instances can be placed on the page.
+	
+</iscomment>
+<isscript>
+	// SFRA has a logic bug where full urls are added twice, so we need to check for duplicates before adding.
+    var assets = require('*/cartridge/scripts/assets.js');
+
+
+	// Cloudinary Core JS
+	src = 'https://unpkg.com/cloudinary-core/cloudinary-core-shrinkwrap.min.js';
+    if (assets.scripts.lastIndexOf(src) < 0) {
+    	assets.addJs(src);
+	}
+
+	// Cloudinary Media library JS
+	// src = 'https://media-library.cloudinary.com/global/all.js';
+    if (assets.scripts.lastIndexOf(src) < 0) {
+		assets.addJs(src);
+	}
+	
+    // assets.addJs('/js/cloudinary-pd-video.js');
+</isscript>
+
+<iscomment>
+	<!-- Uncomment this to expose the raw view model for debugging: -->
+	<div style="font-size: 11px; word-break: break-all;">
+		${JSON.stringify(pdict.viewmodel)}<br />
+	</div>
+</iscomment>
+<div class="cloudinary-media-library-container">
+    <h4>Test 1234</h4>
+</div>
+

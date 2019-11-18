@@ -1,5 +1,5 @@
 'use strict';
-
+//test123
 //var server = require('server');
 var Logger = require('dw/system/Logger');
 
@@ -136,9 +136,9 @@ function getVideoJSON() {
 
 function getImageJSON() {
     var imageJSON = getResourceList('image');
-
     return JSON.parse(imageJSON);
 }
 
 module.exports.getVideoJSON = getVideoJSON;
 module.exports.getImageJSON = getImageJSON;
+module.exports.data = data;
