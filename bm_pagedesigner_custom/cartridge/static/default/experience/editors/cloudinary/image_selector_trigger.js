@@ -2,13 +2,6 @@
 	let videoResources;
 	subscribe('sfcc:ready', async ({value, config, isDisabled, isRequired, dataLocale, displayLocale}) => {
 		console.log('cloudinary.video_selector_trigger::sfcc:ready', dataLocale, displayLocale, isDisabled, isRequired, value, config);
-		// videoResources = JSON.parse(config.fileData).resources;
-
-		// const selectedResourceId = obtainDisplayValue(value);
-		//const selectedResource = selectedResourceId ? videoResources.find(option => selectedResourceId === option.public_id) : null;
-		const template = obtainTemplate(null);
-		const clone = document.importNode(template.content, true);
-		document.body.appendChild(clone);
 
 		// Apply event listeners
 		const buttonEl = document.querySelector('button');

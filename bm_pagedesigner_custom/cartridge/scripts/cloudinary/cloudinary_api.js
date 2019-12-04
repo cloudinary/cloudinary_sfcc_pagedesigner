@@ -139,6 +139,25 @@ function getImageJSON() {
     return JSON.parse(imageJSON);
 }
 
+function getImageSettingUrlPart(sec) {
+	var dpr = currentSite.getCustomPreferenceValue('CloudinaryImageTransformationsDPR');
+	var format = currentSite.getCustomPreferenceValue('CloudinaryImageTransformationsFormat');
+	var qulaty = currentSite.getCustomPreferenceValue('CloudinaryImageTransformationsQuality');
+	var altText = currentSite.getCustomPreferenceValue('CloudinaryImageUseAltText');
+	var urlPart = '/'
+	if (dpr && dpr !== 'none') {
+		urlPart += dpr + '/';
+	}
+	if (format && format !== 'none') {
+		urlPart += format + '/';
+	}
+	if (qulaty && qulaty !== 'none') {
+		urlPart += qulaty + '/';
+	}
+	return urlPart;
+} 
+
 module.exports.getVideoJSON = getVideoJSON;
 module.exports.getImageJSON = getImageJSON;
 module.exports.data = data;
+module.exports.getImageSettingUrlPart = getImageSettingUrlPart;

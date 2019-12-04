@@ -7,6 +7,6 @@ var cloudinaryApi = require('~/cartridge/scripts/cloudinary/cloudinary_api');
 
 module.exports.init = function (editor) {
 	var conf = new HashMap();
-	var videoSelector = PageMgr.getCustomEditor('cloudinary.image_selector', conf);
-	editor.dependencies.put('breakout', videoSelector);
+	var imageSelector = PageMgr.getCustomEditor('cloudinary.image_selector', conf);
+	editor.dependencies.put('breakout', imageSelector);
 };

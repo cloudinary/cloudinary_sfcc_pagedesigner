@@ -23,13 +23,12 @@
     // assets.addJs('/js/cloudinary-pd-video.js');
 </isscript>
 
-<iscomment>
 	<!-- Uncomment this to expose the raw view model for debugging: -->
 	<div style="font-size: 11px; word-break: break-all;">
 		${JSON.stringify(pdict.viewmodel)}<br />
 	</div>
-</iscomment>
-<div class="cloudinary-media-library-container">
-    <h4>Test 1234</h4>
+<div class="cloudinary-media-library-container sfdc-component-mock sfdc-component-assets-cloudinary">
+<img class="ml-image" src="https://cloudinary-res.cloudinary.com/image/upload/c_scale,fl_attachment,w_100/v1/logo/for_white_bg/cloudinary_icon_for_white_bg.png" alt="cld">
+    
 </div>
 

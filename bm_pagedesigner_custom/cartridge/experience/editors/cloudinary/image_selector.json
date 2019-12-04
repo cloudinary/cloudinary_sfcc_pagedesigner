@@ -1,15 +1,10 @@
 {
-  "name": "Cloudinary Video Selector",
-  "description": "Select a video from a list of videos",
+  "name": "Cloudinary Media Library",
+  "description": "Select a Cloudinary resource",
   "resources": {
     "scripts": [
-      "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js",
-      "https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TweenLite.min.js",
-      "https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/plugins/CSSPlugin.min.js",
-      "https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/easing/EasePack.min.js",
-      "/experience/editors/cloudinary/all.js",
-      "/experience/editors/cloudinary/sha256.js",
-      "/experience/editors/cloudinary/video_selector.js"
+      "https://cld-qa-files-dev.s3.amazonaws.com/cms/all.js",
+      "/experience/editors/cloudinary/image_selector.js"
     ]
   }
 }

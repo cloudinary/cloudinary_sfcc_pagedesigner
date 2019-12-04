@@ -1,3 +1,4 @@
+
 (() => {
 	const SECRET_TIMESTAMP = Date.now();
 
@@ -11,7 +12,7 @@
 		function insertHandler(data){
 			emit({
 		        type: 'sfcc:value',
-		        payload: (data && data.assets && data.assets.length > 0)   ? data.assets[0] : null
+		        payload: data ? { value: data } : null
 		      });
 		}
 
@@ -19,9 +20,10 @@
 			cloud_name: config.cloudName,
 			api_key: config.apiKey,
 			inline_container: 'div.sfcc-ml-root',
-			max_files: 1,
-			multiple: false,
-			}, {insertHandler: insertHandler}
+			max_files: 8,
+			multiple: true,
+			folder: {path:'test'}
+		}, {insertHandler: insertHandler}
 		);
 		ml.show();
 

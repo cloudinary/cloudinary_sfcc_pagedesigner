@@ -1,6 +1,6 @@
 {
-  "name": "Cloudinary Video Selector",
-  "description": "Select a video from a list of videos",
+  "name": "Cloudinary Media Library",
+  "description": "Select a Cloudinary Asset",
   "resources": {
     "scripts": [
       "/experience/editors/cloudinary/video_selector_trigger.js"
