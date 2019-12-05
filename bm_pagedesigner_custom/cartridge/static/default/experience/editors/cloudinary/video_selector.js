@@ -21,6 +21,7 @@
 			inline_container: 'div.sfcc-ml-root',
 			max_files: 1,
 			multiple: false,
+			folder: {resource_type: "video"}
 			}, {insertHandler: insertHandler}
 		);
 		ml.show();

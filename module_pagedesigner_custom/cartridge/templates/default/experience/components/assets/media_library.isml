@@ -28,7 +28,7 @@
 		${JSON.stringify(pdict.viewmodel)}<br />
 	</div>
 <div class="cloudinary-media-library-container sfdc-component-mock sfdc-component-assets-cloudinary">
-<img class="ml-image" src="https://cloudinary-res.cloudinary.com/image/upload/c_scale,fl_attachment,w_100/v1/logo/for_white_bg/cloudinary_icon_for_white_bg.png" alt="cld">
+<img class="ml-image" src="${pdict.viewmodel.url}" alt="cld">
     
 </div>
 
