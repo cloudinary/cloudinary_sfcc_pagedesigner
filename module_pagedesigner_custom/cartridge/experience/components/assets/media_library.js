@@ -23,7 +23,7 @@ function getImageSettingUrlPart() {
 } 
 
 function getImageUrlFromAsset(asset) {
-  if (asset.derived.length > 0) {
+  if (asset.derived && asset.derived.length > 0) {
     return asset.derived[0].secure_url;
   } 
   return asset.secure_url;
@@ -33,6 +33,7 @@ function getImageUrlFromAsset(asset) {
 module.exports.render = function (context) {
   let model = new HashMap();
   let viewmodel = {};
+  viewmodel.type = 'image';
   var globalPart = getImageSettingUrlPart();
   let val = context.content.asset_sel;
   if (val.secure_url) {

@@ -3,11 +3,7 @@
 	let resourceType;
 	subscribe('sfcc:ready', async ({value, config, isDisabled, isRequired, dataLocale, displayLocale}) => {
 		console.log('cloudinary.video_selector_trigger::sfcc:ready', dataLocale, displayLocale, isDisabled, isRequired, value, config);
-		resourceType = 'image';
-		// videoResources = JSON.parse(config.fileData).resources;
-
-		const selectedResourceId = obtainDisplayValue(value);
-		// const selectedResource = selectedResourceId ? videoResources.find(option => selectedResourceId === option.public_id) : null;
+		resourceType = config.mlType;
 		const template = obtainTemplate(value);
 		const clone = document.importNode(template.content, true);
 		document.body.appendChild(clone);
@@ -42,11 +38,6 @@
 
 	function obtainItemMarkup(option) {
 		const url = imageTransform(option);
-		if (resourceType === 'image') {
-  			return `<div class="${resourceType}_selector__image">
-   			 <a href="javascript:void(0);"><img src="${url}" /></a>
-  			</div>`
-		} else {
 			return `<div class="${resourceType}_selector__item" data-value="${option.public_id}">
   			<div class="${resourceType}_selector__image">
     <a href="javascript:void(0);"><img src="${url}" /></a>
@@ -59,9 +50,7 @@
   </div>
   <div class="video_selector__action">
     <button type="button" class="slds-button slds-button_neutral">Select</button>
-  </div>
-</div>`;
-	}
+  </div>`
 	}
 
 	function updateMarkup(value) {
@@ -93,7 +82,7 @@
 			type: 'sfcc:breakout',
 			payload: {
 				id: 'breakout',
-				title: `Cloudinary Media Library (${resourceType})`
+				title: `Cloudinary Media Library (${resourceType})`,
 			}
 		}, handleBreakoutClose);
 	}

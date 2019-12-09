@@ -1,19 +1,12 @@
 {
-  "name": "Media Library Images",
-  "description": "Cloudinary Media Library Images",
+  "name": "Media Library Videos",
+  "description": "Cloudinary Media Library Video",
   "group": "Cloudinary",
   "attribute_definition_groups": [
     {
-      "id": "Image",
-      "name": "Cloudinary image Configuration",
+      "id": "Video",
+      "name": "Cloudinary Video Configuration",
       "attribute_definitions": [
-        {
-          "id": "alt",
-          "name": "Image Alt Text",
-          "description": "The image alt text",
-          "type": "string",
-          "required": false
-        },
         {
           "id": "asset_sel",
           "type": "custom",
@@ -21,7 +14,7 @@
           "editor_definition": {
             "type": "cloudinary.video_selector_trigger",
             "configuration": {
-              "mlType": "image"
+              "mlType": "video"
             }
           }
         }

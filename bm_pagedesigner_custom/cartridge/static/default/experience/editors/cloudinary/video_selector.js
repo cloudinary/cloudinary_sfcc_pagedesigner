@@ -2,7 +2,7 @@
 	const SECRET_TIMESTAMP = Date.now();
 
 	// Page Designer ready event
-	subscribe('sfcc:ready', async ({ value, config, isDisabled, isRequired, dataLocale, displayLocale, viewport }) => {
+	subscribe('sfcc:ready', async ({ value, config, isDisabled, isRequired, dataLocale, displayLocale, viewport, breakout }) => {
 		console.log('cloudinary.video_selector::sfcc:ready', dataLocale, displayLocale, isDisabled, isRequired, value, config, viewport);
 
 		const template = obtainTemplate(viewport);
@@ -11,7 +11,7 @@
 		function insertHandler(data){
 			emit({
 		        type: 'sfcc:value',
-		        payload: (data && data.assets && data.assets.length > 0)   ? data.assets[0] : null
+		        payload: (data && data.assets && data.assets.length > 0)   ? Object.assign(data.assets[0], {cloudName: config.cloudName}) : null
 		      });
 		}
 
@@ -21,10 +21,14 @@
 			inline_container: 'div.sfcc-ml-root',
 			max_files: 1,
 			multiple: false,
-			folder: {resource_type: "video"}
 			}, {insertHandler: insertHandler}
 		);
-		ml.show();
+		ml.show(
+			{folder: {
+				resource_type: config.type,
+				path: null
+			}}
+		);
 
 	});
 
