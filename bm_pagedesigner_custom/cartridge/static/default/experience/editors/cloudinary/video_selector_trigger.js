@@ -1,7 +1,7 @@
 (() => {
 	let videoResources;
 	let resourceType;
-	subscribe('sfcc:ready', async ({value, config, isDisabled, isRequired, dataLocale, displayLocale}) => {
+	subscribe('sfcc:ready', async ({ value, config, isDisabled, isRequired, dataLocale, displayLocale }) => {
 		console.log('cloudinary.video_selector_trigger::sfcc:ready', dataLocale, displayLocale, isDisabled, isRequired, value, config);
 		resourceType = config.mlType;
 		const template = obtainTemplate(value);
@@ -23,10 +23,18 @@
 	}
 
 	function imageTransform(option) {
-		const { version, secure_url, format } = option;
+		const { version, format } = option;
+		secure_url = getAssetImageUrl(option);
 		const arr = secure_url.split('v' + version); // Remove version number
 		arr.splice(1, 0, 'c_lpad,h_150,w_150'); // Inject settings
 		return arr.join('').replace('.' + format, '.jpg');
+	}
+
+	function getAssetImageUrl(asset) {
+		if (asset.derived && asset.derived.length > 0) {
+			return asset.derived[0].secure_url;
+		}
+		return asset.secure_url;
 	}
 
 	function obtainDefaultMarkup() {
@@ -38,7 +46,7 @@
 
 	function obtainItemMarkup(option) {
 		const url = imageTransform(option);
-			return `<div class="${resourceType}_selector__item" data-value="${option.public_id}">
+		return `<div class="${resourceType}_selector__item" data-value="${option.public_id}">
   			<div class="${resourceType}_selector__image">
     <a href="javascript:void(0);"><img src="${url}" /></a>
   </div>
