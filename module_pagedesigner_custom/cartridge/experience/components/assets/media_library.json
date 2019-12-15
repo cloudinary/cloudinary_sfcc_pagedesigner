@@ -1,6 +1,6 @@
 {
-  "name": "Media Library Images",
-  "description": "Cloudinary Media Library Images",
+  "name": "Cloudinary Images",
+  "description": "Cloudinary Images",
   "group": "Cloudinary",
   "attribute_definition_groups": [
     {
@@ -24,6 +24,19 @@
               "mlType": "image"
             }
           }
+        },
+        {
+          "id": "placeholderImageType",
+          "name": "Plaseholder image type",
+          "type": "enum",
+          "values":[
+            "none",
+            "blur",
+            "vectorize",
+            "pixelate",
+            "solid"
+          ],
+          "default_value": "none"
         }
      ]
     }
