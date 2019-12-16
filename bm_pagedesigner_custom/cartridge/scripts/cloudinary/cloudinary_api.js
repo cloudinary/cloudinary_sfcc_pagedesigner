@@ -161,3 +161,4 @@ module.exports.getVideoJSON = getVideoJSON;
 module.exports.getImageJSON = getImageJSON;
 module.exports.data = data;
 module.exports.getImageSettingUrlPart = getImageSettingUrlPart;
+module.exports.callService = callService;
