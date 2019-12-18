@@ -30,10 +30,8 @@ function addSignatureToBody(body) {
     if (body[i] == '' || body[i] == null) {
       delete body[i];
     }
-    else if(Array.isArray(body[i])) {
-      fieldsArray.push(i + '=' + body[i].map(function(el) {
-        return JSON.stringify(el);
-      }).join(','));
+    else if (Array.isArray(body[i])) {
+      fieldsArray.push(i + '=' + body[i].join(','));
     }
     else {
       fieldsArray.push(i + '=' + body[i]);
@@ -78,15 +76,42 @@ function callService(body, fileType, callType) {
   return cloudinaryResponse;
 };
 
+function getBreackpointsHard(asset) {
+  var assetUrl = getImageUrlFromAsset(asset);
+  var fileName = getFileName(assetUrl);
+  var baseUrl = getBaseUrlPart(assetUrl, fileName);
+  var breakpoints = [1280, 768, 375];
+  var brs = [];
+  breakpoints.forEach(function(br) {
+    brs.push(baseUrl + '/c_scale,w_' + br + '/' + fileName + ' ' + br + 'w'); 
+  });
+  return {
+    sizes: '(max-width: 1280px) 100vw 1280px',
+    srcset: brs.join(','),
+    src: baseUrl + '/c_scale,w_1280/' + fileName
+  }
+}
 
-function getBrackpoints(publicId) {
+function getBreackpoints(publicId) {
+  var b = new HashMap();
+  b.put('publicId', publicId);
+  b.put('timestamp', (Date.now() / 1000).toFixed);
+  b.put('type', 'upload');
+  var rp = new HashMap();
+  rp.put('create_derived', false);
+  rp.put('bytes_step', 20000);
+  rp.put('min_width', 200);
+  rp.put('max_width', 1000);
+  rp.put('max_images', 20);
+  b.put('responsive_breakpoints', rp);
   var body = {
     timestamp: (Date.now() / 1000).toFixed(),
     public_id: publicId,
     type: 'upload',
     responsive_breakpoints: [{
-      create_derived: false, bytes_step: 20000,
-      min_width: 200, max_width: 1000,
+      bytes_step: 20000,
+      min_width: 200,
+      max_width: 1000,
       max_images: 20
     }]
   }
@@ -131,6 +156,14 @@ function getPlaceholderImage(type) {
   return placeholderImageOptions[type] || placeholderImageOptions['blur'];
 }
 
+function getBaseUrlPart(url, fileName) {
+  return url.replace(/v[0-9]+[\/]/, '').replace(fileName, '');
+}
+
+function getFileName(url) {
+  return url.substr(url.lastIndexOf('/') + 1);
+}
+
 module.exports.render = function (context) {
   let model = new HashMap();
   let viewmodel = {};
@@ -141,10 +174,10 @@ module.exports.render = function (context) {
   let val = context.content.asset_sel;
   if (val.secure_url) {
     var assetUrl = getImageUrlFromAsset(val);
-    var breakpoints = getBrackpoints(context.content.asset_sel.public_id)
+    viewmodel.breakpoints = getBreackpointsHard(context.content.asset_sel);
     var globalPart = getImageSettingUrlPart();
-    var fileName = val.secure_url.substr(val.secure_url.lastIndexOf('/') + 1);
-    var u = assetUrl.replace(/v[0-9]+[\/]/, '').replace(fileName, '');
+    var fileName = getFileName(val.secure_url);
+    var u = getBaseUrlPart(assetUrl, fileName);
     viewmodel.url = u + globalPart + fileName;
     viewmodel.placeholder = u + getPlaceholderImage(plType) + '/' + fileName;
   } else {

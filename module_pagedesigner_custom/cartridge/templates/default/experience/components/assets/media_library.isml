@@ -34,12 +34,16 @@
 
 
 <!-- Uncomment this to expose the raw view model for debugging: -->
-<div style="font-size: 11px; word-break: break-all;">
-    ${JSON.stringify(pdict.viewmodel)}
-</div>
+<script>
+    console.log('${JSON.stringify(pdict.viewmodel.breakpoints.sizes)}');
+</script>
+
 <isif condition="${pdict.viewmodel.type == 'image'}">
     <div class="cloudinary-media-library-container sfdc-component-mock sfdc-component-assets-cloudinary">
-        <img class="ml-image" src="${pdict.viewmodel.placeholder}"  data-real-url="${pdict.viewmodel.url}" alt="${pdict.viewmodel.altText}">
+        <img class="ml-image" src="${pdict.viewmodel.placeholder}"  data-real-url="${pdict.viewmodel.breakpoints.src}"
+        sizes="${pdict.viewmodel.breakpoints.sizes}"
+        srcset="${pdict.viewmodel.breakpoints.srcset}"
+        alt="${pdict.viewmodel.altText}">
     </div>
     <iselseif condition="${pdict.viewmodel.type == 'video'}">
         <video id="player-${pdict.viewmodel.public_id}" class="cld-video"

@@ -8,12 +8,39 @@
 		const template = obtainTemplate(viewport);
 		const clone = document.importNode(template.content, true);
 		document.body.appendChild(clone);
-		function insertHandler(data){
-			emit({
-		        type: 'sfcc:value',
-		        payload: (data && data.assets && data.assets.length > 0)   ? Object.assign(data.assets[0], {cloudName: config.cloudName}) : null
-		      });
+		function insertHandler(data) {
+			var asset = (data && data.assets && data.assets.length > 0) ? Object.assign(data.assets[0], { cloudName: config.cloudName }) : null
+			if (asset.resource_type !== config.type) {
+				var root = document.getElementsByClassName('sfcc-ml-root')[0];
+				var error = document.createElement('div');
+				error.innerHTML = 'Wrong asset type';
+				root.appendChild(error);
+			} else {
+				emit({
+					type: 'sfcc:value',
+					payload: asset
+				});
+				emit({
+					type: 'sfcc:breakoutApply',
+					payload: breakout
+				})
+			}
 		}
+
+		var show = {};
+		if (value) {
+			show.asset = {
+				resource_type: value.resource_type,
+				type: value.type,
+				public_id: value.public_id
+			}
+		} else {
+			show.folder = {
+				resource_type: config.type,
+				path: null
+			}
+		}
+
 
 		var ml = cloudinary.createMediaLibrary({
 			cloud_name: config.cloudName,
@@ -21,13 +48,10 @@
 			inline_container: 'div.sfcc-ml-root',
 			max_files: 1,
 			multiple: false,
-			}, {insertHandler: insertHandler}
+		}, { insertHandler: insertHandler }
 		);
 		ml.show(
-			{folder: {
-				resource_type: config.type,
-				path: null
-			}}
+			show
 		);
 
 	});
