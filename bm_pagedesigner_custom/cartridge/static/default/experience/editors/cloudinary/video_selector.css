@@ -151,3 +151,12 @@ body {
 	background-color: #e9f5ff;
 	border: 3px double #0073d8;
 }
+.cld-error {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	border: 1px #ccc solid;
+	background-color: red;
+	width: 200px;
+	height: 200px;
+}

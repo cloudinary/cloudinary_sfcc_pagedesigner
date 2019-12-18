@@ -10,6 +10,9 @@
       "https://cld-qa-files-dev.s3.amazonaws.com/cms/all.js",
       "/experience/editors/cloudinary/sha256.js",
       "/experience/editors/cloudinary/video_selector.js"
+    ],
+    "styles": [
+      "/experience/editors/cloudinary/video_selector.css"
     ]
   }
 }

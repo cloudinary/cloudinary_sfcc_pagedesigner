@@ -1,5 +1,4 @@
 (() => {
-	let videoResources;
 	let resourceType;
 	subscribe('sfcc:ready', async ({ value, config, isDisabled, isRequired, dataLocale, displayLocale }) => {
 		console.log('cloudinary.video_selector_trigger::sfcc:ready', dataLocale, displayLocale, isDisabled, isRequired, value, config);
@@ -90,7 +89,7 @@
 			type: 'sfcc:breakout',
 			payload: {
 				id: 'breakout',
-				title: `Cloudinary Media Library (${resourceType})`,
+				title: `Cloudinary ${resourceType}`,
 			}
 		}, handleBreakoutClose);
 	}

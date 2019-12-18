@@ -11,11 +11,29 @@
 		function insertHandler(data) {
 			var asset = (data && data.assets && data.assets.length > 0) ? Object.assign(data.assets[0], { cloudName: config.cloudName }) : null
 			if (asset.resource_type !== config.type) {
+				emit({
+					type: 'sfcc:valid',
+					payload: {
+					  valid: false,
+					  message: 'Wrong asset type.'
+					}
+				  });
 				var root = document.getElementsByClassName('sfcc-ml-root')[0];
 				var error = document.createElement('div');
+				error.addEventListener('click', function(e) {
+					var tgt = e.target;
+					tgt.parentNode.removeChild(tgt);
+				})
+				error.className = 'cld-error';
 				error.innerHTML = 'Wrong asset type';
 				root.appendChild(error);
 			} else {
+				emit({
+					type: 'sfcc:valid',
+					payload: {
+					  valid: true,
+					}
+				  });
 				emit({
 					type: 'sfcc:value',
 					payload: asset
