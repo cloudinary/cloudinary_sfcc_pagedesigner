@@ -23,7 +23,7 @@
 	function imageTransform(option) {
 		const { version, secure_url, format } = option;
 		const arr = secure_url.split('v' + version); // Remove version number
-		arr.splice(1, 0, 'c_lpad,h_50,w_50'); // Inject settings
+		arr.splice(1, 0, 'c_lpad,h_150,w_150'); // Inject settings
 		return arr.join('').replace('.' + format, '.jpg');
 	}
 

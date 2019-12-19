@@ -37,6 +37,15 @@
             "solid"
           ],
           "default_value": "none"
+        },
+        {
+        "id": "overlay",
+        "name": "Image Overlay",
+        "type": "custom",
+        "required": false,
+        "editor_definition": {
+          "type": "cloudinary.overlay_selector"
+        }
         }
      ]
     }

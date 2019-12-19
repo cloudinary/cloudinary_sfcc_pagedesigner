@@ -72,6 +72,11 @@
 			show
 		);
 
+		emit({
+			type: 'sfcc:test',
+			payload: "test"
+		})
+
 	});
 
 	function obtainTemplate(viewport) {

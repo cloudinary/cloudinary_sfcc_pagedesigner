@@ -76,10 +76,13 @@ function callService(body, fileType, callType) {
   return cloudinaryResponse;
 };
 
-function getBreackpointsHard(asset) {
+function getBreackpointsHard(asset, overlay) {
   var assetUrl = getImageUrlFromAsset(asset);
   var fileName = getFileName(assetUrl);
   var baseUrl = getBaseUrlPart(assetUrl, fileName);
+  if (overlay && overlay.enable) {
+    baseUrl += buildOverlayUrlPart(overlay);
+  }
   var breakpoints = [1280, 768, 375];
   var brs = [];
   breakpoints.forEach(function(br) {
@@ -164,6 +167,10 @@ function getFileName(url) {
   return url.substr(url.lastIndexOf('/') + 1);
 }
 
+function buildOverlayUrlPart(overlay) {
+  return '/o_' + overlay.opacity + ',c_scale,g_' + overlay.position + ',l_' +overlay.id + ',w_' + overlay.scale;
+}
+
 module.exports.render = function (context) {
   let model = new HashMap();
   let viewmodel = {};
@@ -174,10 +181,13 @@ module.exports.render = function (context) {
   let val = context.content.asset_sel;
   if (val.secure_url) {
     var assetUrl = getImageUrlFromAsset(val);
-    viewmodel.breakpoints = getBreackpointsHard(context.content.asset_sel);
+    viewmodel.breakpoints = getBreackpointsHard(context.content.asset_sel, context.content.overlay);
     var globalPart = getImageSettingUrlPart();
     var fileName = getFileName(val.secure_url);
     var u = getBaseUrlPart(assetUrl, fileName);
+    if (context.content.overlay && context.content.overlay.enable) {
+      u =+ buildOverlayUrlPart(context.content.overlay);
+    }
     viewmodel.url = u + globalPart + fileName;
     viewmodel.placeholder = u + getPlaceholderImage(plType) + '/' + fileName;
   } else {

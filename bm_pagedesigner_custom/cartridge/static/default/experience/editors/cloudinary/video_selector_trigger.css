@@ -1,6 +1,5 @@
 .image_selector__item,
 .video_selector__item {
-	display: flex;
 	justify-content: flex-start;
 	align-items: center;
 	border: 1px #ccc solid;

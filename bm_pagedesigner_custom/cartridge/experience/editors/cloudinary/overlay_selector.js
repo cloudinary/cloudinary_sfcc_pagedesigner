@@ -1,13 +1,12 @@
  'use strict';
 
-var Resource = require('dw/web/Resource');
+var PageMgr = require('dw/experience/PageMgr');
 var HashMap = require('dw/util/HashMap');
-var Site = require('dw/system/Site');
-var cloudinary_api = require('~/cartridge/scripts/cloudinary/cloudinary_api');
 
 module.exports.init = function (editor) {
-    var jsonString = JSON.stringify(cloudinary_api.getImageJSON());
-
-    editor.configuration.put('fileData', jsonString);
+	var conf = new HashMap();
+	conf.put('type', 'image');
+	var videoSelector = PageMgr.getCustomEditor('cloudinary.video_selector', conf);
+	editor.dependencies.put('breakout', videoSelector);
 }
 
