@@ -35,14 +35,15 @@
 
 <!-- Uncomment this to expose the raw view model for debugging: -->
 <script>
-    console.log('${JSON.stringify(pdict.viewmodel.breakpoints.sizes)}');
+    console.log('vars:  ' + '${JSON.stringify(pdict.viewmodel.breakpoints)}');
 </script>
 
 <isif condition="${pdict.viewmodel.type == 'image'}">
     <div class="cloudinary-media-library-container sfdc-component-mock sfdc-component-assets-cloudinary">
         <img class="ml-image" src="${pdict.viewmodel.placeholder}"  data-real-url="${pdict.viewmodel.breakpoints.src}"
         sizes="${pdict.viewmodel.breakpoints.sizes}"
-        srcset="${pdict.viewmodel.breakpoints.srcset}"
+        srcset="${pdict.viewmodel.breakpoints.plSrcset}"
+        data-real-srcset="${pdict.viewmodel.breakpoints.srcset}"
         alt="${pdict.viewmodel.altText}"
         style="max-width: 100%">
     </div>

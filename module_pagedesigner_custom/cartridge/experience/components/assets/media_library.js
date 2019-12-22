@@ -76,21 +76,23 @@ function callService(body, fileType, callType) {
   return cloudinaryResponse;
 };
 
-function getBreackpointsHard(asset, overlay) {
-  var assetUrl = getImageUrlFromAsset(asset);
-  var fileName = getFileName(assetUrl);
-  var baseUrl = getBaseUrlPart(assetUrl, fileName);
-  if (overlay && overlay.enable) {
-    baseUrl += buildOverlayUrlPart(overlay);
-  }
+function getBreackpointsHard(baseUrl, fileName, plType) {
+  var plPart = (plType !== 'none') ? getPlaceholderImage(plType) : null;
   var breakpoints = [1280, 768, 375];
   var brs = [];
+  var placeholderBrs =[];
   breakpoints.forEach(function(br) {
-    brs.push(baseUrl + '/c_scale,w_' + br + '/' + fileName + ' ' + br + 'w'); 
+    brs.push(baseUrl + '/c_scale,w_' + br + '/' + fileName + ' ' + br + 'w');
+    if (plPart) {
+      placeholderBrs.push(baseUrl + plPart + '/c_scale,w_' + br + '/' + fileName + ' ' + br + 'w');
+    } else {
+      brs.push(baseUrl + '/c_scale,w_' + br + '/' + fileName + ' ' + br + 'w');
+    }
   });
   return {
     sizes: '(max-width: 1280px) 100vw 1280px',
     srcset: brs.join(','),
+    plSrcset: placeholderBrs.join(','),
     src: baseUrl + '/c_scale,w_1280/' + fileName
   }
 }
@@ -151,16 +153,16 @@ function getImageUrlFromAsset(asset) {
 
 function getPlaceholderImage(type) {
   var placeholderImageOptions = {
-    'vectorize': 'e_vectorize/q_1',
-    'pixelate': 'e_pixelate/q_1/f_auto',
-    'blur': 'e_blur:2000/q_1/f_auto',
-    'solid': 'w_iw_div_2/ar_1/c_pad/b_auto/c_crop/w_10/h_10/g_north_east/w_iw/h_ih/c_fill/f_auto/q_auto'
+    'vectorize': '/e_vectorize/q_1',
+    'pixelate': '/e_pixelate/q_1/f_auto',
+    'blur': '/e_blur:2000/q_1/f_auto',
+    'solid': '/w_iw_div_2/ar_1/c_pad/b_auto/c_crop/w_10/h_10/g_north_east/w_iw/h_ih/c_fill/f_auto/q_auto'
   }
   return placeholderImageOptions[type] || placeholderImageOptions['blur'];
 }
 
 function getBaseUrlPart(url, fileName) {
-  return url.replace(/v[0-9]+[\/]/, '').replace(fileName, '');
+  return url.replace(/v[0-9]+[\/]/, '').replace(fileName, '').slice(0, -1);
 }
 
 function getFileName(url) {
@@ -168,28 +170,28 @@ function getFileName(url) {
 }
 
 function buildOverlayUrlPart(overlay) {
-  return '/o_' + overlay.opacity + ',c_scale,g_' + overlay.position + ',l_' +overlay.id + ',w_' + overlay.scale;
+  return '/o_' + overlay.opacity + ',c_scale,g_' + overlay.position + ',l_' +overlay.id + ',w_' + overlay.scale + '/';
 }
-
 module.exports.render = function (context) {
   let model = new HashMap();
   let viewmodel = {};
   let plType = context.content.placeholderImageType;
   viewmodel.type = 'image';
-  var globalPart = getImageSettingUrlPart();
   viewmodel.altText = context.content.alt || 'alt';
   let val = context.content.asset_sel;
   if (val.secure_url) {
-    var assetUrl = getImageUrlFromAsset(val);
-    viewmodel.breakpoints = getBreackpointsHard(context.content.asset_sel, context.content.overlay);
     var globalPart = getImageSettingUrlPart();
+    var assetUrl = getImageUrlFromAsset(val);
     var fileName = getFileName(val.secure_url);
-    var u = getBaseUrlPart(assetUrl, fileName);
+    var baseUrl = getBaseUrlPart(assetUrl, fileName);
     if (context.content.overlay && context.content.overlay.enable) {
-      u =+ buildOverlayUrlPart(context.content.overlay);
+      baseUrl += buildOverlayUrlPart(context.content.overlay);
+    } else {
+      baseUrl += '/';
     }
-    viewmodel.url = u + globalPart + fileName;
-    viewmodel.placeholder = u + getPlaceholderImage(plType) + '/' + fileName;
+    baseUrl += globalPart;
+    viewmodel.breakpoints = getBreackpointsHard(baseUrl, fileName, plType);
+    viewmodel.placeholder = (plType !== 'none') ? baseUrl + getPlaceholderImage(plType) + '/' + fileName : viewmodel.breakpoints.src;
   } else {
     viewmodel.url = 'https://cloudinary-res.cloudinary.com/image/upload/c_scale,fl_attachment,w_100/v1/logo/for_white_bg/cloudinary_icon_for_white_bg.png"';
   }
