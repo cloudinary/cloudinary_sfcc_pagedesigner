@@ -1,6 +1,6 @@
 {
-  "name": "Media Library Videos",
-  "description": "Cloudinary Media Library Video",
+  "name": "Cloudinary Videos",
+  "description": "Cloudinary Videos",
   "group": "Cloudinary",
   "attribute_definition_groups": [
     {

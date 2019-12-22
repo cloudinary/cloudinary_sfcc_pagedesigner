@@ -170,7 +170,7 @@ function getFileName(url) {
 }
 
 function buildOverlayUrlPart(overlay) {
-  return '/o_' + overlay.opacity + ',c_scale,g_' + overlay.position + ',l_' +overlay.id + ',w_' + overlay.scale + '/';
+  return '/o_' + overlay.opacity + ',c_scale,g_' + overlay.position + ',l_' +overlay.id + ',w_' + overlay.scale + ',y_' + overlay.yOffset + ',x_' + overlay.xOffset +'/';
 }
 module.exports.render = function (context) {
   let model = new HashMap();

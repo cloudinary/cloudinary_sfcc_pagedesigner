@@ -11,9 +11,9 @@
 
     // Create an image URL with formatting options for thumbnails
     const imageTransform = function ({ public_id, version, secure_url, settings, format }) {
-		const arr = secure_url.split('v' + version); // Remove version number
-		arr.splice(1, 0, 'c_lpad,h_50,w_50'); // Inject settings
-		return arr.join('').replace('.' + format, '.jpg');
+        const arr = secure_url.split('v' + version); // Remove version number
+        arr.splice(1, 0, 'c_lpad,h_50,w_50'); // Inject settings
+        return arr.join('').replace('.' + format, '.jpg');
     }
 
     // Create HTML for a checkbox
@@ -110,7 +110,7 @@
         return str;
     }
 
-    const overlaySelectorTemplate = function (value, checked_overlay, value_opacity, value_width, value_position) {
+    const overlaySelectorTemplate = function (value, checked_overlay, value_opacity, value_width, value_position, yOffset, xOffset) {
         const template = document.createElement('template');
         var str = '';
         var selected = '';
@@ -129,6 +129,8 @@
         str += '<div class="video_selector__options__row">';
         str += '<div class="video_selector__options__col" style="width: 11rem;">';
         str += alignmentSelector('video_options_overlay_position', 'Overlay Position', value_position);
+        str += inputField('options_overlay_y_offset', 'overly postion y offset', yOffset);
+        str += inputField('options_overlay_x_offset', 'overly postion x offset', xOffset);
         str += '</div>';
         str += '<div class="video_selector__options__col">';
         str += inputField('video_options_overlay_opacity', 'Opacity (0 - 100)', value_opacity);
@@ -150,6 +152,8 @@
         var overlay_opacity = $('#video_options_overlay_opacity').val();
         var overlay_scale = $('#video_options_overlay_scale').val();
         var overlay_position = $('.video_selector__alignment .aligner__col.selected').data('value');
+        var overlay_y_offset = $('#options_overlay_y_offset').val();
+        var overlay_x_offset = $('#options_overlay_x_offset').val();
 
         console.log(
             'overlay_id', overlay_id + '\n',
@@ -167,6 +171,8 @@
                 opacity: overlay_opacity,
                 scale: overlay_scale,
                 position: overlay_position,
+                yOffset: overlay_y_offset,
+                xOffset: overlay_x_offset,
                 asset: document.asset
 
             }
@@ -183,40 +189,41 @@
         var value_width = 300;
         var value_position = 'north_east';
         var asset = null;
+        var yOffset = 0;
+        var xOffset = 0;
         if (typeof value === 'object' && value !== null) {
             selected_overlay_id = value.id != undefined ? value.id : selected_overlay_id;
             checked_overlay = value.enable != undefined ? value.enable : checked_overlay;
             value_opacity = value.opacity != undefined ? value.opacity : value_opacity;
             value_width = value.scale != undefined ? value.scale : value_width;
             value_position = value.position != undefined ? value.position : value_position;
-            asset = value.asset != undefined ? value.asset : null;
+            asset = value.asset != undefined ? value.asset : asset;
+            yOffset = value.yOffset != undefined ? value.yOffset : yOffset;
+            xOffset = value.xOffset != undefined ? value.xOffset : xOffset;
         }
 
-        var template = overlaySelectorTemplate(asset, checked_overlay, value_opacity, value_width, value_position);
+        var template = overlaySelectorTemplate(asset, checked_overlay, value_opacity, value_width, value_position, yOffset, xOffset);
         var clone = document.importNode(template.content, true);
         document.body.appendChild(clone);
-
-        /*         // Video Selection event
-                $('.video_selector__container .video_selector__item').on('click', function(e) {
-                    $('.video_selector__container .video_selector__item').removeClass('selected');
-                    $(this).addClass('selected');
-        
-                    emitUpdatedValues();
-                }); */
         var selectButton = document.getElementsByClassName('ml-breakout')[0];
         if (selectButton) {
-        selectButton.addEventListener('click', function (e) {
-            emit({
-                type: 'sfcc:breakout',
-                payload: {
-                    id: 'breakout',
-                    title: 'Cloudinary Overlay image selector'
-                }
-            }, handleBreakoutClose)
-        })
-    }
-
-
+            selectButton.addEventListener('click', function (e) {
+                emit({
+                    type: 'sfcc:breakout',
+                    payload: {
+                        id: 'breakout',
+                        title: 'Cloudinary Overlay image selector'
+                    }
+                }, handleBreakoutClose)
+            })
+        }
+        var inputs = document.getElementsByClassName('video_selector__input__input');
+        if (inputs && inputs.length > 0) {
+            for (var i = 0; i < inputs.length; i++) {
+                var el = inputs[i];
+                el.addEventListener('blur', emitUpdatedValues);
+            }
+        }
         // Checkbox change events
         $('#video_options_overlay_enable').on('change', function (e) {
             var overlay_enable = $('#video_options_overlay_enable').is(":checked");
@@ -242,4 +249,3 @@
 
     });
 })();
-
