@@ -8,6 +8,7 @@ var currentSite = require('dw/system/Site').getCurrent();
 var Logger = require('dw/system').Logger.getLogger('Cloudinary', '');
 var LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
 var cloudName = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCloudName');
+var hash =  require('~/cartridge/experience/components/assets/sha1');
 
 
 
@@ -21,8 +22,48 @@ var cloudinaryService = LocalServiceRegistry.createService("cloudinaryPageDesign
     return client;
   }
 });
+
 var serviceURL = cloudinaryService.URL;
+
 function addSignatureToBody(body) {
+  var hasher = new MessageDigest(MessageDigest.DIGEST_SHA_1);
+  var fieldsArray = [];
+  for (var i in body) {
+    if (body[i] == '' || body[i] == null) {
+      delete body[i];
+    }
+    else if(i === "responsive_breakpoints") {
+      fieldsArray.push(i + '=' + generate_responsive_breakpoints_string(body[i]));
+    }
+    else if(Array.isArray(body[i])) {
+      fieldsArray.push(i + '=' + body[i].map(function(el) {
+        return JSON.stringify(el);
+      }).join(','));
+    }
+    else {
+      fieldsArray.push(i + '=' + body[i]);
+    }
+  }
+  var fields = fieldsArray.sort().join('&');
+  var toSignStr = fields + currentSite.getCustomPreferenceValue('CloudinaryPageDesignerSecretKey');
+  var toSign = new Bytes(toSignStr);
+  var signature = Encoding.toHex(hasher.digestBytes(toSign));
+  return signature;
+};
+
+function generate_responsive_breakpoints_string(breakpoints) {
+    if (breakpoints == null) {
+        return null;
+    }
+    breakpoints = breakpoints;
+    if (!Array.isArray(breakpoints)) {
+        breakpoints = [breakpoints];
+    }
+    return JSON.stringify(breakpoints);
+}
+
+
+/* function addSignatureToBody(body) {
   var hasher = new MessageDigest(MessageDigest.DIGEST_SHA_1);
   var fieldsArray = [];
 
@@ -42,7 +83,7 @@ function addSignatureToBody(body) {
   var toSign = new Bytes(fields + currentSite.getCustomPreferenceValue('CloudinaryPageDesignerSecretKey'), "UTF-8");
   var signature = Encoding.toHex(hasher.digestBytes(toSign));
   return signature;
-};
+}; */
 
 function callService(body, fileType, callType) {
   var serviceResponse,
@@ -76,9 +117,9 @@ function callService(body, fileType, callType) {
   return cloudinaryResponse;
 };
 
-function getBreackpointsHard(baseUrl, fileName, plType) {
+function getBreackpointsObj(baseUrl, fileName, plType, breakpoints) {
   var plPart = (plType !== 'none') ? getPlaceholderImage(plType) : null;
-  var breakpoints = [1280, 768, 375];
+  //var breakpoints = [1280, 768, 375];
   var brs = [];
   var placeholderBrs =[];
   breakpoints.forEach(function(br) {
@@ -98,32 +139,42 @@ function getBreackpointsHard(baseUrl, fileName, plType) {
 }
 
 function getBreackpoints(publicId) {
-  var b = new HashMap();
-  b.put('publicId', publicId);
-  b.put('timestamp', (Date.now() / 1000).toFixed);
-  b.put('type', 'upload');
-  var rp = new HashMap();
-  rp.put('create_derived', false);
-  rp.put('bytes_step', 20000);
-  rp.put('min_width', 200);
-  rp.put('max_width', 1000);
-  rp.put('max_images', 20);
-  b.put('responsive_breakpoints', rp);
   var body = {
-    timestamp: (Date.now() / 1000).toFixed(),
-    public_id: publicId,
-    type: 'upload',
+    timestamp:(Date.now() / 1000).toFixed(),
+    public_id:publicId,
+    type:'upload',
     responsive_breakpoints: [{
-      bytes_step: 20000,
-      min_width: 200,
-      max_width: 1000,
-      max_images: 20
+      bytes_step:20000,
+      max_width:1000,
+      max_images:20,
+      min_width:200
     }]
   }
   body.signature = addSignatureToBody(body);
+  body.responsive_breakpoints = generate_responsive_breakpoints_string(body.responsive_breakpoints);
   body.api_key = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerAPIkey');
   var res = callService(body, 'image', 'explicit');
-  return res;
+  if (res.ok) {
+    var result = JSON.parse(res.message);
+    return getBreackpointsFromResponse(result);
+  }
+  return [1280, 768, 375];
+}
+
+function getBreackpointsFromResponse(response) { 
+  if (response.responsive_breakpoints && response.responsive_breakpoints.length > 0) {
+    var resBreakpoints = [];
+    response.responsive_breakpoints.forEach(function (br) {
+      var breakpoints = br.breakpoints;
+      if (breakpoints && Array.isArray(breakpoints)) {
+        breakpoints.forEach(function (b) {
+          resBreakpoints.push(b.width);
+        })
+      }
+    });
+    return resBreakpoints;
+  }
+  return [1280, 768, 375];
 }
 
 function getImageSettingUrlPart() {
@@ -180,6 +231,7 @@ module.exports.render = function (context) {
   viewmodel.altText = context.content.alt || 'alt';
   let val = context.content.asset_sel;
   if (val.secure_url) {
+    let brs = getBreackpoints(val.public_id);
     var globalPart = getImageSettingUrlPart();
     var assetUrl = getImageUrlFromAsset(val);
     var fileName = getFileName(val.secure_url);
@@ -190,7 +242,7 @@ module.exports.render = function (context) {
       baseUrl += '/';
     }
     baseUrl += globalPart;
-    viewmodel.breakpoints = getBreackpointsHard(baseUrl, fileName, plType);
+    viewmodel.breakpoints = getBreackpointsObj(baseUrl, fileName, plType, brs);
     viewmodel.placeholder = (plType !== 'none') ? baseUrl + getPlaceholderImage(plType) + '/' + fileName : viewmodel.breakpoints.src;
   } else {
     viewmodel.url = 'https://cloudinary-res.cloudinary.com/image/upload/c_scale,fl_attachment,w_100/v1/logo/for_white_bg/cloudinary_icon_for_white_bg.png"';
