@@ -29,7 +29,7 @@
           "id": "placeholderImageType",
           "name": "Plaseholder image type",
           "type": "enum",
-          "values":[
+          "values": [
             "none",
             "blur",
             "vectorize",
@@ -39,15 +39,24 @@
           "default_value": "none"
         },
         {
-        "id": "overlay",
-        "name": "Image Overlay",
-        "type": "custom",
-        "required": false,
-        "editor_definition": {
-          "type": "cloudinary.overlay_selector"
+          "id": "overlay",
+          "name": "Image Overlay",
+          "type": "custom",
+          "required": false,
+          "editor_definition": {
+            "type": "cloudinary.overlay_selector"
+          }
+        },
+        {
+          "id": "textOverlay",
+          "name": "Text Overlay",
+          "type": "custom",
+          "required": false,
+          "editor_definition": {
+            "type": "cloudinary.text_overlay_selector"
+          }
         }
-        }
-     ]
+      ]
     }
   ],
   "region_definitions": []

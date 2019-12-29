@@ -230,7 +230,7 @@ module.exports.render = function (context) {
   viewmodel.type = 'image';
   viewmodel.altText = context.content.alt || 'alt';
   let val = context.content.asset_sel;
-  if (val.secure_url) {
+  if (val && val.secure_url) {
     let brs = getBreackpoints(val.public_id);
     var globalPart = getImageSettingUrlPart();
     var assetUrl = getImageUrlFromAsset(val);
