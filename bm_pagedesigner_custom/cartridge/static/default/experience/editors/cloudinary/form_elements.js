@@ -78,7 +78,7 @@ window.formsEls = {
   <label class="slds-form-element__label" for="textarea-id-${id}">
     ${requiredStr}${label}</label>
   <div class="slds-form-element__control">
-    <textarea id="textarea-id-${id}" ${required ? 'required' : ''} data-propName="${propName}" class="slds-textarea" value="${value}"></textarea>
+    <textarea id="textarea-id-${id}" ${required ? 'required' : ''} data-propName="${propName}" class="slds-textarea">${value}</textarea>
   </div>
 </div>
         `

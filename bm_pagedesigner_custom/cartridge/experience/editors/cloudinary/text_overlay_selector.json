@@ -5,6 +5,7 @@
   "resources": {
     "scripts": [
       "/experience/editors/cloudinary/form_elements.js",
+      "https://unpkg.com/vanilla-picker@2",
       "/experience/editors/cloudinary/text_overlay.js"
     ],
     "styles": [

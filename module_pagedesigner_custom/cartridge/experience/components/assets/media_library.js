@@ -62,29 +62,6 @@ function generate_responsive_breakpoints_string(breakpoints) {
     return JSON.stringify(breakpoints);
 }
 
-
-/* function addSignatureToBody(body) {
-  var hasher = new MessageDigest(MessageDigest.DIGEST_SHA_1);
-  var fieldsArray = [];
-
-  for (var i in body) {
-    if (body[i] == '' || body[i] == null) {
-      delete body[i];
-    }
-    else if (Array.isArray(body[i])) {
-      fieldsArray.push(i + '=' + body[i].join(','));
-    }
-    else {
-      fieldsArray.push(i + '=' + body[i]);
-    }
-  }
-
-  var fields = fieldsArray.sort().join('&');
-  var toSign = new Bytes(fields + currentSite.getCustomPreferenceValue('CloudinaryPageDesignerSecretKey'), "UTF-8");
-  var signature = Encoding.toHex(hasher.digestBytes(toSign));
-  return signature;
-}; */
-
 function callService(body, fileType, callType) {
   var serviceResponse,
     cloudinaryResponse = {
@@ -117,24 +94,30 @@ function callService(body, fileType, callType) {
   return cloudinaryResponse;
 };
 
-function getBreackpointsObj(baseUrl, fileName, plType, breakpoints) {
+function getBreackpointsObj(baseUrl, imageOverlay, textOverlay, globalPart, fileName, plType, breakpoints) {
   var plPart = (plType !== 'none') ? getPlaceholderImage(plType) : null;
-  //var breakpoints = [1280, 768, 375];
   var brs = [];
   var placeholderBrs =[];
+  baseUrl += globalPart;
   breakpoints.forEach(function(br) {
-    brs.push(baseUrl + '/c_scale,w_' + br + '/' + fileName + ' ' + br + 'w');
-    if (plPart) {
-      placeholderBrs.push(baseUrl + plPart + '/c_scale,w_' + br + '/' + fileName + ' ' + br + 'w');
-    } else {
-      brs.push(baseUrl + '/c_scale,w_' + br + '/' + fileName + ' ' + br + 'w');
+    var brUrl = baseUrl + 'c_scale%2Cw_' + br + '/';
+    if (imageOverlay !== null) {
+      brUrl += imageOverlay + '/';
     }
+    if (textOverlay !== null) {
+      brUrl += textOverlay + '/';
+    }
+    brUrl += fileName + ' ' + br + 'w';
+    brs.push(brUrl);
+    if (plPart) {
+      placeholderBrs.push(brUrl + plPart + '/' + fileName + ' ' + br + 'w');
+    } 
   });
   return {
-    sizes: '(max-width: 1280px) 100vw 1280px',
+    sizes: '(max-width: ' + breakpoints[0] + 'px) 100vw, ' + breakpoints[0] + 'px',
     srcset: brs.join(','),
     plSrcset: placeholderBrs.join(','),
-    src: baseUrl + '/c_scale,w_1280/' + fileName
+    src: brs[0].split(' ' + breakpoints[0] + 'w')[0]
   }
 }
 
@@ -182,7 +165,7 @@ function getImageSettingUrlPart() {
   var format = currentSite.getCustomPreferenceValue('CloudinaryImageTransformationsFormat');
   var qulaty = currentSite.getCustomPreferenceValue('CloudinaryImageTransformationsQuality');
   var altText = currentSite.getCustomPreferenceValue('CloudinaryImageUseAltText');
-  var urlPart = '';
+  var urlPart = '/';
   if (dpr && dpr !== 'none') {
     urlPart += dpr + '/';
   }
@@ -221,8 +204,14 @@ function getFileName(url) {
 }
 
 function buildOverlayUrlPart(overlay) {
-  return '/o_' + overlay.opacity + ',c_scale,g_' + overlay.position + ',l_' +overlay.id + ',w_' + overlay.scale + ',y_' + overlay.yOffset + ',x_' + overlay.xOffset +'/';
+  return 'o_' + overlay.opacity + ',c_scale,g_' + overlay.position + ',l_' +overlay.id + ',w_' + overlay.scale + ',y_' + overlay.yOffset + ',x_' + overlay.xOffset;
 }
+function buildTextOverlay(textOverlay, width) { 
+  var fontStyle = textOverlay.fontStyle === 'none' ? '' : '_' + textOverlay.fontStyle;
+  var textWidth = textOverlay.width === 'auto' ? width : textOverlay.width
+  return 'w_' + textWidth +',c_fit,l_text:' + textOverlay.font + '_' + textOverlay.fontSize + fontStyle + ':' + encodeURIComponent(textOverlay.text) + ',y_' + textOverlay.yPos + ',x_' + textOverlay.xPos + ',co_rgb:' + textOverlay.color;
+}
+
 module.exports.render = function (context) {
   let model = new HashMap();
   let viewmodel = {};
@@ -236,18 +225,17 @@ module.exports.render = function (context) {
     var assetUrl = getImageUrlFromAsset(val);
     var fileName = getFileName(val.secure_url);
     var baseUrl = getBaseUrlPart(assetUrl, fileName);
+    var imageOverlay = null;
+    var textOverlay = null;
     if (context.content.overlay && context.content.overlay.enable) {
-      baseUrl += buildOverlayUrlPart(context.content.overlay);
-    } else {
-      baseUrl += '/';
+       imageOverlay = buildOverlayUrlPart(context.content.overlay);
     }
-    baseUrl += globalPart;
-    viewmodel.breakpoints = getBreackpointsObj(baseUrl, fileName, plType, brs);
+    if (context.content.textOverlay && context.content.textOverlay.enable && context.content.textOverlay.text) {
+      textOverlay = buildTextOverlay(context.content.textOverlay, val.width);
+    } 
+    viewmodel.breakpoints = getBreackpointsObj(baseUrl, imageOverlay, textOverlay, globalPart, fileName, plType, brs);
     viewmodel.placeholder = (plType !== 'none') ? baseUrl + getPlaceholderImage(plType) + '/' + fileName : viewmodel.breakpoints.src;
-  } else {
-    viewmodel.url = 'https://cloudinary-res.cloudinary.com/image/upload/c_scale,fl_attachment,w_100/v1/logo/for_white_bg/cloudinary_icon_for_white_bg.png"';
-  }
-
+  } 
   model.viewmodel = viewmodel;
   return new Template('experience/components/assets/media_library').render(model).text;
 
