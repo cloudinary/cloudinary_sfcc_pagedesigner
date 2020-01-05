@@ -47,6 +47,7 @@ const emitUpdatedValues = function () {
 }
 
 const overlayTemplate = function (value) {
+    value = value || {};
     const template = document.createElement('template');
     const fontStyles = {
         'none': 'Normal',
@@ -59,7 +60,7 @@ const overlayTemplate = function (value) {
     template.innerHTML = `
     <div class="slds-panel__body text-overlay">
     ${formsEls.getCheckbox('Enable Text Overlay', !!value.enable, 'enable')}
-    ${formsEls.getTextArea('Text To Overlay', value.text, true, 'text')}
+    ${formsEls.getTextArea('Text To Overlay', value.text || '', true, 'text')}
     ${formsEls.getTextField('font Famaly', (value.font || 'Arial'), true, 'font')}
     ${formsEls.getTextField('font size', '12', true, 'fontSize')}
     ${formsEls.getSelectField('Font Type', fontStyles, false, 'fontStyle', (value.fontStyle || 'normal'))}

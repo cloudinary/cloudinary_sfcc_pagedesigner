@@ -17,9 +17,38 @@
               "mlType": "video"
             }
           }
-        }
-     ]
-    }
-  ],
-  "region_definitions": []
-}
+        },
+        {
+          "id": "controls_showcontrols",
+          "name": "Show Controls",
+          "type": "boolean",
+          "default_value": true
+        },
+        {
+          "id": "controls_autoplay",
+          "name": "Auto Play",
+          "type": "boolean",
+          "default_value": false
+        },
+        {
+          "id": "controls_loopvideo",
+          "name": "Loop Video",
+          "type": "boolean",
+          "default_value": false
+        },
+        {
+          "id": "controls_theme",
+          "name": "Select Theme",
+          "type": "enum",
+          "values": [
+            "Dark",
+            "Light"
+          ],
+          "default_value": "Dark",
+          "required": false
+          }
+        ]
+      }
+    ],
+    "region_definitions": []
+  }

@@ -8,7 +8,6 @@
       "https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/plugins/CSSPlugin.min.js",
       "https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/easing/EasePack.min.js",
       "https://cld-qa-files-dev.s3.amazonaws.com/cms/all.js",
-      "/experience/editors/cloudinary/sha256.js",
       "/experience/editors/cloudinary/video_selector.js"
     ],
     "styles": [

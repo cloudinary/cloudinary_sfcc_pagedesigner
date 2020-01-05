@@ -8,9 +8,6 @@ var currentSite = require('dw/system/Site').getCurrent();
 var Logger = require('dw/system').Logger.getLogger('Cloudinary', '');
 var LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
 var cloudName = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCloudName');
-var hash =  require('~/cartridge/experience/components/assets/sha1');
-
-
 
 
 var cloudinaryService = LocalServiceRegistry.createService("cloudinaryPageDesignerAPI", {
@@ -161,18 +158,18 @@ function getBreackpointsFromResponse(response) {
 }
 
 function getImageSettingUrlPart() {
-  var dpr = currentSite.getCustomPreferenceValue('CloudinaryImageTransformationsDPR');
-  var format = currentSite.getCustomPreferenceValue('CloudinaryImageTransformationsFormat');
-  var qulaty = currentSite.getCustomPreferenceValue('CloudinaryImageTransformationsQuality');
+  var dpr = currentSite.getCustomPreferenceValue('CloudinaryImageTransformationsDPR').getValue();
+  var format = currentSite.getCustomPreferenceValue('CloudinaryImageTransformationsFormat').getValue();
+  var qulaty = currentSite.getCustomPreferenceValue('CloudinaryImageTransformationsQuality').getValue();
   var altText = currentSite.getCustomPreferenceValue('CloudinaryImageUseAltText');
   var urlPart = '/';
-  if (dpr && dpr !== 'none') {
+  if (dpr !== null && dpr !== 'none') {
     urlPart += dpr + '/';
   }
-  if (format && format !== 'none') {
+  if (format !== null && format !== 'none') {
     urlPart += format + '/';
   }
-  if (qulaty && qulaty !== 'none') {
+  if (qulaty !== null && qulaty !== 'none') {
     urlPart += qulaty + '/';
   }
   return urlPart;
@@ -200,7 +197,7 @@ function getBaseUrlPart(url, fileName) {
 }
 
 function getFileName(url) {
-  return url.substr(url.lastIndexOf('/') + 1);
+  return url.split(/v[0-9]+[\/]/, 2)[1];
 }
 
 function buildOverlayUrlPart(overlay) {
