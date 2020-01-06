@@ -224,7 +224,7 @@ module.exports.render = function (context) {
     var baseUrl = getBaseUrlPart(assetUrl, fileName);
     var imageOverlay = null;
     var textOverlay = null;
-    if (context.content.overlay && context.content.overlay.enable) {
+    if (context.content.overlay && context.content.overlay.enable && context.content.overlay.id) {
        imageOverlay = buildOverlayUrlPart(context.content.overlay);
     }
     if (context.content.textOverlay && context.content.textOverlay.enable && context.content.textOverlay.text) {

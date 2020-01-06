@@ -10,7 +10,7 @@
         {
           "id": "asset_sel",
           "type": "custom",
-          "required": false,
+          "required": true,
           "editor_definition": {
             "type": "cloudinary.video_selector_trigger",
             "configuration": {

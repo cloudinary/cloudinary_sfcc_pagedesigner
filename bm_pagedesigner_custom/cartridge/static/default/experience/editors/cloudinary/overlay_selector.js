@@ -182,7 +182,6 @@
     // Page Designer ready event
     subscribe('sfcc:ready', async ({ value, config, isDisabled, isRequired, dataLocale, displayLocale }) => {
         console.log('Overlay, sfcc:ready', dataLocale, displayLocale, value, config);
-
         var selected_overlay_id = null;
         var checked_overlay = false;
         var value_opacity = 100;
@@ -192,6 +191,8 @@
         var yOffset = 0;
         var xOffset = 0;
         if (typeof value === 'object' && value !== null) {
+            document.asset = document.asset || {};
+            document.asset.public_id = value.id;
             selected_overlay_id = value.id != undefined ? value.id : selected_overlay_id;
             checked_overlay = value.enable != undefined ? value.enable : checked_overlay;
             value_opacity = value.opacity != undefined ? value.opacity : value_opacity;

@@ -7,7 +7,7 @@
       "https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TweenLite.min.js",
       "https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/plugins/CSSPlugin.min.js",
       "https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/easing/EasePack.min.js",
-      "https://cld-qa-files-dev.s3.amazonaws.com/cms/all.js",
+      "https://media-library.cloudinary.com/global/all.js",
       "/experience/editors/cloudinary/video_selector.js"
     ],
     "styles": [
