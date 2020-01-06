@@ -22,19 +22,22 @@
           "id": "controls_showcontrols",
           "name": "Show Controls",
           "type": "boolean",
-          "default_value": true
+          "default_value": true,
+          "required": false
         },
         {
           "id": "controls_autoplay",
           "name": "Auto Play",
           "type": "boolean",
-          "default_value": false
+          "default_value": false,
+          "required": false
         },
         {
           "id": "controls_loopvideo",
           "name": "Loop Video",
           "type": "boolean",
-          "default_value": false
+          "default_value": false,
+          "required": false
         },
         {
           "id": "controls_theme",
@@ -46,7 +49,25 @@
           ],
           "default_value": "Dark",
           "required": false
+          },
+        {
+          "id": "overlay",
+          "name": "Image Overlay",
+          "type": "custom",
+          "required": false,
+          "editor_definition": {
+            "type": "cloudinary.overlay_selector"
           }
+        },
+        {
+          "id": "textOverlay",
+          "name": "Text Overlay",
+          "type": "custom",
+          "required": false,
+          "editor_definition": {
+            "type": "cloudinary.text_overlay_selector"
+          }
+        }
         ]
       }
     ],

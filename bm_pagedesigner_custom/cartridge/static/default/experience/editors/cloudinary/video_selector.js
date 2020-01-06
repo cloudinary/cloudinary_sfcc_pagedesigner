@@ -63,6 +63,7 @@
 		var ml = cloudinary.createMediaLibrary({
 			cloud_name: config.cloudName,
 			api_key: config.apiKey,
+			remove_header: true,
 			inline_container: 'div.sfcc-ml-root',
 			max_files: 1,
 			multiple: false,
