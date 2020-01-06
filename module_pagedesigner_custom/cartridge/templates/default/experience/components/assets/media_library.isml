@@ -39,7 +39,7 @@
 </script>
 
 <isif condition="${pdict.viewmodel.type == 'image'}">
-    <div class="cloudinary-media-library-container sfdc-component-mock sfdc-component-assets-cloudinary">
+    <div class="cloudinary-media-library-container sfdc-component-mock sfdc-component-assets-media_library-mock">
         <img class="ml-image" src="${pdict.viewmodel.placeholder}"  data-real-url="${pdict.viewmodel.breakpoints.src}"
         sizes="${pdict.viewmodel.breakpoints.sizes}"
         srcset="${pdict.viewmodel.breakpoints.plSrcset}"

@@ -1,5 +1,6 @@
 subscribe('sfcc:ready', async ({ value, config, isDisabled, isRequired, dataLocale, displayLocale }) => {
     console.log('Text Overlay, sfcc:ready', dataLocale, displayLocale, value, config);
+    value = value || {};
     var template = overlayTemplate(value);
     var clone = document.importNode(template.content, true);
     document.body.appendChild(clone);
@@ -47,7 +48,6 @@ const emitUpdatedValues = function () {
 }
 
 const overlayTemplate = function (value) {
-    value = value || {};
     const template = document.createElement('template');
     const fontStyles = {
         'none': 'Normal',
