@@ -43,7 +43,7 @@
 				<span class="video_selector__data__size">${asset.width} x ${asset.height}</span>
 			</div>
 			<div class="video_selector__action">
-				<button type="button" class="slds-button slds-button_neutral">Select</button>
+				<button type="button" class="slds-button slds-button_neutral ml-breakout">Select</button>
 			</div>
             </div>`;
         } else {

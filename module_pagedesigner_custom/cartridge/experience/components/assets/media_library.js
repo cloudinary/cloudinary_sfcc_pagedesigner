@@ -201,7 +201,7 @@ function getFileName(url) {
 }
 
 function buildOverlayUrlPart(overlay) {
-  return 'o_' + overlay.opacity + ',c_scale,g_' + overlay.position + ',l_' +overlay.id + ',w_' + overlay.scale + ',y_' + overlay.yOffset + ',x_' + overlay.xOffset;
+  return 'o_' + overlay.opacity + ',c_scale,g_' + overlay.position + ',l_' + overlay.id.replace('/', ':') + ',w_' + overlay.scale + ',y_' + overlay.yOffset + ',x_' + overlay.xOffset;
 }
 function buildTextOverlay(textOverlay, width) { 
   var fontStyle = textOverlay.fontStyle === 'none' ? '' : '_' + textOverlay.fontStyle;
