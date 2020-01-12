@@ -24,6 +24,26 @@ subscribe('sfcc:ready', async ({ value, config, isDisabled, isRequired, dataLoca
         }
         );
     picker.show();
+    new autoComplete({
+        data: {
+            src: document.gFontList
+        },
+        placeHolder: 'font name',
+        selector: '#text-input-id-1',
+        resultsList: {
+            render: true,
+            container: source => {
+          source.setAttribute("id", "autoComplete_list");
+            },
+            destination: document.querySelector("#text-input-id-1"),
+            position: "afterend",
+            element: "ul"
+        },
+        onSelection: function(feedback) {
+            document.querySelector("#text-input-id-1").value = feedback.selection.value;
+            emitUpdatedValues();
+        }
+    })
 
 });
 
@@ -62,7 +82,7 @@ const overlayTemplate = function (value) {
     ${formsEls.getCheckbox('Enable Text Overlay', !!value.enable, 'enable')}
     ${formsEls.getTextArea('Text To Overlay', value.text || '', true, 'text')}
     ${formsEls.getTextField('font Famaly', (value.font || 'Arial'), true, 'font')}
-    ${formsEls.getTextField('font size', value.size || '12', true, 'fontSize')}
+    ${formsEls.getTextField('font size', value.fontSize || '12', true, 'fontSize')}
     ${formsEls.getSelectField('Font Type', fontStyles, false, 'fontStyle', (value.fontStyle || 'normal'))}
     <div id="color-picker"></div>
     <input type="hidden" id="color-holder" data-propName="color" value="${value.color || '#000000'}"></input>

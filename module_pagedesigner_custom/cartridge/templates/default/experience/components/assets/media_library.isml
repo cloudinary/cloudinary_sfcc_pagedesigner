@@ -41,7 +41,7 @@
 <isif condition="${pdict.viewmodel.type == 'image'}">
     <div class="cloudinary-media-library-container sfdc-component-mock sfdc-component-assets-media_library-mock">
       <isif condition="${pdict.viewmodel.placeholder}">
-        <img class="component-media_library" src="${pdict.viewmodel.placeholder}"  data-real-url="${pdict.viewmodel.breakpoints.src}"
+        <img class="component-media_library ml-image" src="${pdict.viewmodel.placeholder}"  data-real-url="${pdict.viewmodel.breakpoints.src}"
         sizes="${pdict.viewmodel.breakpoints.sizes}"
         srcset="${pdict.viewmodel.breakpoints.plSrcset}"
         data-real-srcset="${pdict.viewmodel.breakpoints.srcset}"

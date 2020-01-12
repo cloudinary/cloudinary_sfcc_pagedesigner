@@ -97,17 +97,16 @@ function getBreackpointsObj(baseUrl, imageOverlay, textOverlay, globalPart, file
   var placeholderBrs =[];
   baseUrl += globalPart;
   breakpoints.forEach(function(br) {
-    var brUrl = baseUrl + 'c_scale%2Cw_' + br + '/';
+    var brUrl = baseUrl + 'c_scale,w_' + br + '/';
     if (imageOverlay !== null) {
       brUrl += imageOverlay + '/';
     }
     if (textOverlay !== null) {
       brUrl += textOverlay + '/';
     }
-    brUrl += fileName + ' ' + br + 'w';
-    brs.push(brUrl);
+    brs.push(encodeURI(brUrl + fileName) + ' ' + br + 'w');
     if (plPart) {
-      placeholderBrs.push(brUrl + plPart + '/' + fileName + ' ' + br + 'w');
+      placeholderBrs.push(encodeURI(brUrl + plPart + '/' + fileName) + ' ' + br + 'w');
     } 
   });
   return {
@@ -206,7 +205,7 @@ function buildOverlayUrlPart(overlay) {
 function buildTextOverlay(textOverlay, width) { 
   var fontStyle = textOverlay.fontStyle === 'none' ? '' : '_' + textOverlay.fontStyle;
   var textWidth = textOverlay.width === 'auto' ? width : textOverlay.width
-  return 'w_' + textWidth +',c_fit,l_text:' + textOverlay.font + '_' + textOverlay.fontSize + fontStyle + ':' + encodeURIComponent(textOverlay.text) + ',y_' + textOverlay.yPos + ',x_' + textOverlay.xPos + ',co_rgb:' + textOverlay.color;
+  return 'w_' + textWidth +',c_fit,l_text:' + textOverlay.font + '_' + textOverlay.fontSize + fontStyle + ':' + textOverlay.text + ',y_' + textOverlay.yPos + ',x_' + textOverlay.xPos + ',co_rgb:' + textOverlay.color;
 }
 
 module.exports.render = function (context) {
@@ -221,7 +220,7 @@ module.exports.render = function (context) {
     var globalPart = getImageSettingUrlPart();
     var assetUrl = getImageUrlFromAsset(val);
     var fileName = getFileName(val.secure_url);
-    var baseUrl = getBaseUrlPart(assetUrl, fileName);
+    var baseUrl = getBaseUrlPart(assetUrl, fileName); //.replace(/(^\w+:|^)\/\//, '');
     var imageOverlay = null;
     var textOverlay = null;
     if (context.content.overlay && context.content.overlay.enable && context.content.overlay.id) {
