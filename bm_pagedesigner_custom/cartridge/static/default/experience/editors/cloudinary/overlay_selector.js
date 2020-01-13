@@ -5,6 +5,7 @@
         if (type === 'sfcc:breakoutApply') {
             document.asset = value;
             document.getElementsByClassName('overlay-selector')[0].innerHTML = mlButton(value);
+            mlButtonListener();
             emitUpdatedValues();
         }
     }
@@ -178,6 +179,21 @@
         });
     }
 
+    const mlButtonListener = () => {
+        var selectButton = document.getElementsByClassName('ml-breakout')[0];
+        if (selectButton) {
+            selectButton.addEventListener('click', function (e) {
+                emit({
+                    type: 'sfcc:breakout',
+                    payload: {
+                        id: 'breakout',
+                        title: 'Cloudinary Overlay image selector'
+                    }
+                }, handleBreakoutClose)
+            })
+        }
+    }
+
     // Page Designer ready event
     subscribe('sfcc:ready', async ({ value, config, isDisabled, isRequired, dataLocale, displayLocale }) => {
         console.log('Overlay, sfcc:ready', dataLocale, displayLocale, value, config);
@@ -205,18 +221,7 @@
         var template = overlaySelectorTemplate(asset, checked_overlay, value_opacity, value_width, value_position, yOffset, xOffset);
         var clone = document.importNode(template.content, true);
         document.body.appendChild(clone);
-        var selectButton = document.getElementsByClassName('ml-breakout')[0];
-        if (selectButton) {
-            selectButton.addEventListener('click', function (e) {
-                emit({
-                    type: 'sfcc:breakout',
-                    payload: {
-                        id: 'breakout',
-                        title: 'Cloudinary Overlay image selector'
-                    }
-                }, handleBreakoutClose)
-            })
-        }
+        mlButtonListener();
         var inputs = document.getElementsByClassName('video_selector__input__input');
         if (inputs && inputs.length > 0) {
             for (var i = 0; i < inputs.length; i++) {

@@ -85,7 +85,7 @@ const overlayTemplate = function (value) {
     ${formsEls.getTextField('font size', value.fontSize || '12', true, 'fontSize')}
     ${formsEls.getSelectField('Font Type', fontStyles, false, 'fontStyle', (value.fontStyle || 'normal'))}
     <div id="color-picker"></div>
-    <input type="hidden" id="color-holder" data-propName="color" value="${value.color || '#000000'}"></input>
+    <input type="hidden" id="color-holder" data-propName="color" value="${value.color || '000000ff'}"></input>
     ${formsEls.getTextField('X position', value.xPos || 0, true, 'xPos')}
     ${formsEls.getTextField('Y position', value.yPos || 0, true, 'yPos')}
     ${formsEls.getTextField('Overlay width', value.width || 'auto', true, 'width')}

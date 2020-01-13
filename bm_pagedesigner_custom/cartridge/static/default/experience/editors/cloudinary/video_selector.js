@@ -46,7 +46,7 @@
 		}
 
 		var show = {};
-		if (value) {
+		if (value && value.id) {
 			show.asset = {
 				resource_type: value.resource_type,
 				type: value.type,
