@@ -19,13 +19,10 @@
 					}
 				  });
 				var root = document.getElementsByClassName('sfcc-ml-root')[0];
-				var error = document.createElement('div');
-				error.addEventListener('click', function(e) {
-					var tgt = e.target;
-					tgt.parentNode.removeChild(tgt);
+				var error = formsEls.htmlToElement(formsEls.getErrorToast('Wrong asset type.'));
+				error.querySelector('#btn-close').addEventListener('click', function(e) {
+					root.removeChild(error);
 				})
-				error.className = 'cld-error';
-				error.innerHTML = 'Wrong asset type';
 				root.appendChild(error);
 			} else {
 				emit({

@@ -89,7 +89,7 @@
 			type: 'sfcc:breakout',
 			payload: {
 				id: 'breakout',
-				title: `Cloudinary ${resourceType}`,
+				title: `Cloudinary ${resourceType}`
 			}
 		}, handleBreakoutClose);
 	}

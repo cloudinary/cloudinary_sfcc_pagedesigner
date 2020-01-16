@@ -153,10 +153,10 @@ body {
 }
 .cld-error {
 	position: absolute;
-	top: 50%;
+	top: 30%;
 	left: 50%;
-	border: 1px #ccc solid;
-	background-color: red;
-	width: 200px;
-	height: 200px;
+}
+
+.slds-modal > div > footer > button.slds-button.slds-button_brand {
+	display: none;
 }
