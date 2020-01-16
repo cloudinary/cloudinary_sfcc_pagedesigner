@@ -49,7 +49,7 @@
         style="max-width: 100%">
         </isif>
     </div>
-    <iselseif condition="${pdict.viewmodel.type == 'video'}">
+    <iselseif condition="${pdict.viewmodel.type == 'video' && pdict.viewmodel.id != null}">
         <video id="player-${pdict.viewmodel.id}" class="cld-video cld-video-player-skin-${pdict.viewmodel.theme}"
          data-cld-public-id="${pdict.viewmodel.public_id}"
          <isif condition="${pdict.viewmodel.transformations}">

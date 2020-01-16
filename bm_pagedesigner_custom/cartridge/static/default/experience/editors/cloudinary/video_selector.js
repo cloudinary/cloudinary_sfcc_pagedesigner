@@ -71,8 +71,8 @@
 		);
 
 		emit({
-			type: 'sfcc:test',
-			payload: "test"
+			type: 'sfcc:valid',
+			payload: false
 		})
 
 	});
