@@ -49,7 +49,35 @@
           ],
           "default_value": "Dark",
           "required": false
-          },
+        },
+        {
+          "id": "controls_mute",
+          "name": "Mute Video",
+          "type": "boolean",
+          "default_value": false,
+          "required": false
+        },
+        {
+          "id": "controls_no_volume",
+          "name": "Do Not Show Volume Controls",
+          "type": "boolean",
+          "default_value": false,
+          "required": false
+        },
+        {
+          "id": "controls_jump",
+          "name": "Show +/- 10sec control",
+          "type": "boolean",
+          "default_value": false,
+          "required": false
+        },
+        {
+          "id": "controls_no_fullscreen",
+          "name": "Do Not Allow Fullscreen",
+          "type": "boolean",
+          "default_value": false,
+          "required": false
+        },
         {
           "id": "overlay",
           "name": "Image Overlay",

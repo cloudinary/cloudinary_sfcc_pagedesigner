@@ -55,9 +55,16 @@
          <isif condition="${pdict.viewmodel.transformations}">
           data-cld-transformation="${pdict.viewmodel.transformations}"
          </isif>
-         ${pdict.viewmodel.showControles}
+         <isif condition="${pdict.viewmodel.jumpControls}">
+         data-cld-show-jump-controls="true"
+         </isif>
+         <isif condition="${pdict.viewmodel.controlBar}">
+         data-cld-control-bar="${pdict.viewmodel.controlBar}"
+         </isif>
+         ${pdict.viewmodel.showControls}
          ${pdict.viewmodel.autoplay}
          ${pdict.viewmodel.loop}
+         ${pdict.viewmodel.muted}
          >
         </video>
         <script>

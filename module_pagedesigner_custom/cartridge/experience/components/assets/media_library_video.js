@@ -111,10 +111,26 @@ module.exports.render = function (context) {
     var videoPlayerConf = getVideoTransfomations();
     viewmodel.url = val.secure_url;
     viewmodel.autoplay = (context.content.controls_autoplay) ? 'autopaly' : '';
-    viewmodel.showControles = (context.content.controls_showcontrols) ? 'controls' : '';
+    viewmodel.showControls = (context.content.controls_showcontrols) ? 'controls' : '';
     viewmodel.loop = (context.content.controls_loopvideo) ? 'loop' : '';
+    viewmodel.muted = (context.content.controls_loopvideo) ? 'muted' : '';
+    viewmodel.jumpControls = context.content.controls_jump;
     viewmodel.theme = context.content.controls_theme.toLowerCase();
     viewmodel.cloudName = val.cloudName;
+    var controlBar = null;
+    if (context.content.controls_no_fullscreen === true) {
+      controlBar = {};
+      controlBar.fullscreenToggle = false;
+    }
+    if (context.content.controls_no_volume === true) {
+      if (controlBar == null) {
+        controlBar = {};
+      }
+      controlBar.volumePanel = false;
+    }
+    if (controlBar !== null) {
+      viewmodel.controlBar = JSON.stringify(controlBar);
+    }
     if (context.content.overlay && context.content.overlay.enable && context.content.overlay.id) {
       var imageOverlay = buildImageOverlay(context.content.overlay);
       if (!videoPlayerConf.transformations) {
