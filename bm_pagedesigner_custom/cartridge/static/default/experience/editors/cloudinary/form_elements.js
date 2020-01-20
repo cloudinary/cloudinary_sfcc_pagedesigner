@@ -108,11 +108,67 @@ xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="close"><path d="M14.3
 </div>
     `
   },
+  getSlider: function(label, value, min, max, classes) {
+    var classesStr = Array.isArray(classes) ? classes.join(' ') : classes || '';
+    var id = window.sliderIdNum + 1 || 1;
+    window.sliderIdNum = id;
+    return `<div class="slds-form-element ${classesStr}">
+      <label class="slds-form-element__label" for="slider-id-${id}">
+      <span class="slds-slider-label">
+      <span class="slds-slider-label__label">${label}</span>
+      <span class="slds-slider-label__range">${min} - ${max}</span>
+      </span>
+      </label>
+      <div class="slds-form-element__control">
+      <div class="slds-slider">
+      <input type="range" id="slider-id-${id}" class="slds-slider__range" value="${value}" />
+      <span class="slds-slider__value" aria-hidden="true">${value}</span>
+      </div>
+      </div>
+      </div>`
+
+  },
+  getRadioGroup: function(label, value, options, groupName, classes) {
+    return `
+    <fieldset class="slds-form-element">
+  <legend class="slds-form-element__legend slds-form-element__label">${label}</legend>
+  <div class="slds-form-element__control">
+    <div class="slds-radio_button-group">
+    ${options.map((option, i) =>
+      `<span class="slds-button slds-radio_button">
+      <input type="radio" name="${groupName}" id="${option}-${i}" value="${option}" />
+      <label class="slds-radio_button__label" for="${option}-${i}">
+        <span class="slds-radio_faux">${option}</span>
+      </label>
+    </span>`).join('')}
+    </div>
+  </div>
+</fieldset>
+    `;
+
+  },
   htmlToElement: function(html) {
     var template = document.createElement('template');
     html = html.trim(); // Never return a text node of whitespace as the result
     template.innerHTML = html;
     return template.content.firstChild;
+},
+openMl: function(type) {
+  emit({
+    type: 'sfcc:breakout',
+    payload: {
+      id: 'breakout',
+      title: `Cloudinary ${type}`
+    }
+  }, formsEls.handleBreakoutClose);
+},
+handleBreakoutClose: function( {type, value }) {
+  if (type === 'sfcc:breakoutApply') {
+    emit({
+			type: 'sfcc:value',
+			payload: value
+		});
+  } 
 }
 }
 

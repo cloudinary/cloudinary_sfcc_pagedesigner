@@ -19,6 +19,22 @@
           }
         },
         {
+          "id": "poster_sel",
+          "type": "custom",
+          "required": true,
+          "editor_definition": {
+            "type": "cloudinary.radio_group",
+            "configuration": {
+              "label": "Video Poster",
+              "options": {"Auto": "emit", "First Frame": "emit", "Custom": "openMl"},
+              "groupName": "poster",
+              "defaultVal": "Auto",
+              "mlType": "image"
+            }
+          }
+        },
+
+        {
           "id": "controls_showcontrols",
           "name": "Show Controls",
           "type": "boolean",
@@ -51,7 +67,7 @@
           "required": false
         },
         {
-          "id": "controls_mute",
+          "id": "controls_muted",
           "name": "Mute Video",
           "type": "boolean",
           "default_value": false,

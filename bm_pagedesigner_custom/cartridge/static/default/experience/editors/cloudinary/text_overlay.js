@@ -82,7 +82,7 @@ const overlayTemplate = function (value) {
     ${formsEls.getCheckbox('Enable Text Overlay', !!value.enable, 'enable')}
     ${formsEls.getTextArea('Text To Overlay', value.text || '', true, 'text')}
     ${formsEls.getTextField('font Famaly', (value.font || 'Arial'), true, 'font')}
-    ${formsEls.getTextField('font size', value.fontSize || '12', true, 'fontSize')}
+    ${formsEls.getTextField('font size', value.fontSize || '55', true, 'fontSize')}
     ${formsEls.getSelectField('Font Type', fontStyles, false, 'fontStyle', (value.fontStyle || 'normal'))}
     <div id="color-picker"></div>
     <input type="hidden" id="color-holder" data-propName="color" value="${value.color || '000000ff'}"></input>
