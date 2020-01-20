@@ -207,7 +207,7 @@
         var xOffset = 0;
         if (typeof value === 'object' && value !== null) {
             document.asset = value.asset || {};
-            document.asset.public_id = value.asset.public_id || value.id;
+            document.asset.public_id = (value.asset && value.asset.public_id) ? value.asset.public_id : value.id;
             selected_overlay_id = value.id != undefined ? value.id : selected_overlay_id;
             checked_overlay = value.enable != undefined ? value.enable : checked_overlay;
             value_opacity = value.opacity != undefined ? value.opacity : value_opacity;
