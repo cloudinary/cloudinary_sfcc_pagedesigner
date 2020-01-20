@@ -75,6 +75,16 @@ function idSafeString(str) {
   return 'id' + str.toLowerCase().replace(/[^a-zA-Z0-9-:\.]/, '');
 }
 
+function randomString(length) {
+  var result           = '';
+  var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+  for ( var i = 0; i < length; i++ ) {
+     result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+
 function buildImageOverlay(conf) {
   return {
     overlay: conf.id,
@@ -107,10 +117,10 @@ module.exports.render = function (context) {
   let val = context.content.asset_sel || {};
   if (val.secure_url) {
     viewmodel.public_id = val.public_id;
-    viewmodel.id = idSafeString(val.public_id);
+    viewmodel.id = idSafeString(val.public_id + randomString(12));
     var videoPlayerConf = getVideoTransfomations();
     viewmodel.url = val.secure_url;
-    viewmodel.autoplay = (context.content.controls_autoplay) ? 'autopaly' : '';
+    viewmodel.autoplay = (context.content.controls_autoplay) ? 'autoplay' : '';
     viewmodel.showControls = (context.content.controls_showcontrols) ? 'controls' : '';
     viewmodel.loop = (context.content.controls_loopvideo) ? 'loop' : '';
     viewmodel.muted = (context.content.controls_muted) ? 'muted' : '';
@@ -119,12 +129,12 @@ module.exports.render = function (context) {
     viewmodel.cloudName = val.cloudName;
     var controlBar = null;
     if (context.content.controls_no_fullscreen === true) {
-      controlBar = {};
+      controlBar = {pictureInPictureToggle: false};
       controlBar.fullscreenToggle = false;
     }
     if (context.content.controls_no_volume === true) {
       if (controlBar == null) {
-        controlBar = {};
+        controlBar = {pictureInPictureToggle: false};
       }
       controlBar.volumePanel = false;
     }

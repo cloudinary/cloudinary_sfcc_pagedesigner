@@ -21,7 +21,7 @@
         {
           "id": "poster_sel",
           "type": "custom",
-          "required": true,
+          "required": false,
           "editor_definition": {
             "type": "cloudinary.radio_group",
             "configuration": {

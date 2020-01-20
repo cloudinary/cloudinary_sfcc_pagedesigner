@@ -27,7 +27,7 @@
         },
         {
           "id": "placeholderImageType",
-          "name": "Plaseholder image type",
+          "name": "Placeholder image type",
           "type": "enum",
           "values": [
             "none",
