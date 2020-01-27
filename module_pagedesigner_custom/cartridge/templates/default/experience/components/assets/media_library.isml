@@ -35,7 +35,7 @@
 
 <!-- Uncomment this to expose the raw view model for debugging: -->
 <script>
-    console.log('vars:  ' + '${JSON.stringify(pdict.viewmodel.videoPlayerConf.transformations)}');
+    console.log('vars:  ' + '${JSON.stringify(JSON.parse(pdict.viewmodel))}');
 </script>
 
 <isif condition="${pdict.viewmodel.type == 'image'}">

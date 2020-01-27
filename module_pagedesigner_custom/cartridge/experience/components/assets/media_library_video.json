@@ -33,7 +33,6 @@
             }
           }
         },
-
         {
           "id": "controls_showcontrols",
           "name": "Show Controls",
@@ -110,6 +109,15 @@
           "required": false,
           "editor_definition": {
             "type": "cloudinary.text_overlay_selector"
+          }
+        }, 
+        {
+          "id": "poc",
+          "name": "Poc",
+          "type": "custom",
+          "required": false,
+          "editor_definition": {
+            "type": "cloudinary.video_studio"
           }
         }
         ]

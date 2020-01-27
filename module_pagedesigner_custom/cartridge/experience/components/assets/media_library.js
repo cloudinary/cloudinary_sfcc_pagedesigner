@@ -8,6 +8,7 @@ var currentSite = require('dw/system/Site').getCurrent();
 var Logger = require('dw/system').Logger.getLogger('Cloudinary', '');
 var LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
 var cloudName = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCloudName');
+var PageRenderHelper = require('*/cartridge/experience/utilities/PageRenderHelper.js');
 
 
 var cloudinaryService = LocalServiceRegistry.createService("cloudinaryPageDesignerAPI", {
