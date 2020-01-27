@@ -29,6 +29,14 @@
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
             </attribute-definition>
+            <attribute-definition attribute-id="CloudinaryPageDesignerUseSha256">
+                <display-name xml:lang="x-default">Use SHA-256</display-name>
+                <description xml:lang="x-default">Use SHA-256 to sign calls to Cloudinary</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
             <attribute-definition attribute-id="CloudinaryPageDesignerSecretKey">
                 <display-name xml:lang="x-default">Cloudinary API Secret</display-name>
                 <description xml:lang="x-default">The API Secret of your Cloudinary account</description>
@@ -273,6 +281,7 @@
                 <attribute attribute-id="CloudinaryPageDesignerCNAME"/>
                 <attribute attribute-id="CloudinaryPageDesignerAPIkey"/>
                 <attribute attribute-id="CloudinaryPageDesignerSecretKey"/>
+                <attribute attribute-id="CloudinaryPageDesignerUseSha256"/>
                 <attribute attribute-id="CloudinaryPageDesignerTag"/>
                 <attribute attribute-id="CloudinaryImageTransformationsDPR"/>
                 <attribute attribute-id="CloudinaryImageTransformationsFormat"/>

@@ -24,7 +24,13 @@ var cloudinaryService = LocalServiceRegistry.createService("cloudinaryPageDesign
 var serviceURL = cloudinaryService.URL;
 
 function addSignatureToBody(body) {
-  var hasher = new MessageDigest(MessageDigest.DIGEST_SHA_1);
+  var hasher = null;
+  var useSha256 = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerUseSha256') === true;
+  if (useSha256) {
+    hasher = new MessageDigest(MessageDigest.DIGEST_SHA_256);
+  } else {
+    hasher = new MessageDigest(MessageDigest.DIGEST_SHA_1);
+  }
   var fieldsArray = [];
   for (var i in body) {
     if (body[i] == '' || body[i] == null) {
