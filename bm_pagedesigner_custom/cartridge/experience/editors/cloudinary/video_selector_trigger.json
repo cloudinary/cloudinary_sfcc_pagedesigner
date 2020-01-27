@@ -3,6 +3,7 @@
   "description": "Select a Cloudinary Asset",
   "resources": {
     "scripts": [
+      "/experience/editors/cloudinary/form_elements.js",
       "/experience/editors/cloudinary/video_selector_trigger.js"
     ],
     "styles": [

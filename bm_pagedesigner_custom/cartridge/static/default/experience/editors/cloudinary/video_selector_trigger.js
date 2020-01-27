@@ -3,20 +3,20 @@
 	subscribe('sfcc:ready', async ({ value, config, isDisabled, isRequired, dataLocale, displayLocale }) => {
 		console.log('cloudinary.video_selector_trigger::sfcc:ready', dataLocale, displayLocale, isDisabled, isRequired, value, config);
 		resourceType = config.mlType;
-		const template = obtainTemplate(value);
+		const template = obtainTemplate(value, resourceType);
 		const clone = document.importNode(template.content, true);
 		document.body.appendChild(clone);
 
 		// Apply event listeners
-		const buttonEl = document.querySelector('button');
+		const buttonEl = document.querySelector('.slds-file-selector__button');
 		const imgEl = document.querySelector(`.${resourceType}_selector__image img`);
 		buttonEl && buttonEl.addEventListener('click', triggerBreakout);
 		imgEl && imgEl.addEventListener('click', triggerBreakout);
 	});
 
-	function obtainTemplate(selectedResource) {
+	function obtainTemplate(selectedResource, resourceType) {
 		const template = document.createElement('template');
-		const markup = selectedResource ? obtainItemMarkup(selectedResource) : obtainDefaultMarkup();
+		const markup = selectedResource ? obtainItemMarkup(selectedResource) : obtainDefaultMarkup(resourceType);
 		template.innerHTML = `<div class="${resourceType}_selector__container">${markup}</div>`;
 		return template;
 	}
@@ -36,11 +36,8 @@
 		return asset.secure_url;
 	}
 
-	function obtainDefaultMarkup() {
-		return `<div style="display: flex; justify-content: space-between; align-items: center;">
-  <span>No ${resourceType} selected.</span>
-  <button type="button" class="slds-button slds-button_neutral">Select</button>
-</div>`;
+	function obtainDefaultMarkup(assetType) {
+		return formsEls.getMlTrigger(assetType);
 	}
 
 	function obtainItemMarkup(option) {

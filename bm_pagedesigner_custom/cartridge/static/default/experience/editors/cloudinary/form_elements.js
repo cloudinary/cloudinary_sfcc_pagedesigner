@@ -108,7 +108,7 @@ xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="close"><path d="M14.3
 </div>
     `
   },
-  getSlider: function(label, value, min, max, classes) {
+  getSlider: function (label, value, min, max, classes) {
     var classesStr = Array.isArray(classes) ? classes.join(' ') : classes || '';
     var id = window.sliderIdNum + 1 || 1;
     window.sliderIdNum = id;
@@ -128,7 +128,7 @@ xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="close"><path d="M14.3
       </div>`
 
   },
-  getRadioGroup: function(label, value, options, groupName, classes) {
+  getRadioGroup: function (label, value, options, groupName, classes) {
     return `
     <fieldset class="slds-form-element">
   <legend class="slds-form-element__legend slds-form-element__label">${label}</legend>
@@ -147,28 +147,46 @@ xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="close"><path d="M14.3
     `;
 
   },
-  htmlToElement: function(html) {
+  getMlTrigger: function (fileType, classes) {
+    return `
+    <div class="slds-form-element">
+<span class="slds-form-element__label" id="file-selector-primary-label">Choose ${fileType}</span>
+<div class="slds-form-element__control">
+<div class="slds-file-selector slds-file-selector_files">
+<div class="slds-file-selector__dropzone">
+<label class="slds-file-selector__body" for="file-upload-input-01" id="file-selector-secondary-label">
+<span class="slds-file-selector__button slds-button slds-button_neutral">
+<svg base-icon--prefix="slds-button__icon" class="slds-button__icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" viewBox="0 0 24 24"><path d="M21.2 6.5H10.8c-.7 0-1.3-.4-1.7-1L7.5 2.8c-.3-.6-.9-1-1.6-1H2.8c-1 0-1.9.9-1.9 1.9v16.6c0 1 .9 1.9 1.9 1.9h18.4c1 0 1.9-.9 1.9-1.9v-12c0-1-.9-1.8-1.9-1.8zm0-3.7H10.1c-.2 0-.3.2-.2.3l.8 1.2c.1.2.2.3.4.3h10.1c.5 0 1 .1 1.5.3.1.1.4-.1.4-.3 0-1-.9-1.8-1.9-1.8z"></path>
+            </svg>Choose ${fileType}</span>
+</label>
+</div>
+</div>
+</div>
+</div>
+    `
+  },
+  htmlToElement: function (html) {
     var template = document.createElement('template');
     html = html.trim(); // Never return a text node of whitespace as the result
     template.innerHTML = html;
     return template.content.firstChild;
-},
-openMl: function(type) {
-  emit({
-    type: 'sfcc:breakout',
-    payload: {
-      id: 'breakout',
-      title: `Cloudinary ${type}`
-    }
-  }, formsEls.handleBreakoutClose);
-},
-handleBreakoutClose: function( {type, value }) {
-  if (type === 'sfcc:breakoutApply') {
+  },
+  openMl: function (type) {
     emit({
-			type: 'sfcc:value',
-			payload: value
-		});
-  } 
-}
+      type: 'sfcc:breakout',
+      payload: {
+        id: 'breakout',
+        title: `Cloudinary ${type}`
+      }
+    }, formsEls.handleBreakoutClose);
+  },
+  handleBreakoutClose: function ({ type, value }) {
+    if (type === 'sfcc:breakoutApply') {
+      emit({
+        type: 'sfcc:value',
+        payload: value
+      });
+    }
+  }
 }
 
