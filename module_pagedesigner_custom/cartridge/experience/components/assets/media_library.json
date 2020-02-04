@@ -8,6 +8,14 @@
       "name": "Cloudinary image Configuration",
       "attribute_definitions": [
         {
+          "id": "image_sel",
+          "type": "custom",
+          "required": true,
+          "editor_definition": {
+            "type": "cloudinary.image_form"
+          }
+        },
+        {
           "id": "alt",
           "name": "Image Alt Text",
           "description": "The image alt text",

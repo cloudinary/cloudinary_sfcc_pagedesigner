@@ -18,7 +18,7 @@ window.formsEls = {
 </div>`
   },
 
-  getTextField: function (label, value, required, propName, classes) {
+  getTextField: function (label, value, required, propName, classes, type = 'text') {
     var requiredStr = required ? '<abbr class="slds-required" title="required">* </abbr>' : '';
     var classesStr = Array.isArray(classes) ? classes.join(' ') : classes || '';
     var id = window.inputIdNum + 1 || 1;
@@ -28,12 +28,14 @@ window.formsEls = {
   <label class="slds-form-element__label" for="text-input-id-${id}">
     ${requiredStr}${label}</label>
   <div class="slds-form-element__control">
-    <input type="text" id="text-input-id-${id}" data-propName="${propName}" value="${value}" ${required ? 'required' : ''} class="slds-input" />
+    <input type="${type}" id="text-input-id-${id}" data-propName="${propName}" value="${value}" ${required ? 'required' : ''} class="slds-input" />
   </div>
 </div>
     `
   },
-
+  getNumberField: function (label, value, required, propName, classes) {
+    return getTextField(label, value, required, propName, classes , 'number');
+  },
   getSelectField: function (label, options, required, propName, selected, classes) {
     var classesStr = Array.isArray(classes) ? classes.join(' ') : classes || '';
     var requiredStr = required ? '<abbr class="slds-required" title="required">* </abbr>' : '';
@@ -170,6 +172,36 @@ xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="close"><path d="M14.3
     html = html.trim(); // Never return a text node of whitespace as the result
     template.innerHTML = html;
     return template.content.firstChild;
+  },
+  getTextFieldNode: function(htmlOpts, onBlur, onClick) {
+    let label, value, required, propName, classes = {htmlOpts};
+    let node = formsEls.htmlToElement(formsEls.getTextField(label, value, required, propName, classes));
+    if (onBlur) {
+      node.querySelector('input').addEventListener('blur', onBlur);
+    }
+    if (onClick) {
+      node.querySelector('input').addEventListener('click', onClick);
+    }
+  },
+  getNumberFieldNode: function(htmlOpts, onBlur, onClick) {
+    let label, value, required, propName, classes = htmlOpts;
+    let node = formsEls.htmlToElement(formsEls.getNumberField(label, value, required, propName, classes));
+    if (onBlur) {
+      node.querySelector('input').addEventListener('blur', onBlur);
+    }
+    if (onClick) {
+      node.querySelector('input').addEventListener('click', onClick);
+    }
+  },
+  getButtonNode: function(htmlOpts, onBlur, onClick) {
+    let label, classes = htmlOpts;
+    let node = formsEls.htmlToElement(formsEls.getButton(label, classes));
+    if (onBlur) {
+      node.querySelector('button').addEventListener('blur', onBlur);
+    }
+    if (onClick) {
+      node.querySelector('button').addEventListener('click', onClick);
+    }
   },
   openMl: function (type) {
     emit({
