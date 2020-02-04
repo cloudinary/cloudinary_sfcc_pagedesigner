@@ -30,7 +30,7 @@
             <attribute-definition attribute-id="CloudinaryPageDesignerSecretKey">
                 <display-name xml:lang="x-default">Cloudinary API Secret</display-name>
                 <description xml:lang="x-default">The API Secret of your Cloudinary account</description>
-                <type>string</type>
+                <type>password</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
