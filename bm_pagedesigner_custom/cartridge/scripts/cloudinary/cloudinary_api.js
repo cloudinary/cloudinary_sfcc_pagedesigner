@@ -6,6 +6,7 @@ var Logger = require('dw/system/Logger');
 var LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
 var currentSite = require('dw/system/Site').getCurrent();
 
+
 var data = {
     getAPIKey: function () {
         return currentSite.getCustomPreferenceValue('CloudinaryPageDesignerAPIkey');
@@ -96,7 +97,7 @@ function getResourceList(resourceType) {
 
 	try {
 		service.setRequestMethod('GET');
-		var src = 'https://' + data.getAPIKey() + ':' + data.getSecretKey() + '@api.cloudinary.com/v1_1/' + data.getCloudName() + '/resources/' + resourceType + '/tags/' + data.getTagName();
+		var src = 'https://res.cloudinary.com/' + data.getCloudName() + '/' + resourceType + '/list/' + data.getTagName() + '.json';
 		service.setURL(src);
 		service.addHeader('Content-Type', 'application/json');
 		serviceResponse = service.call();
