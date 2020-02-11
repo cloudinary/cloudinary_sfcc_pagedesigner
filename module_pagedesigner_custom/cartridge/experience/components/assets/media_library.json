@@ -10,58 +10,9 @@
         {
           "id": "image_sel",
           "type": "custom",
-          "required": true,
+          "required": false,
           "editor_definition": {
             "type": "cloudinary.image_form"
-          }
-        },
-        {
-          "id": "alt",
-          "name": "Image Alt Text",
-          "description": "The image alt text",
-          "type": "string",
-          "required": false
-        },
-        {
-          "id": "asset_sel",
-          "type": "custom",
-          "required": true,
-          "editor_definition": {
-            "type": "cloudinary.video_selector_trigger",
-            "configuration": {
-              "mlType": "image"
-            }
-          }
-        },
-        {
-          "id": "placeholderImageType",
-          "name": "Placeholder image type",
-          "type": "enum",
-          "values": [
-            "none",
-            "blur",
-            "vectorize",
-            "pixelate",
-            "solid"
-          ],
-          "default_value": "none"
-        },
-        {
-          "id": "overlay",
-          "name": "Image Overlay",
-          "type": "custom",
-          "required": false,
-          "editor_definition": {
-            "type": "cloudinary.overlay_selector"
-          }
-        },
-        {
-          "id": "textOverlay",
-          "name": "Text Overlay",
-          "type": "custom",
-          "required": false,
-          "editor_definition": {
-            "type": "cloudinary.text_overlay_selector"
           }
         }
       ]
