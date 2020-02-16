@@ -35,19 +35,18 @@
 
 <!-- Uncomment this to expose the raw view model for debugging: -->
 <script>
-    console.log('vars:  ' + '${JSON.stringify(JSON.parse(pdict.viewmodel))}');
+    var vars = "<isprint encoding="jsvalue" value="${pdict.viewmodel}"/>";
+    console.log(JSON.stringify(vars));
 </script>
+
 
 <isif condition="${pdict.viewmodel.type == 'image'}">
     <div class="cloudinary-media-library-container sfdc-component-mock sfdc-component-assets-media_library-mock">
-      <isif condition="${pdict.viewmodel.placeholder}">
-        <img class="component-media_library ml-image" src="${pdict.viewmodel.placeholder}"  data-real-url="${pdict.viewmodel.breakpoints.src}"
-        sizes="${pdict.viewmodel.breakpoints.sizes}"
-        srcset="${pdict.viewmodel.breakpoints.plSrcset}"
-        data-real-srcset="${pdict.viewmodel.breakpoints.srcset}"
+        <img class="component-media_library ml-image" src="${pdict.viewmodel.placeholder}"  data-real-url="${pdict.viewmodel.src}"
+        srcset="${pdict.viewmodel.breakpoints}"
+        sizes="${pdict.viewmodel.sizes}"
         alt="${pdict.viewmodel.altText}"
         style="max-width: 100%">
-        </isif>
     </div>
     <iselseif condition="${pdict.viewmodel.type == 'video' && pdict.viewmodel.id != null}">
         <video id="player-${pdict.viewmodel.id}" class="cld-video cld-video-player-skin-${pdict.viewmodel.theme}"

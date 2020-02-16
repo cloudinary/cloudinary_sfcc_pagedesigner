@@ -6,7 +6,7 @@ function lqipChnage() {
     for (var image of imgsColl) {
         if (image.dataset.realUrl !== image.src) {
             image.src = image.dataset.realUrl;
-            image.srcset = image.dataset.realSrcset;
+            //image.srcset = image.dataset.realSrcset;
         }
     }
 }

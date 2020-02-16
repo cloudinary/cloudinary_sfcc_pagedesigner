@@ -238,7 +238,13 @@ module.exports.render = function (context) {
     } 
     viewmodel.breakpoints = getBreackpointsObj(baseUrl, imageOverlay, textOverlay, globalPart, fileName, plType, brs);
     viewmodel.placeholder = (plType !== 'none') ? baseUrl + getPlaceholderImage(plType) + '/' + fileName : viewmodel.breakpoints.src;
-  } 
+  }
+  if (context.content.image_sel && context.content.image_sel.imageUrl) {
+    viewmodel.placeholder = context.content.image_sel.placeholderUrl || context.content.image_sel.imageUrl;
+    viewmodel.breakpoints = context.content.image_sel.breakpoints;
+    viewmodel.sizes = context.content.image_sel.sizes;
+    viewmodel.src = context.content.image_sel.imageUrl;
+  }
   model.viewmodel = viewmodel;
   return new Template('experience/components/assets/media_library').render(model).text;
 
