@@ -11,63 +11,27 @@
     if (assets.scripts.lastIndexOf(src) < 0) {
         assets.addJs(src);
     }
-</isscript>
-
-<isif condition="${pdict.viewmodel.type == 'video'}">
-    <isscript>
-     var src = "https://unpkg.com/cloudinary-video-player/dist/cld-video-player.min.js"
-     if (assets.scripts.lastIndexOf(src) === -1) {
-         assets.addJs(src);
-     }
-     var css = "https://unpkg.com/cloudinary-video-player/dist/cld-video-player.min.css"
-     if (assets.styles.lastIndexOf(css) === -1) {
-        assets.addCss(css);
-     }
-     assets.addJs('/js/cloudinary-videos.js');
- </isscript>
-</isif>
-<isif condition="${pdict.viewmodel.type == 'image'}">
-<isscript>
     assets.addJs('js/cloudinary-images.js');
 </isscript>
-</isif>
 
 
 <!-- Uncomment this to expose the raw view model for debugging: -->
 <script>
-    var vars = "<isprint encoding="jsvalue" value="${pdict.viewmodel}"/>";
-    console.log(JSON.stringify(vars));
+  var value = JSON.parse('<isprint value="${JSON.stringify(pdict.viewmodel)}" encoding="jsonvalue"/>');
+  console.log(value);
 </script>
 
 
-<isif condition="${pdict.viewmodel.type == 'image'}">
-    <div class="cloudinary-media-library-container sfdc-component-mock sfdc-component-assets-media_library-mock">
-        <img class="component-media_library ml-image" src="${pdict.viewmodel.placeholder}"  data-real-url="${pdict.viewmodel.src}"
-        srcset="${pdict.viewmodel.breakpoints}"
-        sizes="${pdict.viewmodel.sizes}"
-        alt="${pdict.viewmodel.altText}"
-        style="max-width: 100%">
-    </div>
-    <iselseif condition="${pdict.viewmodel.type == 'video' && pdict.viewmodel.id != null}">
-        <video id="player-${pdict.viewmodel.id}" class="cld-video cld-video-player-skin-${pdict.viewmodel.theme}"
-         data-cld-public-id="${pdict.viewmodel.public_id}"
-         <isif condition="${pdict.viewmodel.transformations}">
-          data-cld-transformation="${pdict.viewmodel.transformations}"
-         </isif>
-         <isif condition="${pdict.viewmodel.jumpControls}">
-         data-cld-show-jump-controls="true"
-         </isif>
-         <isif condition="${pdict.viewmodel.controlBar}">
-         data-cld-control-bar="${pdict.viewmodel.controlBar}"
-         </isif>
-         ${pdict.viewmodel.showControls}
-         ${pdict.viewmodel.autoplay}
-         ${pdict.viewmodel.loop}
-         ${pdict.viewmodel.muted}
-         >
-        </video>
-        <script>
-        window.cloudName = '${pdict.viewmodel.cloudName}';
-        </script>
-    </iselseif>
-</isif>
+<div class="cloudinary-media-library-container sfdc-component-mock sfdc-component-assets-media_library-mock">
+<isif condition="${pdict.viewmodel.placeholder}">
+    <img class="component-media_library ml-image" src="${pdict.viewmodel.placeholder}"  data-real-url="${pdict.viewmodel.src}"
+    <isif condition="${pdict.viewmodel.breakpoints != null}">
+    srcset="${pdict.viewmodel.breakpoints}"
+    </isif>
+    <isif condition="${pdict.viewmodel.sizes != null}">
+    sizes="${pdict.viewmodel.sizes}"
+    </isif>
+    alt="${pdict.viewmodel.altText}"
+    style="max-width: 100%">
+    </isif>
+</div>

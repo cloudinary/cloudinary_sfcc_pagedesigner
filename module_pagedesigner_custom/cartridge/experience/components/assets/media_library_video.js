@@ -114,54 +114,61 @@ module.exports.render = function (context) {
   let viewmodel = {};
   viewmodel.type = 'video';
   var globalPart = getVideoTransfomations();
-  let val = context.content.asset_sel || {};
-  if (val.secure_url) {
-    viewmodel.public_id = val.public_id;
+  let val = context.content.asset_sel;
+  if (!val.videoAsset.empty && !val.formValues.empty) {
+    viewmodel.cloudName = val.videoAsset.cloudName;
+    viewmodel.public_id = val.videoAsset.public_id;
     viewmodel.id = idSafeString(val.public_id + randomString(12));
-    var videoPlayerConf = getVideoTransfomations();
-    viewmodel.url = val.secure_url;
-    viewmodel.autoplay = (context.content.controls_autoplay) ? 'autoplay' : '';
-    viewmodel.showControls = (context.content.controls_showcontrols) ? 'controls' : '';
-    viewmodel.loop = (context.content.controls_loopvideo) ? 'loop' : '';
-    viewmodel.muted = (context.content.controls_muted) ? 'muted' : '';
-    viewmodel.jumpControls = context.content.controls_jump;
-    viewmodel.theme = context.content.controls_theme.toLowerCase();
-    viewmodel.cloudName = val.cloudName;
-    var controlBar = null;
-    if (context.content.controls_no_fullscreen === true) {
-      controlBar = {pictureInPictureToggle: false};
-      controlBar.fullscreenToggle = false;
-    }
-    if (context.content.controls_no_volume === true) {
-      if (controlBar == null) {
-        controlBar = {pictureInPictureToggle: false};
-      }
-      controlBar.volumePanel = false;
-    }
-    if (controlBar !== null) {
-      viewmodel.controlBar = JSON.stringify(controlBar);
-    }
-    if (context.content.overlay && context.content.overlay.enable && context.content.overlay.id) {
-      var imageOverlay = buildImageOverlay(context.content.overlay);
-      if (!videoPlayerConf.transformations) {
-        videoPlayerConf.transformations = [];
-      }
-      videoPlayerConf.transformations.push(imageOverlay);
-    }
-    if (context.content.textOverlay && context.content.textOverlay.enable && context.content.textOverlay.text) {
-      var textOverlay = buildTextOverlay(context.content.textOverlay);
-      if (!videoPlayerConf.transformations) {
-        videoPlayerConf.transformations = [];
-      }
-      videoPlayerConf.transformations.push(textOverlay);
-    } 
-    viewmodel.transformations = JSON.stringify(videoPlayerConf.transformations);
-
-  } else {
-    viewmodel.url = 'https://cloudinary-res.cloudinary.com/image/upload/c_scale,fl_attachment,w_100/v1/logo/for_white_bg/cloudinary_icon_for_white_bg.png';
+    viewmodel.playerConfig = val.formValues.playerConfig;
+    viewmodel.sourceConfig = val.formValues.sourceConfig;
   }
+  // if (val.secure_url) {
+  //   viewmodel.public_id = val.public_id;
+  //   viewmodel.id = idSafeString(val.public_id + randomString(12));
+  //   var videoPlayerConf = getVideoTransfomations();
+  //   viewmodel.url = val.secure_url;
+  //   viewmodel.autoplay = (context.content.controls_autoplay) ? 'autoplay' : '';
+  //   viewmodel.showControls = (context.content.controls_showcontrols) ? 'controls' : '';
+  //   viewmodel.loop = (context.content.controls_loopvideo) ? 'loop' : '';
+  //   viewmodel.muted = (context.content.controls_muted) ? 'muted' : '';
+  //   viewmodel.jumpControls = context.content.controls_jump;
+  //   viewmodel.theme = context.content.controls_theme.toLowerCase();
+  //   viewmodel.cloudName = val.cloudName;
+  //   var controlBar = null;
+  //   if (context.content.controls_no_fullscreen === true) {
+  //     controlBar = {pictureInPictureToggle: false};
+  //     controlBar.fullscreenToggle = false;
+  //   }
+  //   if (context.content.controls_no_volume === true) {
+  //     if (controlBar == null) {
+  //       controlBar = {pictureInPictureToggle: false};
+  //     }
+  //     controlBar.volumePanel = false;
+  //   }
+  //   if (controlBar !== null) {
+  //     viewmodel.controlBar = JSON.stringify(controlBar);
+  //   }
+  //   if (context.content.overlay && context.content.overlay.enable && context.content.overlay.id) {
+  //     var imageOverlay = buildImageOverlay(context.content.overlay);
+  //     if (!videoPlayerConf.transformations) {
+  //       videoPlayerConf.transformations = [];
+  //     }
+  //     videoPlayerConf.transformations.push(imageOverlay);
+  //   }
+  //   if (context.content.textOverlay && context.content.textOverlay.enable && context.content.textOverlay.text) {
+  //     var textOverlay = buildTextOverlay(context.content.textOverlay);
+  //     if (!videoPlayerConf.transformations) {
+  //       videoPlayerConf.transformations = [];
+  //     }
+  //     videoPlayerConf.transformations.push(textOverlay);
+  //   } 
+  //   viewmodel.transformations = JSON.stringify(videoPlayerConf.transformations);
+
+  // } else {
+  //   viewmodel.url = 'https://cloudinary-res.cloudinary.com/image/upload/c_scale,fl_attachment,w_100/v1/logo/for_white_bg/cloudinary_icon_for_white_bg.png';
+  // }
 
   model.viewmodel = viewmodel;
-  return new Template('experience/components/assets/media_library').render(model).text;
+  return new Template('experience/components/assets/cloudinary_video').render(model).text;
 
 };

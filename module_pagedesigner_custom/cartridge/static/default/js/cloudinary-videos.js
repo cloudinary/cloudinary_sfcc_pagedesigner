@@ -1,13 +1,10 @@
 function initializeCloudinaryPlayers() {
-    var videosEls = document.getElementsByClassName('cld-video');
-    var videoIds = Array.prototype.map.call(videosEls, function(el) {
-        return el.id;
-    })
-    videoIds.forEach(element => {
-        var p = cld.videoPlayer(element);
+    window.players.forEach(player => {
+        var p = cld.videoPlayer(player.id, player.playerConfig);
         p.fluid(true);
+        p.source(player.public_id, player.sourceConfig);
     });
-    console.log(videoIds);
+    console.log(players);
 }
 
 $(document).ready(function() {

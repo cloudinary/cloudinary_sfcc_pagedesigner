@@ -10,7 +10,7 @@
         {
           "id": "image_sel",
           "type": "custom",
-          "required": false,
+          "required": true,
           "editor_definition": {
             "type": "cloudinary.image_form"
           }

@@ -241,7 +241,7 @@ module.exports.render = function (context) {
   }
   if (context.content.image_sel && context.content.image_sel.imageUrl) {
     viewmodel.placeholder = context.content.image_sel.placeholderUrl || context.content.image_sel.imageUrl;
-    viewmodel.breakpoints = context.content.image_sel.breakpoints;
+    viewmodel.breakpoints = context.content.image_sel.srcSet;
     viewmodel.sizes = context.content.image_sel.sizes;
     viewmodel.src = context.content.image_sel.imageUrl;
   }

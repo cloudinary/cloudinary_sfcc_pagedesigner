@@ -4,7 +4,22 @@
 	// Page Designer ready event
 	subscribe('sfcc:ready', async ({ value, config, isDisabled, isRequired, dataLocale, displayLocale, viewport, breakout }) => {
 		console.log('cloudinary.video_selector::sfcc:ready', dataLocale, displayLocale, isDisabled, isRequired, value, config, viewport);
-
+		let asset;
+		if (value) {
+			if (config.imageType === 'overlay' && value.overlayImage) {
+				asset = {
+					id: value.overlayImage.public_id,
+					type: value.overlayImage.type,
+					resource_type: value.overlayImage.resource_type
+				}
+			} else if (value.mainImage) {
+				asset = {
+					id: value.mainImage.public_id,
+					type: value.mainImage.type,
+					resource_type: value.mainImage.resource_type
+				}
+			}
+		}
 		const template = obtainTemplate(viewport);
 		const clone = document.importNode(template.content, true);
 		document.body.appendChild(clone);
@@ -14,13 +29,13 @@
 				emit({
 					type: 'sfcc:valid',
 					payload: {
-					  valid: false,
-					  message: 'Wrong asset type.'
+						valid: false,
+						message: 'Wrong asset type.'
 					}
-				  });
+				});
 				var root = document.getElementsByClassName('sfcc-ml-root')[0];
 				var error = formsEls.htmlToElement(formsEls.getErrorToast('Wrong asset type.'));
-				error.querySelector('#btn-close').addEventListener('click', function(e) {
+				error.querySelector('#btn-close').addEventListener('click', function (e) {
 					root.removeChild(error);
 				})
 				root.appendChild(error);
@@ -28,9 +43,9 @@
 				emit({
 					type: 'sfcc:valid',
 					payload: {
-					  valid: true,
+						valid: true,
 					}
-				  });
+				});
 				emit({
 					type: 'sfcc:value',
 					payload: asset
@@ -43,11 +58,11 @@
 		}
 
 		var show = {};
-		if (value && value.id) {
+		if (asset && asset.id) {
 			show.asset = {
-				resource_type: value.resource_type,
-				type: value.type,
-				public_id: value.public_id
+				resource_type: asset.resource_type,
+				type: asset.type,
+				public_id: asset.id
 			}
 		} else {
 			show.folder = {
