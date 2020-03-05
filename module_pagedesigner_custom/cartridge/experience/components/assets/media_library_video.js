@@ -115,12 +115,11 @@ module.exports.render = function (context) {
   viewmodel.type = 'video';
   var globalPart = getVideoTransfomations();
   let val = context.content.asset_sel;
-  if (!val.videoAsset.empty && !val.formValues.empty) {
-    viewmodel.cloudName = val.videoAsset.cloudName;
-    viewmodel.public_id = val.videoAsset.public_id;
+  if (!val.playerConf.empty) {
+    viewmodel.cloudName = val.cloudName;
+    viewmodel.public_id = val.playerConf.publicId;
     viewmodel.id = idSafeString(val.public_id + randomString(12));
-    viewmodel.playerConfig = val.formValues.playerConfig;
-    viewmodel.sourceConfig = val.formValues.sourceConfig;
+    viewmodel.playerConf = val.playerConf;
   }
   // if (val.secure_url) {
   //   viewmodel.public_id = val.public_id;

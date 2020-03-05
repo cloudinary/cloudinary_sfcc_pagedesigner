@@ -1,8 +1,9 @@
 function initializeCloudinaryPlayers() {
     window.players.forEach(player => {
-        var p = cld.videoPlayer(player.id, player.playerConfig);
+        var pCnf = JSON.parse(player.playerConf);
+        var p = cld.videoPlayer(player.id, pCnf.playerConfig);
         p.fluid(true);
-        p.source(player.public_id, player.sourceConfig);
+        p.source(pCnf.publicId, pCnf.sourceConfig);
     });
     console.log(players);
 }
