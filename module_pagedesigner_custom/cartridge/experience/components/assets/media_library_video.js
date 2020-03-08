@@ -3,6 +3,7 @@
 var Template = require('dw/util/Template');
 var HashMap = require('dw/util/HashMap');
 var currentSite = require('dw/system/Site').getCurrent();
+var utils = require('~/cartridge/experience/utils/utils');
 
 if (typeof Object.assign !== 'function') {
   // Must be writable: true, enumerable: false, configurable: true
@@ -38,8 +39,6 @@ function isObjectEmpty(obj) {
   return Object.keys(obj).length === 0 && obj.constructor === Object;
 }
 
-
-
 function getVideoTransfomations() {
   var format = currentSite.getCustomPreferenceValue('CloudinaryVideoFormat');
   var quality = currentSite.getCustomPreferenceValue('CloudinaryVideoTransformationsQuality');
@@ -63,110 +62,58 @@ function getVideoTransfomations() {
 
   return videoPlayerConf;
 }
-
-function getImageUrlFromAsset(asset) {
-  if (asset.derived && asset.derived.length > 0) {
-    return asset.derived[0].secure_url;
+function randomString(length) {
+  var result = '';
+  var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+  for (var i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
-  return asset.secure_url;
+  return result;
 }
-
 function idSafeString(str) {
   return 'id' + str.toLowerCase().replace(/[^a-zA-Z0-9-:\.]/, '');
 }
 
-function randomString(length) {
-  var result           = '';
-  var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  var charactersLength = characters.length;
-  for ( var i = 0; i < length; i++ ) {
-     result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  }
-  return result;
+function rebuildTransformations(transformations) {
+  transformations.map(function(tr) {
+    if (tr.overlay && tr.overlay.resource_type) {
+      delete tr.overlay.resource_type;
+    }
+    return tr;
+  })
+
 }
 
-function buildImageOverlay(conf) {
-  return {
-    overlay: conf.id,
-    opacity: conf.opacity,
-    gravity: conf.position,
-    width: conf.scale,
-    x: conf.xOffset,
-    y: conf.yOffset
-  }
-}
-
-function buildTextOverlay(conf) {
-  return {
-    overlay: {
-      font_family: conf.font,
-      text: conf.text,
-      font_size: conf.fontSize,
-    },
-    y: conf.yPos,
-    x: conf.xPos,
-    color: '#' + conf.color
+function callEagerTransformations(videoPlayerConf) {
+  var conf = JSON.parse(videoPlayerConf);
+  var trans = conf.sourceConfig.transformation
+  if (trans.length > 0) {
+    var body = {
+      timestamp: (Date.now() / 1000).toFixed(),
+      type: "upload",
+      public_id: conf.publicId,
+      eager: utils.stringifyJson(rebuildTransformations(trans)),
+      eager_async: true
+    }
+    body.signature = utils.addSignatureToBody(body);
+    body.api_key = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerAPIkey');
+    var res = utils.callService(body, 'video', 'explicit');
+    return res.ok;
   }
 }
 
 module.exports.render = function (context) {
   let model = new HashMap();
   let viewmodel = {};
-  viewmodel.type = 'video';
-  var globalPart = getVideoTransfomations();
   let val = context.content.asset_sel;
   if (!val.playerConf.empty) {
+    callEagerTransformations(val.playerConf);
     viewmodel.cloudName = val.cloudName;
     viewmodel.public_id = val.playerConf.publicId;
     viewmodel.id = idSafeString(val.public_id + randomString(12));
     viewmodel.playerConf = val.playerConf;
   }
-  // if (val.secure_url) {
-  //   viewmodel.public_id = val.public_id;
-  //   viewmodel.id = idSafeString(val.public_id + randomString(12));
-  //   var videoPlayerConf = getVideoTransfomations();
-  //   viewmodel.url = val.secure_url;
-  //   viewmodel.autoplay = (context.content.controls_autoplay) ? 'autoplay' : '';
-  //   viewmodel.showControls = (context.content.controls_showcontrols) ? 'controls' : '';
-  //   viewmodel.loop = (context.content.controls_loopvideo) ? 'loop' : '';
-  //   viewmodel.muted = (context.content.controls_muted) ? 'muted' : '';
-  //   viewmodel.jumpControls = context.content.controls_jump;
-  //   viewmodel.theme = context.content.controls_theme.toLowerCase();
-  //   viewmodel.cloudName = val.cloudName;
-  //   var controlBar = null;
-  //   if (context.content.controls_no_fullscreen === true) {
-  //     controlBar = {pictureInPictureToggle: false};
-  //     controlBar.fullscreenToggle = false;
-  //   }
-  //   if (context.content.controls_no_volume === true) {
-  //     if (controlBar == null) {
-  //       controlBar = {pictureInPictureToggle: false};
-  //     }
-  //     controlBar.volumePanel = false;
-  //   }
-  //   if (controlBar !== null) {
-  //     viewmodel.controlBar = JSON.stringify(controlBar);
-  //   }
-  //   if (context.content.overlay && context.content.overlay.enable && context.content.overlay.id) {
-  //     var imageOverlay = buildImageOverlay(context.content.overlay);
-  //     if (!videoPlayerConf.transformations) {
-  //       videoPlayerConf.transformations = [];
-  //     }
-  //     videoPlayerConf.transformations.push(imageOverlay);
-  //   }
-  //   if (context.content.textOverlay && context.content.textOverlay.enable && context.content.textOverlay.text) {
-  //     var textOverlay = buildTextOverlay(context.content.textOverlay);
-  //     if (!videoPlayerConf.transformations) {
-  //       videoPlayerConf.transformations = [];
-  //     }
-  //     videoPlayerConf.transformations.push(textOverlay);
-  //   } 
-  //   viewmodel.transformations = JSON.stringify(videoPlayerConf.transformations);
-
-  // } else {
-  //   viewmodel.url = 'https://cloudinary-res.cloudinary.com/image/upload/c_scale,fl_attachment,w_100/v1/logo/for_white_bg/cloudinary_icon_for_white_bg.png';
-  // }
-
   model.viewmodel = viewmodel;
   return new Template('experience/components/assets/cloudinary_video').render(model).text;
 
