@@ -3,7 +3,8 @@
     subscribe('sfcc:ready', async ({ value, config, isDisabled, isRequired, dataLocale, displayLocale }) => {
         let iFrame = document.createElement('iframe');
         let val = encodeURIComponent(JSON.stringify(value));
-        iFrame.src = "https://sfcc.t-y.co/image-side-panel?cloudName=" + config.cloudName + '&value=' + val;
+        let global = encodeURIComponent(JSON.stringify(config.globalTrans));
+        iFrame.src = "https://sfcc-pd.local:1234/image-side-panel?cloudName=" + config.cloudName + '&value=' + val + '&global=' + global;
         iFrame.id = 'image-form';
         iFrame.setAttribute('frameborder', 0);
         iFrame.setAttribute('marginwidth', 0);
@@ -14,7 +15,7 @@
         document.body.appendChild(iFrame);
         let ifrm = document.querySelector('iframe');
         window.addEventListener('message', (event) => {
-            //if (event.origin === 'https://sfcc.t-y.co') {
+            //if (event.origin === 'https://sfcc-pd.local:1234') {
                 handleIframeMessage(event.data, ifrm, value, config);
             //}
         }

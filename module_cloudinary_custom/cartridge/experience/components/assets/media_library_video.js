@@ -40,27 +40,24 @@ function isObjectEmpty(obj) {
 }
 
 function getVideoTransfomations() {
-  var format = currentSite.getCustomPreferenceValue('CloudinaryVideoFormat');
   var quality = currentSite.getCustomPreferenceValue('CloudinaryVideoTransformationsQuality');
   var bitRate = currentSite.getCustomPreferenceValue('CloudinaryVideoTransformationsBitRate');
   var global = currentSite.getCustomPreferenceValue('CloudinaryVideoTransformations');
-  var videoPlayerConf = {
-  }
   var transformations = {}
+  var tr = [];
   if (quality !== null && quality.value !== 'none') {
     transformations.quality = quality.value;
   }
   if (bitRate !== null && bitRate.value !== 'none') {
     transformations.bitRate = bitRate.value
   }
-  if (format !== null && format.value !== 'none') {
-    videoPlayerConf.sourceType = format
-  }
   if (!isObjectEmpty(transformations)) {
-    videoPlayerConf.transformations = [transformations];
+    tr.push(transformations)
   }
-
-  return videoPlayerConf;
+  if (global) {
+    tr.push(global);
+  }
+  return tr;
 }
 function randomString(length) {
   var result = '';
@@ -76,19 +73,18 @@ function idSafeString(str) {
 }
 
 function rebuildTransformations(transformations) {
-  transformations.map(function(tr) {
+  var global = getVideoTransfomations();
+  var trns = transformations.map(function(tr) {
     if (tr.overlay && tr.overlay.resource_type) {
       delete tr.overlay.resource_type;
     }
     return tr;
-  })
-
+  });
+  return global.concat(trns);
 }
 
-function callEagerTransformations(videoPlayerConf) {
-  var conf = JSON.parse(videoPlayerConf);
-  var trans = conf.sourceConfig.transformation
-  if (trans.length > 0) {
+function callEagerTransformations(conf) {
+  var trans = Array.isArray(conf.sourceConfig.transformation) ? conf.sourceConfig.transformation : [];
     var body = {
       timestamp: (Date.now() / 1000).toFixed(),
       type: "upload",
@@ -100,7 +96,6 @@ function callEagerTransformations(videoPlayerConf) {
     body.api_key = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerAPIkey');
     var res = utils.callService(body, 'video', 'explicit');
     return res.ok;
-  }
 }
 
 module.exports.render = function (context) {
@@ -108,11 +103,16 @@ module.exports.render = function (context) {
   let viewmodel = {};
   let val = context.content.asset_sel;
   if (!val.playerConf.empty) {
-    callEagerTransformations(val.playerConf);
-    viewmodel.cloudName = val.cloudName;
-    viewmodel.public_id = val.playerConf.publicId;
-    viewmodel.id = idSafeString(val.public_id + randomString(12));
-    viewmodel.playerConf = val.playerConf;
+  var conf = JSON.parse(val.playerConf);
+  var format = currentSite.getCustomPreferenceValue('CloudinaryVideoFormat');
+  if (format !== null && format.value !== 'none') {
+    conf.sourceType = format
+  }
+  callEagerTransformations(conf);
+  viewmodel.cloudName = val.cloudName;
+  viewmodel.public_id = val.playerConf.publicId;
+  viewmodel.id = idSafeString(val.public_id + randomString(12));
+  viewmodel.playerConf = JSON.stringify(conf);
   }
   model.viewmodel = viewmodel;
   return new Template('experience/components/assets/cloudinary_video').render(model).text;

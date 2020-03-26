@@ -79,6 +79,7 @@
 			inline_container: 'div.sfcc-ml-root',
 			max_files: 1,
 			multiple: false,
+			sandboxAttributes: ["allow-scripts", "allow-same-origin"]
 		}, { insertHandler: insertHandler }
 		);
 		ml.show(

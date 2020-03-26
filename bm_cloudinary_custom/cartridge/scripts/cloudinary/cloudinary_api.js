@@ -2,6 +2,7 @@
 //test123
 //var server = require('server');
 var Logger = require('dw/system/Logger');
+var HashMap = require('dw/util/HashMap');
 
 var LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
 var currentSite = require('dw/system/Site').getCurrent();
@@ -140,6 +141,13 @@ function getImageJSON() {
     return JSON.parse(imageJSON);
 }
 
+function getImageGlobalTransforms() {
+	var trans = new HashMap();
+	trans.put('dpr', currentSite.getCustomPreferenceValue('CloudinaryImageTransformationsDPR').toString());
+	trans.put('fetchFormat', currentSite.getCustomPreferenceValue('CloudinaryImageTransformationsFormat').toString());
+	trans.put('quality', currentSite.getCustomPreferenceValue('CloudinaryImageTransformationsQuality').toString());
+	return trans;
+}
 function getImageSettingUrlPart(sec) {
 	var dpr = currentSite.getCustomPreferenceValue('CloudinaryImageTransformationsDPR');
 	var format = currentSite.getCustomPreferenceValue('CloudinaryImageTransformationsFormat');
@@ -158,8 +166,10 @@ function getImageSettingUrlPart(sec) {
 	return urlPart;
 } 
 
+
 module.exports.getVideoJSON = getVideoJSON;
 module.exports.getImageJSON = getImageJSON;
 module.exports.data = data;
+module.exports.globalTransform = getImageGlobalTransforms;
 module.exports.getImageSettingUrlPart = getImageSettingUrlPart;
 module.exports.callService = callService;
