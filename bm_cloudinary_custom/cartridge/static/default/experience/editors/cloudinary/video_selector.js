@@ -6,18 +6,13 @@
 		console.log('cloudinary.video_selector::sfcc:ready', dataLocale, displayLocale, isDisabled, isRequired, value, config, viewport);
 		let asset;
 		if (value) {
-			if (config.imageType === 'overlay' && value.overlayImage) {
-				asset = {
-					id: value.overlayImage.public_id,
-					type: value.overlayImage.type,
-					resource_type: value.overlayImage.resource_type
-				}
-			} else if (value.mainImage) {
-				asset = {
-					id: value.mainImage.public_id,
-					type: value.mainImage.type,
-					resource_type: value.mainImage.resource_type
-				}
+			let image = ((value.formValues || {}).image || {}).asset;
+			if (config.imageType === 'overlay') {
+			 if (((value.formValues || {}).overlayImage || {}).asset) {
+				 asset = value.formValues.overlayImage.asset
+			}
+			} else if (value.formValues.image.asset) { 
+				asset = image;
 			}
 		}
 		const template = obtainTemplate(viewport);
@@ -58,11 +53,11 @@
 		}
 
 		var show = {};
-		if (asset && asset.id) {
+		if (asset && asset.public_id) {
 			show.asset = {
 				resource_type: asset.resource_type,
 				type: asset.type,
-				public_id: asset.id
+				public_id: asset.public_id
 			}
 		} else {
 			show.folder = {
