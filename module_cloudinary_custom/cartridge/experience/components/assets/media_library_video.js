@@ -4,6 +4,7 @@ var Template = require('dw/util/Template');
 var HashMap = require('dw/util/HashMap');
 var currentSite = require('dw/system/Site').getCurrent();
 var utils = require('~/cartridge/experience/utils/utils');
+var log = require('dw/system').Logger.getLogger('Cloudinary', '');
 
 if (typeof Object.assign !== 'function') {
   // Must be writable: true, enumerable: false, configurable: true
@@ -85,17 +86,22 @@ function rebuildTransformations(transformations) {
 
 function callEagerTransformations(conf) {
   var trans = Array.isArray(conf.sourceConfig.transformation) ? conf.sourceConfig.transformation : [];
+  trans = rebuildTransformations(trans);
+  conf.sourceConfig.transformation = trans;
     var body = {
       timestamp: (Date.now() / 1000).toFixed(),
       type: "upload",
       public_id: conf.publicId,
-      eager: utils.stringifyJson(rebuildTransformations(trans)),
+      eager: utils.stringifyJson(trans),
       eager_async: true
     }
     body.signature = utils.addSignatureToBody(body);
     body.api_key = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerAPIkey');
     var res = utils.callService(body, 'video', 'explicit');
-    return res.ok;
+    if (!res.ok) {
+      log.error('Error call explicit video transformations');
+    }
+    return conf;
 }
 
 module.exports.render = function (context) {
@@ -108,7 +114,7 @@ module.exports.render = function (context) {
   if (format !== null && format.value !== 'none') {
     conf.sourceType = format
   }
-  callEagerTransformations(conf);
+  conf = callEagerTransformations(conf);
   viewmodel.cloudName = val.cloudName;
   viewmodel.public_id = val.playerConf.publicId;
   viewmodel.id = idSafeString(val.public_id + randomString(12));
