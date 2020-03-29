@@ -6,13 +6,12 @@
 		console.log('cloudinary.video_selector::sfcc:ready', dataLocale, displayLocale, isDisabled, isRequired, value, config, viewport);
 		let asset;
 		if (value) {
-			let image = ((value.formValues || {}).image || {}).asset;
 			if (config.imageType === 'overlay') {
-			 if (((value.formValues || {}).overlayImage || {}).asset) {
-				 asset = value.formValues.overlayImage.asset
-			}
-			} else if (value.formValues.image.asset) { 
-				asset = image;
+				if (((value.formValues || {}).overlayImage || {}).asset) {
+					asset = value.formValues.overlayImage.asset
+				}
+			} else {
+				asset = config.type === 'image' ? ((value.formValues || {}).image || {}).asset : ((value.formValues || {}).video || {}).asset;
 			}
 		}
 		const template = obtainTemplate(viewport);
