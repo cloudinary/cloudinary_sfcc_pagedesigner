@@ -244,6 +244,7 @@ module.exports.render = function (context) {
     viewmodel.breakpoints = context.content.image_sel.srcSet;
     viewmodel.sizes = context.content.image_sel.sizes;
     viewmodel.src = context.content.image_sel.imageUrl;
+    viewmodel.altText = context.content.image_sel.alt;
   }
   model.viewmodel = viewmodel;
   return new Template('experience/components/assets/media_library').render(model).text;
