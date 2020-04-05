@@ -54,50 +54,49 @@
                 <value-definitions>
                     <value-definition>
                         <display xml:lang="x-default">auto</display>
-                        <value>q_auto</value>
+                        <value>auto</value>
                     </value-definition>
                     <value-definition>
                         <display xml:lang="x-default">20%</display>
-                        <value>q_20%</value>
+                        <value>20</value>
                     </value-definition>
                     <value-definition>
                         <display xml:lang="x-default">30%</display>
-                        <value>q_30%</value>
+                        <value>30</value>
                     </value-definition>
                     <value-definition>
                         <display xml:lang="x-default">40%</display>
-                        <value>q_40%</value>
+                        <value>40</value>
                     </value-definition>
                     <value-definition>
                         <display xml:lang="x-default">50%</display>
-                        <value>q_50%</value>
+                        <value>50</value>
                     </value-definition>
                     <value-definition>
                         <display xml:lang="x-default">60%</display>
-                        <value>q_60%</value>
+                        <value>60</value>
                     </value-definition>
                     <value-definition>
                         <display xml:lang="x-default">70%</display>
-                        <value>q_70%</value>
+                        <value>70</value>
                     </value-definition>
                     <value-definition>
                         <display xml:lang="x-default">80%</display>
-                        <value>q_80%</value>
+                        <value>80</value>
                     </value-definition>
                     <value-definition>
                         <display xml:lang="x-default">90%</display>
-                        <value>q_90%</value>
+                        <value>90</value>
                     </value-definition>
                     <value-definition>
                         <display xml:lang="x-default">100%</display>
-                        <value>q_100%</value>
+                        <value>100</value>
                     </value-definition>
                     <value-definition>
                         <display xml:lang="x-default">none</display>
                         <value>none</value>
                     </value-definition>
                 </value-definitions>
-                <default-value>q_auto</default-value>
             </attribute-definition>
             <attribute-definition attribute-id="CloudinaryImageTransformationsDPR">
                 <display-name xml:lang="x-default">Transformations - Device Pixel Ratio (DPR)</display-name>
@@ -108,22 +107,21 @@
                 <value-definitions>
                     <value-definition>
                         <display xml:lang="x-default">auto</display>
-                        <value>dpr_auto</value>
+                        <value>auto</value>
                     </value-definition>
                     <value-definition>
-                        <display xml:lang="x-default">1</display>
-                        <value>dpr_1</value>
+                        <display xml:lang="x-default">drp_1</display>
+                        <value>1</value>
                     </value-definition>
                     <value-definition>
-                        <display xml:lang="x-default">2</display>
-                        <value>dpr_2</value>
+                        <display xml:lang="x-default">dpr_2</display>
+                        <value>2</value>
                     </value-definition>
                     <value-definition>
                         <display xml:lang="x-default">none</display>
                         <value>none</value>
                     </value-definition>
                 </value-definitions>
-                <default-value>dpr_auto</default-value>
             </attribute-definition>
             <attribute-definition attribute-id="CloudinaryImageTransformationsFormat">
                 <display-name xml:lang="x-default">Image foramt</display-name>
@@ -134,30 +132,29 @@
                 <value-definitions>
                     <value-definition>
                         <display xml:lang="x-default">auto</display>
-                        <value>f_auto</value>
+                        <value>auto</value>
                     </value-definition>
                     <value-definition>
                         <display xml:lang="x-default">gif</display>
-                        <value>f_gif</value>
+                        <value>gif</value>
                     </value-definition>
                     <value-definition>
                         <display xml:lang="x-default">webp</display>
-                        <value>f_webp</value>
+                        <value>webp</value>
                     </value-definition>
                     <value-definition>
                         <display xml:lang="x-default">jpeg</display>
-                        <value>f_jpeg</value>
+                        <value>jpeg</value>
                     </value-definition>
                     <value-definition>
                         <display xml:lang="x-default">png</display>
-                        <value>f_png</value>
+                        <value>png</value>
                     </value-definition>
                     <value-definition>
                         <display xml:lang="x-default">none</display>
                         <value>none</value>
                     </value-definition>
                 </value-definitions>
-                <default-value>f_auto</default-value>
             </attribute-definition>
             <attribute-definition attribute-id="CloudinaryImageUseAltText">
                 <display-name xml:lang="x-default">Use Cloudinary Alt Text</display-name>
@@ -166,6 +163,13 @@
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <default-value>true</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="CloudinaryImageTransformations">
+                <display-name xml:lang="x-default">Global Image Transformations</display-name>
+                <description xml:lang="x-default">Default settings for image transformations</description>
+                <type>text</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
             </attribute-definition>
             <attribute-definition attribute-id="CloudinaryVideoFormat">
                 <type>enum-of-string</type>
@@ -221,7 +225,6 @@
                         <value>2m</value>
                     </value-definition>
                 </value-definitions>
-                <default-value>default</default-value>
             </attribute-definition>
             <attribute-definition attribute-id="CloudinaryVideoTransformationsQuality">
                 <display-name xml:lang="x-default">Global Video Transformations - Quality</display-name>
@@ -271,7 +274,6 @@
                         <value>100</value>
                     </value-definition>
                 </value-definitions>
-                <default-value>auto</default-value>
             </attribute-definition>
         </custom-attribute-definitions>
         <group-definitions>
@@ -287,6 +289,7 @@
                 <attribute attribute-id="CloudinaryImageTransformationsFormat"/>
                 <attribute attribute-id="CloudinaryImageTransformationsQuality"/>
                 <attribute attribute-id="CloudinaryImageUseAltText"/>
+                <attribute attribute-id="CloudinaryImageTransformations"/>
                 <attribute attribute-id="CloudinaryVideoFormat"/>
                 <attribute attribute-id="CloudinaryVideoTransformationsBitRate"/>
                 <attribute attribute-id="CloudinaryVideoTransformationsQuality"/>

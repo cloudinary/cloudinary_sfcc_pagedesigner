@@ -36,7 +36,7 @@
     <video id="${pdict.viewmodel.id}"></video>
 <script> 
   var value = JSON.parse('<isprint value="${JSON.stringify(pdict.viewmodel)}" encoding="jsonvalue"/>');
-  window.players = value.players || [];
+  window.players = window.players || [];
   window.players.push(value);
   window.cloudName = value.cloudName;
   console.log(value);

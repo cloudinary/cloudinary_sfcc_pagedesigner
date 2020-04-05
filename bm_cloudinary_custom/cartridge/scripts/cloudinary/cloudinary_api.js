@@ -143,9 +143,10 @@ function getImageJSON() {
 
 function getImageGlobalTransforms() {
 	var trans = new HashMap();
-	trans.put('dpr', currentSite.getCustomPreferenceValue('CloudinaryImageTransformationsDPR').toString());
-	trans.put('fetchFormat', currentSite.getCustomPreferenceValue('CloudinaryImageTransformationsFormat').toString());
-	trans.put('quality', currentSite.getCustomPreferenceValue('CloudinaryImageTransformationsQuality').toString());
+	trans.put('dpr', currentSite.getCustomPreferenceValue('CloudinaryImageTransformationsDPR').getValue());
+	trans.put('fetchFormat', currentSite.getCustomPreferenceValue('CloudinaryImageTransformationsFormat').getValue());
+	trans.put('quality', currentSite.getCustomPreferenceValue('CloudinaryImageTransformationsQuality').getValue());
+	trans.put('raw_transformation', currentSite.getCustomPreferenceValue('CloudinaryImageTransformations'))
 	return trans;
 }
 function getImageSettingUrlPart(sec) {

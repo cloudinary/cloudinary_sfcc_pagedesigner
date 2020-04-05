@@ -56,7 +56,7 @@ function getVideoTransfomations() {
     tr.push(transformations)
   }
   if (global) {
-    tr.push(global);
+    tr.push({raw_transformation: global});
   }
   return tr;
 }
@@ -86,7 +86,9 @@ function rebuildTransformations(transformations) {
 
 function callEagerTransformations(conf) {
   var trans = Array.isArray(conf.sourceConfig.transformation) ? conf.sourceConfig.transformation : [];
-  trans = rebuildTransformations(trans);
+  if (!conf.isTransformationOverride) {
+    trans = rebuildTransformations(trans);
+  }
   conf.sourceConfig.transformation = trans;
     var body = {
       timestamp: (Date.now() / 1000).toFixed(),
