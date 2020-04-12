@@ -1,10 +1,8 @@
 
 (() => {
-    subscribe('sfcc:ready', async ({ value, config, isDisabled, isRequired, dataLocale, displayLocale }) => {
+    subscribe('sfcc:ready', async ({ value, config }) => {
         let iFrame = document.createElement('iframe');
-        let val = encodeURIComponent(JSON.stringify(value));
-        let global = encodeURIComponent(JSON.stringify(config.globalTrans));
-        iFrame.src = "https://sfcc.t-y.co/image-side-panel?cloudName=" + config.cloudName + '&value=' + val + '&global=' + global;
+        iFrame.src = getIframeUrl(value, config);
         iFrame.id = 'image-form';
         iFrame.setAttribute('frameborder', 0);
         iFrame.setAttribute('marginwidth', 0);
@@ -12,17 +10,32 @@
         iFrame.setAttribute('vspace', 0);
         iFrame.setAttribute('hspace', 0);
         iFrame.setAttribute('scrolling', "no");
+        iFrame.setAttribute('name', Date.now().toString());
         document.body.appendChild(iFrame);
         let ifrm = document.querySelector('iframe');
         window.addEventListener('message', (event) => {
-            //if (event.origin === 'https://sfcc.t-y.co') {
-                handleIframeMessage(event.data, ifrm, value, config);
+            //if (event.origin === 'https://sfcc-pd.local:1234') {
+            handleIframeMessage(event.data, ifrm, value, config);
             //}
         }
         )
-        iFrameResize({heightCalculationMethod: 'taggedElement' }, '#image-form');
+        window.config = config;
+        iFrameResize({ heightCalculationMethod: 'taggedElement'}, '#image-form');
     })
 })()
+
+function getIframeUrl(value, config) {
+    let val = encodeURIComponent(JSON.stringify(value));
+    let global = encodeURIComponent(JSON.stringify(config.globalTrans));
+    return "https://sfcc-pd.local:1234/image-side-panel?cloudName=" + config.cloudName + '&value=' + val + '&global=' + global;
+}
+
+function reInitIframe(value, config) {
+    var iFrm = document.getElementById('image-form');
+    if (iFrm) {
+        iFrm.src = getIframeUrl(value, config);
+    }
+}
 
 function autosizeIframe(iframe) {
     iframe.height = iframe.contentWindow.document.body.scrollHeight + "px";
@@ -68,27 +81,33 @@ const handleIframeMessage = (message, ifrm, value = null, config) => {
                     ifrm.contentWindow.postMessage(data.value, '*');
                 });
                 break;
-                case 'openLinkBuilder':
-                    emit({
-                        type: 'sfcc:breakout',
-                        payload: {
-                          id: 'sfcc:linkBuilder',
-                          title: 'Link Builder'
-                        }
-                      }, (data) => {
-                          console.log(data);
-                      });
-                    break;
+            case 'openLinkBuilder':
+                emit({
+                    type: 'sfcc:breakout',
+                    payload: {
+                        id: 'sfcc:linkBuilder',
+                        title: 'Link Builder'
+                    }
+                }, (data) => {
+                    console.log(data);
+                });
+                break;
             case 'done':
                 delete message.action;
                 var val = isObjectEmpty(message.formValues.image) ? null : message;
                 emit({
                     type: 'sfcc:value',
                     payload: val
-                })
+                });
+                emit({
+                    type: 'sfcc:interacted',
+                });
                 break;
-
         }
     }
     console.log(message);
 }
+listen('sfcc:value', value => {
+    reInitIframe(value, window.config);
+});
+

@@ -2,9 +2,7 @@
 (() => {
     subscribe('sfcc:ready', async ({ value, config, isDisabled, isRequired, dataLocale, displayLocale }) => {
         let iFrame = document.createElement('iframe');
-        let val = encodeURIComponent(JSON.stringify(value));
-        let global = encodeURIComponent(JSON.stringify(config.globalTrans));
-        iFrame.src = "https://sfcc.t-y.co/video-side-panel?cloudName=" + config.cloudName + '&value=' + val + '&global=' + global;
+        iFrame.src = getIframeUrl(value, config);
         iFrame.id = 'video-form';
         iFrame.setAttribute('frameborder', 0);
         iFrame.setAttribute('marginwidth', 0);
@@ -15,24 +13,27 @@
         document.body.appendChild(iFrame);
         let ifrm = document.querySelector('iframe');
         window.addEventListener('message', (event) => {
-            //if (event.origin === 'https://sfcc.t-y.co') {
+            //if (event.origin === 'https://sfcc-pd.local:1234') {
                 handleIframeMessage(event.data, ifrm, value, config);
             //}
         }
         )
+        window.config = config;
         iFrameResize({heightCalculationMethod: 'taggedElement' }, '#video-form');
     })
 })()
 
+function getIframeUrl(value, config) {
+    let val = encodeURIComponent(JSON.stringify(value));
+    let global = encodeURIComponent(JSON.stringify(config.globalTrans));
+    return "https://sfcc-pd.local:1234/video-side-panel?cloudName=" + config.cloudName + '&value=' + val + '&global=' + global;
+}
 
-const getBreackpoints = (brUrl, publicId, ifrm) => {
-    fetch(brUrl + '?publicId=' + publicId).then(response => {
-        if (response.ok) {
-            response.json().then(data => {
-                ifrm.contentWindow.postMessage(data, '*');
-            })
-        }
-    })
+function reInitIframe(value, config) {
+    var iFrm = document.getElementById('video-form');
+    if (iFrm) {
+        iFrm.src = getIframeUrl(value, config);
+    }
 }
 
 const handleIframeMessage = (message, ifrm, value = null, config) => {
@@ -75,3 +76,6 @@ const handleIframeMessage = (message, ifrm, value = null, config) => {
     }
     console.log(message);
 }
+listen('sfcc:value', value => {
+    reInitIframe(value, window.config);
+});
