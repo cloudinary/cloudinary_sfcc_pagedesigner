@@ -284,7 +284,6 @@
                 <attribute attribute-id="CloudinaryPageDesignerAPIkey"/>
                 <attribute attribute-id="CloudinaryPageDesignerSecretKey"/>
                 <attribute attribute-id="CloudinaryPageDesignerUseSha256"/>
-                <attribute attribute-id="CloudinaryPageDesignerTag"/>
                 <attribute attribute-id="CloudinaryImageTransformationsDPR"/>
                 <attribute attribute-id="CloudinaryImageTransformationsFormat"/>
                 <attribute attribute-id="CloudinaryImageTransformationsQuality"/>
