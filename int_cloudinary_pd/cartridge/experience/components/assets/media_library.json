@@ -1,6 +1,6 @@
 {
-  "name": "Cloudinary Images",
-  "description": "Cloudinary Images",
+  "name": "Cloudinary Image",
+  "description": "Cloudinary Image",
   "group": "Cloudinary",
   "attribute_definition_groups": [
     {
