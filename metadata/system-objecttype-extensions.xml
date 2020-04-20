@@ -124,8 +124,8 @@
                 </value-definitions>
             </attribute-definition>
             <attribute-definition attribute-id="CloudinaryImageTransformationsFormat">
-                <display-name xml:lang="x-default">Image foramt</display-name>
-                <description xml:lang="x-default">Image foramt</description>
+                <display-name xml:lang="x-default">Image format</display-name>
+                <description xml:lang="x-default">Image format</description>
                 <type>enum-of-string</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
