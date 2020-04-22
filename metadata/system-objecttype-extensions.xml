@@ -46,7 +46,7 @@
                 <min-length>0</min-length>
             </attribute-definition>
             <attribute-definition attribute-id="CloudinaryImageTransformationsQuality">
-                <display-name xml:lang="x-default">Image Quality</display-name>
+                <display-name xml:lang="x-default">Default image quality</display-name>
                 <description xml:lang="x-default">Choose the quality for images</description>
                 <type>enum-of-string</type>
                 <mandatory-flag>false</mandatory-flag>
@@ -124,7 +124,7 @@
                 </value-definitions>
             </attribute-definition>
             <attribute-definition attribute-id="CloudinaryImageTransformationsFormat">
-                <display-name xml:lang="x-default">Image format</display-name>
+                <display-name xml:lang="x-default">Default image format</display-name>
                 <description xml:lang="x-default">Choose the format for images</description>
                 <type>enum-of-string</type>
                 <mandatory-flag>false</mandatory-flag>
