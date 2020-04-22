@@ -52,7 +52,7 @@
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <value-definitions>
-                    <value-definition>
+                    <value-definition default="true">
                         <display xml:lang="x-default">auto</display>
                         <value>auto</value>
                     </value-definition>
@@ -105,7 +105,7 @@
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <value-definitions>
-                    <value-definition>
+                    <value-definition default="true">
                         <display xml:lang="x-default">auto</display>
                         <value>auto</value>
                     </value-definition>
@@ -130,7 +130,7 @@
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <value-definitions>
-                    <value-definition>
+                    <value-definition default="true">
                         <display xml:lang="x-default">auto</display>
                         <value>auto</value>
                     </value-definition>
@@ -178,7 +178,7 @@
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <value-definitions>
-                    <value-definition>
+                    <value-definition default="true">
                         <display xml:lang="x-default">none</display>
                         <value>none</value>
                     </value-definition>
