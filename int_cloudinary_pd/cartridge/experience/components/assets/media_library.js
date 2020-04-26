@@ -8,7 +8,10 @@ var currentSite = require('dw/system/Site').getCurrent();
 var Logger = require('dw/system').Logger.getLogger('Cloudinary', '');
 var LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
 var cloudName = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCloudName');
-var PageRenderHelper = require('*/cartridge/experience/utilities/PageRenderHelper.js');
+var URLUtils = require("dw/web/URLUtils");
+var URLAction = require("dw/web/URLAction");
+var URLParamter = require("dw/web/URLParameter");
+
 
 
 var cloudinaryService = LocalServiceRegistry.createService("cloudinaryPageDesignerAPI", {
@@ -22,6 +25,13 @@ var cloudinaryService = LocalServiceRegistry.createService("cloudinaryPageDesign
 });
 
 var serviceURL = cloudinaryService.URL;
+
+function buildLinkUrl(linkArr) {
+  if (linkArr && linkArr.length > 0) {
+    return new URLUtils.url(new URLAction(linkArr[0], currentSite.name), new URLParamter('pid', linkArr[2]));
+  }
+  return null;
+}
 
 function addSignatureToBody(body) {
   var hasher = null;

@@ -85,6 +85,7 @@ function rebuildTransformations(transformations) {
 }
 
 function callEagerTransformations(conf) {
+  try {
   var trans = Array.isArray(conf.sourceConfig.transformation) ? conf.sourceConfig.transformation : [];
   if (!conf.isTransformationOverride) {
     trans = rebuildTransformations(trans);
@@ -104,6 +105,12 @@ function callEagerTransformations(conf) {
       log.error('Error call explicit video transformations');
     }
     return conf;
+  } catch (e) {
+      log.error('Error call explicit video transformations');
+      log.error(e.);
+
+
+  }
 }
 
 module.exports.render = function (context) {
