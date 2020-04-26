@@ -105,10 +105,11 @@ function callEagerTransformations(conf) {
       log.error('Error call explicit video transformations');
       log.error(res.message);
     }
-  } catch (err) {
-    log.error(err);
+    return conf;
+  } catch (e) {
+      log.error('Error call explicit video transformations');
+      log.error(e.message);
   }
-  return conf;
 }
 
 module.exports.render = function (context) {
