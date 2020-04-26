@@ -49,14 +49,14 @@ function getVideoTransfomations() {
   if (quality !== null && quality.value !== 'none') {
     transformations.quality = quality.value;
   }
-  if (bitRate !== null && bitRate.value !== 'none') {
-    transformations.bitRate = bitRate.value
+  if (bitRate !== null && bitRate.value !== 'default') {
+    transformations.bit_rate = bitRate.value
   }
   if (!isObjectEmpty(transformations)) {
     tr.push(transformations)
   }
   if (global) {
-    tr.push({raw_transformation: global});
+    tr.push({ raw_transformation: global });
   }
   return tr;
 }
@@ -75,7 +75,7 @@ function idSafeString(str) {
 
 function rebuildTransformations(transformations) {
   var global = getVideoTransfomations();
-  var trns = transformations.map(function(tr) {
+  var trns = transformations.map(function (tr) {
     if (tr.overlay && tr.overlay.resource_type) {
       delete tr.overlay.resource_type;
     }
@@ -85,11 +85,12 @@ function rebuildTransformations(transformations) {
 }
 
 function callEagerTransformations(conf) {
-  var trans = Array.isArray(conf.sourceConfig.transformation) ? conf.sourceConfig.transformation : [];
-  if (!conf.isTransformationOverride) {
-    trans = rebuildTransformations(trans);
-  }
-  conf.sourceConfig.transformation = trans;
+  try {
+    var trans = Array.isArray(conf.sourceConfig.transformation) ? conf.sourceConfig.transformation : [];
+    if (!conf.isTransformationOverride) {
+      trans = rebuildTransformations(trans);
+    }
+    conf.sourceConfig.transformation = trans;
     var body = {
       timestamp: (Date.now() / 1000).toFixed(),
       type: "upload",
@@ -102,8 +103,12 @@ function callEagerTransformations(conf) {
     var res = utils.callService(body, 'video', 'explicit');
     if (!res.ok) {
       log.error('Error call explicit video transformations');
+      log.error(res.message);
     }
-    return conf;
+  } catch (err) {
+    log.error(err);
+  }
+  return conf;
 }
 
 module.exports.render = function (context) {
@@ -111,16 +116,16 @@ module.exports.render = function (context) {
   let viewmodel = {};
   let val = context.content.asset_sel;
   if (!val.playerConf.empty) {
-  var conf = JSON.parse(val.playerConf);
-  var format = currentSite.getCustomPreferenceValue('CloudinaryVideoFormat');
-  if (format !== null && format.value !== 'none') {
-    conf.sourceType = format
-  }
-  conf = callEagerTransformations(conf);
-  viewmodel.cloudName = val.cloudName;
-  viewmodel.public_id = val.playerConf.publicId;
-  viewmodel.id = idSafeString(val.public_id + randomString(12));
-  viewmodel.playerConf = JSON.stringify(conf);
+    var conf = JSON.parse(val.playerConf);
+    var format = currentSite.getCustomPreferenceValue('CloudinaryVideoFormat');
+    if (format !== null && format.value !== 'none') {
+      conf.sourceType = format
+    }
+    conf = callEagerTransformations(conf);
+    viewmodel.cloudName = val.cloudName;
+    viewmodel.public_id = val.playerConf.publicId;
+    viewmodel.id = idSafeString(val.public_id + randomString(12));
+    viewmodel.playerConf = JSON.stringify(conf);
   }
   model.viewmodel = viewmodel;
   return new Template('experience/components/assets/cloudinary_video').render(model).text;

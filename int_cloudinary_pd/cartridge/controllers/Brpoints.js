@@ -7,9 +7,9 @@ var utils = require('~/cartridge/experience/utils/utils');
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 
 server.get('Points', server.middleware.https, function (req, res, next) {
-    let publicId = req.querystring.publicId;
+    var publicId = req.querystring.publicId;
     if (publicId) {
-        let brs = getBreackpoints(publicId);
+        var brs = getBreackpoints(publicId);
         res.json({
             status: 'ok',
             breakpoints: brs

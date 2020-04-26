@@ -97,7 +97,8 @@ function generate_responsive_breakpoints_string(breakpoints) {
     if (!Array.isArray(breakpoints)) {
         breakpoints = [breakpoints];
     }
-    return JSON.stringify(breakpoints);
+    var b = JSON.stringify(breakpoints);
+    return b;
 }
 
 module.exports = {
