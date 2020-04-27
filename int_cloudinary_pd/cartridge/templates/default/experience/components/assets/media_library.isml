@@ -27,9 +27,15 @@
 
 <div class="cloudinary-media-library-container sfdc-component-mock sfdc-component-assets-media_library-mock">
 <isif condition="${pdict.viewmodel.placeholder}">
+<isif condition="${pdict.viewmodel.imageLink}">
+    <a href="${pdict.viewmodel.imageLink}">
+</isif>
     <img class="component-media_library ml-image" src="${pdict.viewmodel.placeholder}"  data-real-url="${pdict.viewmodel.src}"
     id="${pdict.viewmodel.id}"
     alt="${pdict.viewmodel.altText}"
     style="max-width: 100%">
+<isif condition="${pdict.viewmodel.imageLink}">
+</a>
+</isif>
     </isif>
 </div>

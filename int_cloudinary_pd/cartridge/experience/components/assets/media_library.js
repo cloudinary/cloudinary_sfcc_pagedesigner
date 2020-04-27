@@ -28,7 +28,7 @@ var serviceURL = cloudinaryService.URL;
 
 function buildLinkUrl(linkArr) {
   if (linkArr && linkArr.length > 0) {
-    return new URLUtils.url(new URLAction(linkArr[0], currentSite.name), new URLParamter('pid', linkArr[2]));
+    return new URLUtils.url(new URLAction(linkArr[0], currentSite.name), new URLParamter(linkArr[1], linkArr[2]));
   }
   return null;
 }
@@ -231,6 +231,9 @@ module.exports.render = function (context) {
     viewmodel.breakpoints = context.content.image_sel.breakpoints;
     viewmodel.sizes = context.content.image_sel.sizes;
     viewmodel.src = context.content.image_sel.imageUrl;
+    if (context.content.image_sel.imageLinkData) {
+      viewmodel.imageLink = buildLinkUrl(JSON.parse(context.content.image_sel.imageLinkData));
+    }
     viewmodel.altText = context.content.image_sel.alt;
     if (context.content.image_sel.isTransformationOverride) {
       viewmodel.transformation = context.content.image_sel.transformation;
