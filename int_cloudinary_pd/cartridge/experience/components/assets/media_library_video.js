@@ -84,18 +84,18 @@ function rebuildTransformations(transformations) {
   return global.concat(trns);
 }
 
-function callEagerTransformations(conf) {
+function callEagerTransformations(str, publicId) {
   try {
-    var trans = Array.isArray(conf.sourceConfig.transformation) ? conf.sourceConfig.transformation : [];
+/*     var trans = Array.isArray(conf.sourceConfig.transformation) ? conf.sourceConfig.transformation : [];
     if (!conf.isTransformationOverride) {
       trans = rebuildTransformations(trans);
     }
-    conf.sourceConfig.transformation = trans;
+    conf.sourceConfig.transformation = trans; */
     var body = {
       timestamp: (Date.now() / 1000).toFixed(),
       type: "upload",
-      public_id: conf.publicId,
-      eager: utils.stringifyJson(trans),
+      public_id: publicId,
+      eager: str,
       eager_async: true
     }
     body.signature = utils.addSignatureToBody(body);
@@ -122,10 +122,10 @@ module.exports.render = function (context) {
     if (format !== null && format.value !== 'none') {
       conf.sourceType = format
     }
-    conf = callEagerTransformations(conf);
+    conf = callEagerTransformations(conf.transStr, conf.publicId);
     viewmodel.cloudName = val.cloudName;
     viewmodel.public_id = val.playerConf.publicId;
-    viewmodel.id = idSafeString(val.public_id + randomString(12));
+    viewmodel.id = idSafeString(conf.public_id + randomString(12));
     viewmodel.playerConf = JSON.stringify(conf);
   }
   model.viewmodel = viewmodel;
