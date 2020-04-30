@@ -23,12 +23,10 @@ var data = {
 
     getCloudName: function () {
         return currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCloudName');
-    },
-
-    getTagName: function () {
-		// Should be "/tags/SFCCPageDesigner"
-        return currentSite.getCustomPreferenceValue('CloudinaryPageDesignerTag');
-    }
+	},
+	getIframeEnv: function () {
+        return currentSite.getCustomPreferenceValue('CloudinaryPageDesignerEnv');
+	}
 };
 
 // define service

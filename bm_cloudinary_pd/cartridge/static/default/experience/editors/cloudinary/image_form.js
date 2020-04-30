@@ -14,9 +14,9 @@
         document.body.appendChild(iFrame);
         let ifrm = document.querySelector('iframe');
         window.addEventListener('message', (event) => {
-            //if (event.origin === 'https://sfcc-pd.local:1234') {
-            handleIframeMessage(event.data, ifrm, value, config);
-            //}
+            if (event.origin === config.iFrameEnv) {
+                handleIframeMessage(event.data, ifrm, value, config);
+            }
         }
         )
         window.config = config;
@@ -27,7 +27,7 @@
 function getIframeUrl(value, config) {
     let val = encodeURIComponent(JSON.stringify(value));
     let global = encodeURIComponent(JSON.stringify(config.globalTrans));
-    return "https://sfcc-pd.local:1234/image-side-panel?cloudName=" + config.cloudName + '&value=' + val + '&global=' + global;
+    return config.iFrameEnv + "/image-side-panel?cloudName=" + config.cloudName + '&value=' + val + '&global=' + global;
 }
 
 function reInitIframe(value, config) {

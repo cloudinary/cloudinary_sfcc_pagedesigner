@@ -20,6 +20,7 @@ module.exports.init = function (editor) {
 	conf.put('type', 'image');
 	editor.configuration.put('cloudName', cloudinaryApi.data.getCloudName());
 	editor.configuration.put('globalTrans', cloudinaryApi.globalTransform());
+	editor.configuration.put('iFrameEnv', cloudinaryApi.data.getIframeEnv());
 	var videoSelector = PageMgr.getCustomEditor('cloudinary.video_selector', conf);
 	var adv = PageMgr.getCustomEditor('cloudinary.advanced_image_form', conf);
 	editor.dependencies.put('advBreakout', adv);

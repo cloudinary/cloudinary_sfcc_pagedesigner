@@ -3,7 +3,7 @@
     subscribe('sfcc:ready', async ({ value, config, isDisabled, isRequired, dataLocale, displayLocale }) => {
         let iFrame = document.createElement('iframe');
         let val = encodeURIComponent(JSON.stringify(value));
-        iFrame.src = "https://sfcc-pd.local:1234/video?cloudName=" + config.cloudName + '&value=' + val;
+        iFrame.src = config.iFrameEnv + "/video?cloudName=" + config.cloudName + '&value=' + val;
         iFrame.id = 'video-form';
         iFrame.setAttribute('frameborder', 0);
         iFrame.setAttribute('marginwidth', 0);
@@ -14,12 +14,12 @@
         document.body.appendChild(iFrame);
         let ifrm = document.querySelector('iframe');
         window.addEventListener('message', (event) => {
-            //if (event.origin === 'https://sfcc-pd.local:1234') {
+            if (event.origin === config.iFrameEnv) {
                 handleIframeMessage(event.data, ifrm, value, config);
-            //}
+            }
         }
         )
-        iFrameResize({heightCalculationMethod: 'taggedElement', autoResize: false}, '#video-form');
+        iFrameResize({heightCalculationMethod: 'taggedElement' }, '#video-form');
     })
 })()
 

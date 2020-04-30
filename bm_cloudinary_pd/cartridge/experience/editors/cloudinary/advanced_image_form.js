@@ -14,4 +14,5 @@ module.exports.init = function (editor) {
 	editor.configuration.put('cloudName', cloudinaryApi.data.getCloudName());
 	editor.configuration.put('globalTrans', cloudinaryApi.globalTransform());
 	editor.configuration.put('apiKey', cloudinaryApi.data.getAPIKey());
+	editor.configuration.put('iFrameEnv', cloudinaryApi.data.getIframeEnv());
 }

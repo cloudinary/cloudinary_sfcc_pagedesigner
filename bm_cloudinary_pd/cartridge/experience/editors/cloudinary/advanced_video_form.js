@@ -13,4 +13,5 @@ module.exports.init = function (editor) {
 	editor.dependencies.put('overlayBreakout', videoSelector);
 	editor.configuration.put('cloudName', cloudinaryApi.data.getCloudName());
 	editor.configuration.put('apiKey', cloudinaryApi.data.getAPIKey());
+	editor.configuration.put('iFrameEnv', cloudinaryApi.data.getIframeEnv());
 }

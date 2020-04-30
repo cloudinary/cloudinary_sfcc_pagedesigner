@@ -45,6 +45,15 @@
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
             </attribute-definition>
+            <attribute-definition attribute-id="CloudinaryPageDesignerEnv">
+                <display-name xml:lang="x-default">Cloudinary Page Designer Enviroment</display-name>
+                <description xml:lang="x-default">Cloudinary Iframe Enviroment</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>https://sfcc.t-y.co</default-value>
+            </attribute-definition>
             <attribute-definition attribute-id="CloudinaryImageTransformationsQuality">
                 <display-name xml:lang="x-default">Default image quality</display-name>
                 <description xml:lang="x-default">Choose the quality for images</description>
@@ -295,7 +304,7 @@
                 <attribute attribute-id="CloudinaryVideoTransformationsBitRate"/>
                 <attribute attribute-id="CloudinaryVideoTransformationsQuality"/>
                 <attribute attribute-id="CloudinaryVideoTransformations"/>
-                
+                <attribute attribute-id="CloudinaryPageDesignerEnv"/>
             </attribute-group>
         </group-definitions>
     </type-extension>
