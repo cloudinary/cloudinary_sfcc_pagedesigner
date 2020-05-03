@@ -52,7 +52,7 @@
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
-                <default-value>https://sfcc.t-y.co</default-value>
+                <default-value>https://page-designer.cloudinary.com</default-value>
             </attribute-definition>
             <attribute-definition attribute-id="CloudinaryImageTransformationsQuality">
                 <display-name xml:lang="x-default">Default image quality</display-name>
