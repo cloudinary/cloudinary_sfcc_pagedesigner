@@ -20,7 +20,7 @@
         }
         )
         window.config = config;
-        iFrameResize({ heightCalculationMethod: 'taggedElement'}, '#image-form');
+        iFrameResize({ heightCalculationMethod: 'taggedElement' }, '#image-form');
     })
 })()
 
@@ -91,7 +91,17 @@ const handleIframeMessage = (message, ifrm, value = null, config) => {
                 }, (data) => {
                     console.log(data);
                     data.value.origin = 'imageLink';
-                    ifrm.contentWindow.postMessage(data.value, '*');
+                    fetch(config.linkBuilderUrl + '?linkData=' + encodeURIComponent(JSON.stringify(data.value.value))).then((response) => {
+                        if (response.status === 200) {
+                            response.json().then((json) => {
+                                if (json.status === 'ok') {
+                                    data.value.url = json.url;
+                                    ifrm.contentWindow.postMessage(data.value, '*');
+                                }
+
+                            })
+                        }
+                    })
                 });
                 break;
             case 'done':

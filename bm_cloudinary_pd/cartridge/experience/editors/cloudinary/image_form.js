@@ -15,7 +15,9 @@ module.exports.init = function (editor) {
 	csrf.put(CSRF.getTokenName(), CSRF.generateToken());
 	var currentSite = Site.getCurrent();
 	var act = new URLAction('Brpoints-Points', currentSite.getID());
+	var linkUrlAct = new URLAction('Links-url', currentSite.getID());
 	editor.configuration.put('breakpointsUrl', URLUtils.abs(act).toString());
+	editor.configuration.put('linkBuilderUrl', URLUtils.abs(linkUrlAct).toString());
 	editor.configuration.put('csfr', csrf)
 	conf.put('type', 'image');
 	editor.configuration.put('cloudName', cloudinaryApi.data.getCloudName());
