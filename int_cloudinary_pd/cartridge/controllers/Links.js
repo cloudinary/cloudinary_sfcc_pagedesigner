@@ -12,7 +12,7 @@ var URLParamter = require("dw/web/URLParameter");
 server.get('url', server.middleware.https, function (req, res, next) {
   var linkArr = (req.querystring && req.querystring.linkData) ? JSON.parse(decodeURIComponent(req.querystring.linkData)) : null;
   if (linkArr && linkArr.length > 0) {
-    var url = new URLUtils.(new URLAction(linkArr[0], currentSite.name), new URLParamter(linkArr[1], linkArr[2]))
+    var url = new URLUtils.abs(new URLAction(linkArr[0], currentSite.name), new URLParamter(linkArr[1], linkArr[2]))
     var link = {
         status: 'ok',
         url: url.toString()
