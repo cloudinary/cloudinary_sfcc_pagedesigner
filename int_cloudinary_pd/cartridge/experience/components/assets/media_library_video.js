@@ -149,7 +149,7 @@ module.exports.render = function (context) {
     conf = callEagerTransformations(conf, publicId);
     viewmodel.cloudName = val.cloudName;
     viewmodel.public_id = publicId;
-    viewmodel.id = idSafeString(publicId + randomString(12));
+    viewmodel.id = idSafeString(randomString(16));
     viewmodel.playerConf = JSON.stringify(conf);
   }
   model.viewmodel = viewmodel;
