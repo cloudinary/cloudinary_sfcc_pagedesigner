@@ -46,8 +46,8 @@
                 <min-length>0</min-length>
             </attribute-definition>
             <attribute-definition attribute-id="CloudinaryPageDesignerEnv">
-                <display-name xml:lang="x-default">Cloudinary Page Designer Enviroment</display-name>
-                <description xml:lang="x-default">Cloudinary Iframe Enviroment</description>
+                <display-name xml:lang="x-default">Cloudinary Page Designer Environment</display-name>
+                <description xml:lang="x-default">Cloudinary Iframe Environment</description>
                 <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
