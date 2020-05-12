@@ -11,7 +11,7 @@
             }
         });
         let div = document.createElement('div');
-        div.textContent = "Cartridge version V0.19"
+        div.textContent = "Cartridge version: " + config.version
         document.body.appendChild(div);
     });
 })();
