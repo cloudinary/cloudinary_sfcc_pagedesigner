@@ -26,7 +26,7 @@
 })()
 
 function getIframeUrl(value, config) {
-    let val = encodeURIComponent(JSON.stringify(value));
+    let val = encodeURIComponent(JSON.stringify(cldUtils.dehydrate(value)));
     let global = encodeURIComponent(JSON.stringify(config.globalTrans));
     return config.iFrameEnv + "/image?cloudName=" + config.cloudName + '&value=' + val + '&global=' + global;
 }
@@ -60,9 +60,6 @@ const handleIframeMessage = (message, ifrm, value = null, config) => {
                     ifrm.contentWindow.postMessage(data.value, '*');
                 });
                 break;
-            case 'ready':
-                ifrm.contentWindow.postMessage(value, '*');
-                break;
             case 'done':
                 delete message.action;
                 var val = Object.assign({}, message);
@@ -70,6 +67,10 @@ const handleIframeMessage = (message, ifrm, value = null, config) => {
                     type: 'sfcc:value',
                     payload: val
                 })
+                break;
+            case 'ready':
+                value.origin = 'ready';
+                ifrm.contentWindow.postMessage(value, '*');
                 break;
 
         }

@@ -24,8 +24,9 @@
     })
 })()
 
+
 function getIframeUrl(value, config) {
-    let val = encodeURIComponent(JSON.stringify(value));
+    let val = encodeURIComponent(JSON.stringify(cldUtils.dehydrate(value)));
     let global = encodeURIComponent(JSON.stringify(config.globalTrans));
     return config.iFrameEnv + "/image-side-panel?cloudName=" + config.cloudName + '&value=' + val + '&global=' + global;
 }
@@ -89,7 +90,6 @@ const handleIframeMessage = (message, ifrm, value = null, config) => {
                         title: 'Link Builder'
                     }
                 }, (data) => {
-                    console.log(data);
                     data.value.origin = 'imageLink';
                     fetch(config.linkBuilderUrl + '?linkData=' + encodeURIComponent(JSON.stringify(data.value.value))).then((response) => {
                         if (response.status === 200) {
@@ -114,6 +114,10 @@ const handleIframeMessage = (message, ifrm, value = null, config) => {
                 emit({
                     type: 'sfcc:interacted',
                 });
+                break;
+            case 'ready':
+                value.origin = 'ready';
+                ifrm.contentWindow.postMessage(value, '*');
                 break;
         }
     }

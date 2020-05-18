@@ -24,7 +24,7 @@
 })()
 
 function getIframeUrl(value, config) {
-    let val = encodeURIComponent(JSON.stringify(value));
+    let val = encodeURIComponent(JSON.stringify(cldUtils.dehydrate(value)));
     let global = encodeURIComponent(JSON.stringify(config.globalTrans));
     return config.iFrameEnv + "/video-side-panel?cloudName=" + config.cloudName + '&value=' + val + '&global=' + global;
 }
@@ -70,6 +70,10 @@ const handleIframeMessage = (message, ifrm, value = null, config) => {
                     type: 'sfcc:value',
                     payload: val
                 })
+                break;
+            case 'ready':
+                value.origin = 'ready';
+                ifrm.contentWindow.postMessage(value, '*');
                 break;
 
         }

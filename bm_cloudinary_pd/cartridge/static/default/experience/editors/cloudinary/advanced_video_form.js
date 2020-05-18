@@ -2,7 +2,7 @@
 (() => {
     subscribe('sfcc:ready', async ({ value, config, isDisabled, isRequired, dataLocale, displayLocale }) => {
         let iFrame = document.createElement('iframe');
-        let val = encodeURIComponent(JSON.stringify(value));
+        let val = encodeURIComponent(JSON.stringify(cldUtils.dehydrate(value)));
         iFrame.src = config.iFrameEnv + "/video?cloudName=" + config.cloudName + '&value=' + val;
         iFrame.id = 'video-form';
         iFrame.setAttribute('frameborder', 0);
@@ -40,6 +40,7 @@ const handleIframeMessage = (message, ifrm, value = null, config) => {
                 });
                 break;
             case 'ready':
+                value.origin = 'ready';
                 ifrm.contentWindow.postMessage(value, '*');
                 break;
             case 'done':
