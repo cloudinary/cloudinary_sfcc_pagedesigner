@@ -94,7 +94,7 @@ function buildGlobalStr(global) {
         str += (str === '') ? ',br_' + global[key] : 'br_' + global[key];
       }
       if (key === 'raw_transformation') {
-        str += (str === '') ? ',' + global[key] :  global[key];
+        str += (str === '') ? ',' + global[key] : global[key];
       }
     }
   }
@@ -111,7 +111,7 @@ function callEagerTransformations(conf, publicId) {
       var globalStr = buildGlobalStr(global[0]);
       if (globalStr !== '') {
         str = globalStr + ',' + str;
-       }
+      }
     }
     conf.sourceConfig.transformation = trans;
     var body = {
@@ -130,16 +130,19 @@ function callEagerTransformations(conf, publicId) {
     }
     return conf;
   } catch (e) {
-      log.error('Error call explicit video transformations');
-      log.error(e.message);
+    log.error('Error call explicit video transformations');
+    log.error(e.message);
   }
+}
+function asVideo(val) {
+  return val.formValues && val.formValues.video && val.formValues.video.asset;
 }
 
 module.exports.render = function (context) {
-  let model = new HashMap();
-  let viewmodel = {};
   let val = context.content.asset_sel;
-  if (!val.playerConf.empty) {
+  let model = new HashMap();
+  if (!val.playerConf.empty && asVideo(val)) {
+    let viewmodel = {};
     var conf = JSON.parse(val.playerConf);
     var publicId = conf.publicId;
     var format = currentSite.getCustomPreferenceValue('CloudinaryVideoFormat');
@@ -151,8 +154,7 @@ module.exports.render = function (context) {
     viewmodel.public_id = publicId;
     viewmodel.id = idSafeString(randomString(16));
     viewmodel.playerConf = JSON.stringify(conf);
+    model.viewmodel = viewmodel;
   }
-  model.viewmodel = viewmodel;
   return new Template('experience/components/assets/cloudinary_video').render(model).text;
-
 };

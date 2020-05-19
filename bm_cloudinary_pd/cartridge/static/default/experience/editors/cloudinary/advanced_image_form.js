@@ -30,16 +30,16 @@ function getIframeUrl(value, config) {
     let global = encodeURIComponent(JSON.stringify(config.globalTrans));
     return config.iFrameEnv + "/image?cloudName=" + config.cloudName + '&value=' + val + '&global=' + global;
 }
-function autosizeIframe(iframe) {
+/* function autosizeIframe(iframe) {
     iframe.height = iframe.contentWindow.document.body.scrollHeight + "px";
-}
+} */
 
 const getBreackpoints = (brUrl, publicId, ifrm) => {
     fetch(brUrl + '?publicId=' + publicId).then(response => {
         if (response.ok) {
             response.json().then(data => {
                 ifrm.contentWindow.postMessage(data, '*');
-            })
+            }).catch((e) => { console.log(e); });
         }
     })
 }
@@ -55,7 +55,6 @@ const handleIframeMessage = (message, ifrm, value = null, config) => {
                         title: `Cloudinary Image`
                     }
                 }, (data) => {
-                    getBreackpoints(config.breakpointsUrl, data.value.public_id, ifrm);
                     data.value.origin = message.source;
                     ifrm.contentWindow.postMessage(data.value, '*');
                 });

@@ -98,15 +98,14 @@ const handleIframeMessage = (message, ifrm, value = null, config) => {
                                     data.value.url = json.url;
                                     ifrm.contentWindow.postMessage(data.value, '*');
                                 }
-
-                            })
+                            }).catch((e) => {console.log(e)});
                         }
                     })
                 });
                 break;
             case 'done':
                 delete message.action;
-                var val = isObjectEmpty(message.formValues.image) ? null : message;
+                var val = message.valid ? message : null;
                 emit({
                     type: 'sfcc:value',
                     payload: val

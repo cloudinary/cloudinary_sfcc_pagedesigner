@@ -19,7 +19,7 @@
         }
         )
         window.config = config;
-        iFrameResize({heightCalculationMethod: 'taggedElement' }, '#video-form');
+        iFrameResize({ heightCalculationMethod: 'taggedElement' }, '#video-form');
     })
 })()
 
@@ -65,11 +65,14 @@ const handleIframeMessage = (message, ifrm, value = null, config) => {
                 break;
             case 'done':
                 delete message.action;
-                var val = Object.assign({}, message);
+                var val = message.valid ? message : null;
                 emit({
                     type: 'sfcc:value',
                     payload: val
-                })
+                });
+                emit({
+                    type: 'sfcc:interacted',
+                });
                 break;
             case 'ready':
                 value.origin = 'ready';

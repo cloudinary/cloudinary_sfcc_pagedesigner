@@ -28,7 +28,7 @@
 		${JSON.stringify(pdict.viewmodel)}<br />
 	</div>
 </iscomment>
-<div class="cloudinary-video-container">
+<div class="cloudinary-video-container sfdc-component-mock sfdc-component-assets-media_library_image-mock">
 <img alt="pdict.viewmodel.alt" src="pdict.viewmodel.src">
 </div>
 
