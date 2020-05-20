@@ -8,10 +8,6 @@
 	// SFRA has a logic bug where full urls are added twice, so we need to check for duplicates before adding.
     var assets = require('*/cartridge/scripts/assets.js');
 
-
-	// Cloudinary PD Component CSS
-    assets.addCss('/css/cloudinary.css');
-    
 	// Cloudinary Core JS
 	src = 'https://unpkg.com/cloudinary-core/cloudinary-core-shrinkwrap.min.js';
     if (assets.scripts.lastIndexOf(src) < 0) {

@@ -5,7 +5,6 @@
   "attribute_definition_groups": [
     {
       "id": "Image",
-      "name": "Cloudinary image Configuration",
       "attribute_definitions": [
         {
           "id": "image_sel",
