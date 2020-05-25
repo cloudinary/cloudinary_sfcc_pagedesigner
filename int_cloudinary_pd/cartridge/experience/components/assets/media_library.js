@@ -223,10 +223,14 @@ function idSafeString(str) {
 module.exports.render = function (context) {
   let model = new HashMap();
   let viewmodel = {};
+  let cname = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCNAME');
   if (context.content.image_sel && context.content.image_sel.imageUrl) {
     viewmodel.id = idSafeString(context.content.image_sel.public_id + randomString(12));
     viewmodel.publicId = context.content.image_sel.public_id;
-    viewmodel.cloudName = context.content.image_sel.cloudName;
+    viewmodel.cloudName = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCloudName');
+    if (cname !== 'res.cloudinary.com') {
+      viewmodel.cname = cname;
+    }
     viewmodel.placeholder = context.content.image_sel.placeholderUrl || context.content.image_sel.imageUrl;
     viewmodel.breakpoints = context.content.image_sel.breakpoints;
     viewmodel.sizes = context.content.image_sel.sizes;

@@ -142,6 +142,7 @@ module.exports.render = function (context) {
   let val = context.content.asset_sel;
   let model = new HashMap();
   if (!val.playerConf.empty && asVideo(val)) {
+  let cname = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCNAME');
     let viewmodel = {};
     var conf = JSON.parse(val.playerConf);
     var publicId = conf.publicId;
@@ -149,8 +150,11 @@ module.exports.render = function (context) {
     if (format !== null && format.value !== 'none') {
       conf.sourceType = format
     }
+    if (cname !== 'res.cloudinary.com') {
+      viewmodel.cname = cname;
+    }
     conf = callEagerTransformations(conf, publicId);
-    viewmodel.cloudName = val.cloudName;
+    viewmodel.cloudName = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCloudName');
     viewmodel.public_id = publicId;
     viewmodel.id = idSafeString(randomString(16));
     viewmodel.playerConf = JSON.stringify(conf);

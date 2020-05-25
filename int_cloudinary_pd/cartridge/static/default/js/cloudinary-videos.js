@@ -22,7 +22,13 @@ $(document).ready(function () {
         document.cloudinaryInit = true;
         setTimeout(function () {
             // console.log('Cloudinary: Waiting 0.5 seconds');
-            cld = cloudinary.Cloudinary.new({ cloud_name: window.cloudName });
+            let conf = {
+                cloud_name: window.cloudName
+            }
+            if (window.cname) {
+                conf.cname = window.cname
+            }
+            cld = cloudinary.Cloudinary.new(conf);
             initializeCloudinaryPlayers();
         }, 100);
     }

@@ -21,6 +21,7 @@ module.exports.init = function (editor) {
 	editor.configuration.put('csfr', csrf)
 	conf.put('type', 'image');
 	editor.configuration.put('cloudName', cloudinaryApi.data.getCloudName());
+	editor.configuration.put('cname', cloudinaryApi.data.getCloudinaryCNAME());
 	editor.configuration.put('globalTrans', cloudinaryApi.globalTransform());
 	editor.configuration.put('iFrameEnv', cloudinaryApi.data.getIframeEnv());
 	var videoSelector = PageMgr.getCustomEditor('cloudinary.video_selector', conf);

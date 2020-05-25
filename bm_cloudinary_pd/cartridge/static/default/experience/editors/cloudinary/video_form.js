@@ -26,7 +26,7 @@
 function getIframeUrl(value, config) {
     let val = encodeURIComponent(JSON.stringify(cldUtils.dehydrate(value)));
     let global = encodeURIComponent(JSON.stringify(config.globalTrans));
-    return config.iFrameEnv + "/video-side-panel?cloudName=" + config.cloudName + '&value=' + val + '&global=' + global;
+    return config.iFrameEnv + "/video-side-panel?cloudName=" + config.cloudName + '&cname=' + config.cname + '&value=' + val + '&global=' + global;
 }
 
 function reInitIframe(value, config) {

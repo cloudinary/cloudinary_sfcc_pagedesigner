@@ -36,6 +36,7 @@
   window.players = window.players || [];
   window.players.push(value);
   window.cloudName = value.cloudName;
+  window.cname = value.cname || null;
   console.log(value);
 </script>
 </div>

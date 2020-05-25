@@ -5,5 +5,6 @@ var Logger = require('dw/system/Logger');
 
 module.exports.init = function (editor) {
 	editor.configuration.put('cloudName', cloudinaryApi.data.getCloudName());
+	editor.configuration.put('cname', cloudinaryApi.data.getCloudinaryCNAME());
 	editor.configuration.put('apiKey', cloudinaryApi.data.getAPIKey());
 };

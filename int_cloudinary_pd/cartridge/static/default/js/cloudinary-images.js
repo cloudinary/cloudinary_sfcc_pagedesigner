@@ -2,7 +2,13 @@ window.addEventListener('load', renderImgs);
 
 function renderImgs() {
     console.log('render images');
-    cld = cloudinary.Cloudinary.new({ cloud_name: window.cloudName });
+    let conf = {
+        cloud_name: window.cloudName
+    }
+    if (window.cname) {
+        conf.cname = window.cname
+    }
+    cld = cloudinary.Cloudinary.new(conf);
     for (var imageConf of cldImages) {
         if (imageConf.id) {
             var trans = JSON.parse(imageConf.transformation);
@@ -19,8 +25,8 @@ function renderImgs() {
             var breakpoints = JSON.parse(imageConf.breakpoints);
             if (breakpoints && breakpoints.length > 0) {
                 for (let br of breakpoints) {
-                    var trs = [{ crop: 'scale', width: br}].concat(t);
-                    var s = cld.url(imageConf.publicId, {transformation: trs});
+                    var trs = [{ crop: 'scale', width: br }].concat(t);
+                    var s = cld.url(imageConf.publicId, { transformation: trs });
                     brs.push(s + ' w' + br);
                 }
             }

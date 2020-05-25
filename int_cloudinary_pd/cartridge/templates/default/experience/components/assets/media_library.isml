@@ -20,7 +20,8 @@
   var value = JSON.parse('<isprint value="${JSON.stringify(pdict.viewmodel)}" encoding="jsonvalue"/>');
   window.cldImages = window.cldImages || [];
   window.cldImages.push(value);
-  window.cloudName = window.cloudName || value.cloudName;
+  window.cloudName = value.cloudName;
+  window.cnamw = value.cname || null;
   console.log(value);
 </script>
 
