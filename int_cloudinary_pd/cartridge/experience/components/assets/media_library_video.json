@@ -8,6 +8,7 @@
       "attribute_definitions": [
         {
           "id": "asset_sel",
+          "name": " ",
           "type": "custom",
           "required": true,
           "editor_definition": {

@@ -19,7 +19,14 @@
             }
         }
         )
-        iFrameResize({heightCalculationMethod: 'taggedElement' }, '#video-form');
+        parentIFrame.getPageInfo((i) => {
+            const rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
+            const headerHeight = 61;
+            const footerHeight = 61;
+            // We remove - 6rem padding, header & footer
+            iFrame.height = i.clientHeight - (6 * rem) - headerHeight - footerHeight;
+        });
+        //iFrameResize({heightCalculationMethod: 'taggedElement' }, '#video-form');
     })
 })()
 
