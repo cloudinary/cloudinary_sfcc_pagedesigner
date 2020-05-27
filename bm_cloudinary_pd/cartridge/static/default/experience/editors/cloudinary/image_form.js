@@ -56,6 +56,7 @@ const isObjectEmpty = (obj) => Object.keys(obj).length === 0 && obj.constructor 
 
 const handleIframeMessage = (message, ifrm, value = null, config) => {
     if (message.action) {
+    console.log(message);
         switch (message.action) {
             case 'openAdvConf':
                 emit({
@@ -105,22 +106,30 @@ const handleIframeMessage = (message, ifrm, value = null, config) => {
                 break;
             case 'done':
                 delete message.action;
-                var val = message.valid ? message : null;
+                emit({
+                    type: 'sfcc:valid',
+                    payload: {
+                        valid: false,
+                    }
+                });
                 emit({
                     type: 'sfcc:value',
-                    payload: val
-                });
-                emit({
-                    type: 'sfcc:interacted',
+                    payload: message
                 });
                 break;
+            case 'invalid':
+                emit({
+                    type: 'sfcc:valid',
+                    payload: {
+                        valid: false,
+                    }
+                });
             case 'ready':
                 value.origin = 'ready';
                 ifrm.contentWindow.postMessage(value, '*');
                 break;
         }
     }
-    console.log(message);
 }
 listen('sfcc:value', value => {
     reInitIframe(value, window.config);
