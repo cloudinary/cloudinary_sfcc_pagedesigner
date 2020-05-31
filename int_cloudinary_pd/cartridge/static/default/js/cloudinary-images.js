@@ -27,7 +27,7 @@ function renderImgs() {
                 for (let br of breakpoints) {
                     var trs = [{ crop: 'scale', width: br }].concat(t);
                     var s = cld.url(imageConf.publicId, { transformation: trs });
-                    brs.push(s + ' w' + br);
+                    brs.push(s + ' ' + br + 'w');
                 }
             }
             var img = document.getElementById(imageConf.id);
