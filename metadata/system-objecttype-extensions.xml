@@ -188,7 +188,7 @@
                 <externally-managed-flag>false</externally-managed-flag>
                 <value-definitions>
                     <value-definition default="true">
-                        <display xml:lang="x-default">none</display>
+                        <display xml:lang="x-default">Player default</display>
                         <value>none</value>
                     </value-definition>
                     <value-definition>
