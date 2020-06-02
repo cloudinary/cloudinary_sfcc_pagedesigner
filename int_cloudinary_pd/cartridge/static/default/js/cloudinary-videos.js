@@ -5,11 +5,19 @@ function initializeCloudinaryPlayers() {
             var p = cld.videoPlayer(player.id, pCnf.playerConfig);
             p.fluid(true);
             p.source(pCnf.publicId, pCnf.sourceConfig);
+            p.on('error', function(e) {
+                const error = e.Player.videojs.error();
+                if (error && error.code === 10) {
+                    p.videojs.error(null);
+                    p.videojs.error({code: null, message: "Generating the video, please wait."});
+                }
+            })
         }
     });
     console.log(players);
 
 }
+
 
 $(document).ready(function () {
 	/**

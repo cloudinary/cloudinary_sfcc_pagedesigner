@@ -124,6 +124,10 @@ const handleIframeMessage = (message, ifrm, value = null, config) => {
                         valid: false,
                     }
                 });
+                emit({
+                    type: 'sfcc:value',
+                    payload: null
+                });
             case 'ready':
                 value.origin = 'ready';
                 ifrm.contentWindow.postMessage(value, '*');
