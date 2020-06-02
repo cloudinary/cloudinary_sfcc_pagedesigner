@@ -27,27 +27,36 @@
 						message: 'Wrong asset type.'
 					}
 				});
-				var root = document.getElementsByClassName('sfcc-ml-root')[0];
-				var error = formsEls.htmlToElement(formsEls.getErrorToast('Wrong asset type.'));
-				error.querySelector('#btn-close').addEventListener('click', function (e) {
-					root.removeChild(error);
-				})
-				root.appendChild(error);
+				showError('Wrong asset type.');
 			} else {
-				emit({
-					type: 'sfcc:valid',
-					payload: {
-						valid: true,
+				isAssetRestricted(config.assetInfoUrl, asset).then((restricted => {
+					if (!restricted) {
+						emit({
+							type: 'sfcc:valid',
+							payload: {
+								valid: true,
+							}
+						});
+						emit({
+							type: 'sfcc:value',
+							payload: asset
+						});
+						emit({
+							type: 'sfcc:breakoutApply',
+							payload: breakout
+						})
+					} else {
+						emit({
+							type: 'sfcc:valid',
+							payload: {
+								valid: false,
+								message: 'Asset is restricted'
+							}
+						});
+						showError('Asset is restricted');
 					}
-				});
-				emit({
-					type: 'sfcc:value',
-					payload: asset
-				});
-				emit({
-					type: 'sfcc:breakoutApply',
-					payload: breakout
 				})
+				)
 			}
 		}
 
@@ -92,5 +101,30 @@
 		const height = viewport.height - 16; // 16px = padding top + padding bottom
 		template.innerHTML = `<div class="sfcc-ml-root" style="height: ${height}px; max-height: ${height}px;"></div>`;
 		return template;
+	}
+	const showError = (message) => {
+		var root = document.getElementsByClassName('sfcc-ml-root')[0];
+		var error = formsEls.htmlToElement(formsEls.getErrorToast(message));
+		error.querySelector('#btn-close').addEventListener('click', function (e) {
+			root.removeChild(error);
+		})
+		root.appendChild(error);
+	}
+	const isAssetRestricted = (assetInfoUrl, asset) => {
+		return new Promise((resolve, reject) => {
+			fetch(assetInfoUrl + '?publicId=' + asset.public_id + '&type=' + asset.type + '&rType=' + asset.resource_type).then(response => {
+				if (response.ok) {
+					response.json().then(data => {
+						if (data.status === 'ok') {
+							resolve(data.info.access_mode !== 'public' || !!data.info.access_control);
+						} else {
+							resolve(false);
+						}
+					})
+				} else {
+					resolve(false);
+				}
+			});
+		})
 	}
 })();

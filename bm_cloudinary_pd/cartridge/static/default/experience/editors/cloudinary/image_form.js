@@ -52,6 +52,7 @@ const getBreackpoints = (brUrl, publicId, ifrm) => {
     })
 }
 
+
 const isObjectEmpty = (obj) => Object.keys(obj).length === 0 && obj.constructor === Object;
 
 const handleIframeMessage = (message, ifrm, value = null, config) => {

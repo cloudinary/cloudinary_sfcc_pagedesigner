@@ -101,9 +101,15 @@ function generate_responsive_breakpoints_string(breakpoints) {
     return b;
 }
 
+function createBasicAuthStr() {
+    var bytes = new Bytes(currentSite.getCustomPreferenceValue('CloudinaryPageDesignerAPIkey') + ":" + currentSite.getCustomPreferenceValue('CloudinaryPageDesignerSecretKey'));
+    return Encoding.toBase64(bytes);
+}
+
 module.exports = {
     addSignatureToBody: addSignatureToBody,
     callService: callService,
     stringifyJson: generate_responsive_breakpoints_string,
-    verifySignature: verifySignature
+    verifySignature: verifySignature,
+    createBasicAuthStr: createBasicAuthStr
 }
