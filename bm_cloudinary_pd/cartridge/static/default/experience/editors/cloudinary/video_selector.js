@@ -116,7 +116,11 @@
 				if (response.ok) {
 					response.json().then(data => {
 						if (data.status === 'ok') {
-							resolve(data.info.access_mode !== 'public' || !!data.info.access_control);
+							if (data.info.access_control) {
+								resolve(data.info.access_mode !== 'public' || (data.info.access_control && data.info.access_control[0].access_type !== 'anonymous'));
+							} else {
+								return resolve(false);
+							}
 						} else {
 							resolve(false);
 						}
