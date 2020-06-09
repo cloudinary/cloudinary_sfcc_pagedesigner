@@ -102,7 +102,7 @@
                         <value>100</value>
                     </value-definition>
                     <value-definition>
-                        <display xml:lang="x-default">none</display>
+                        <display xml:lang="x-default">No transformation</display>
                         <value>none</value>
                     </value-definition>
                 </value-definitions>
@@ -127,7 +127,7 @@
                         <value>2</value>
                     </value-definition>
                     <value-definition>
-                        <display xml:lang="x-default">none</display>
+                        <display xml:lang="x-default">No transformation</display>
                         <value>none</value>
                     </value-definition>
                 </value-definitions>
@@ -160,7 +160,7 @@
                         <value>png</value>
                     </value-definition>
                     <value-definition>
-                        <display xml:lang="x-default">none</display>
+                        <display xml:lang="x-default">No transformation</display>
                         <value>none</value>
                     </value-definition>
                 </value-definitions>

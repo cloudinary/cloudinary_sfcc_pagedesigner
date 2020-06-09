@@ -8,7 +8,7 @@
       "attribute_definitions": [
         {
           "id": "asset_sel",
-          "name": " ",
+          "name": "Component configuration",
           "type": "custom",
           "required": true,
           "editor_definition": {
