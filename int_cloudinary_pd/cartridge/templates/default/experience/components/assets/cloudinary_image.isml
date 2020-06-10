@@ -1,7 +1,7 @@
 <iscomment>
 	Cloudinary Video Component Template:
 	This document renders an instance of the component. Multiple instances can be placed on the page.
-	
+
 	Refer to module_pagedesigner_custom/cartridge/experience/components/assets/cloudinary_video.js
 </iscomment>
 <isscript>
@@ -14,8 +14,6 @@
     	assets.addJs(src);
 	}
 
-	
-    assets.addJs('/js/cloudinary-pd-video.js');
 </isscript>
 
 <iscomment>
