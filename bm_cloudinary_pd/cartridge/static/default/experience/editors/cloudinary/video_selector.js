@@ -82,7 +82,13 @@
 			inline_container: 'div.sfcc-ml-root',
 			max_files: 1,
 			multiple: false,
-			sandboxAttributes: ["allow-scripts", "allow-same-origin"]
+			sandboxAttributes: ["allow-scripts", "allow-same-origin"],
+			integration: {
+				type: "salesforce",
+				platform: "page-designer",
+				version: config.version,
+				environment: config.env
+			}
 		}, { insertHandler: insertHandler }
 		);
 		ml.show(

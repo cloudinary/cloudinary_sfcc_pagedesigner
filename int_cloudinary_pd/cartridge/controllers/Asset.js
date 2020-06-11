@@ -35,6 +35,7 @@ function getAssetInfo(publicId, type, rType, cloudName) {
     var authStr = utils.createBasicAuthStr();
     httpClient.setRequestHeader('Authorization', "Basic " + authStr);
     httpClient.setRequestHeader('Content-Type', 'application/json');
+    httpClient
     httpClient.send();
     if (httpClient.statusCode === 200) {
         return JSON.parse(httpClient.getText());
