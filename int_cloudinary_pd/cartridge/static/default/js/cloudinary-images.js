@@ -33,6 +33,7 @@ function renderImgs() {
             var img = document.getElementById(imageConf.id);
             if (img) {
                 img.src = url;
+                img.onerror = onError;
                 if (brs.length > 0) {
                     img.srcset = brs.join(',');
                 }
@@ -40,6 +41,14 @@ function renderImgs() {
         }
 
     }
+}
+
+const onError = (err) => {
+    let target = event.currentTarget;
+    target.onerror = null;
+    target.removeAttribute('srcset'); 
+    target.src = 'https://product-assets-res.cloudinary.com/image/upload/w_250,co_rgb:c23834,e_colorize:100,f_png/PageDesigner/warning.png';
+    return true;
 }
 
 const buildImageOverlay = (overlay) => {
