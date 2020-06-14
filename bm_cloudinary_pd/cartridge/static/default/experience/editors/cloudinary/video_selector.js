@@ -84,8 +84,8 @@
 			multiple: false,
 			sandboxAttributes: ["allow-scripts", "allow-same-origin"],
 			integration: {
-				type: "salesforce",
-				platform: "page-designer",
+				type: "sfcc_page_designer",
+				platform: "salesforce_commerce_cloud",
 				version: config.version,
 				environment: config.env
 			}
