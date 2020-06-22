@@ -3,7 +3,7 @@
 
 var PageMgr = require('dw/experience/PageMgr');
 var HashMap = require('dw/util/HashMap');
-var cloudinaryApi = require('~/cartridge/scripts/cloudinary/cloudinaryApi');
+var cloudinaryApi = require('*/cartridge/scripts/cloudinary/cloudinaryApi');
 
 module.exports.init = function (editor) {
 	var conf = new HashMap();

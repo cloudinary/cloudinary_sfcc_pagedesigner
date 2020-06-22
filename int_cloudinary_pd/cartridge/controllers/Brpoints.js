@@ -3,7 +3,7 @@
 var server = require('server');
 var cache = require('*/cartridge/scripts/middleware/cache');
 var currentSite = require('dw/system/Site').getCurrent();
-var utils = require('~/cartridge/experience/utils/utils');
+var utils = require('*/cartridge/experience/utils/utils');
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 
 server.get('Points', server.middleware.https, function (req, res, next) {

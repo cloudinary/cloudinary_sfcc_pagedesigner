@@ -1,11 +1,11 @@
 'use strict';
 
-var cloudinaryApi = require('~/cartridge/scripts/cloudinary/cloudinaryApi');
+var cloudinaryApi = require('*/cartridge/scripts/cloudinary/cloudinaryApi');
 var Logger = require('dw/system/Logger');
 var URLUtils = require('dw/web/URLUtils');
 var URLAction = require('dw/web/URLAction');
 var Site = require('dw/system/Site');
-var verJson = require('~/cartridge/scripts/cloudinary/version.json');
+var verJson = require('*/cartridge/scripts/cloudinary/version.json');
 
 module.exports.init = function (editor) {
 	editor.configuration.put('cloudName', cloudinaryApi.data.getCloudName());
