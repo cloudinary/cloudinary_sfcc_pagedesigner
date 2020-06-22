@@ -6,7 +6,7 @@
     "scripts": [
       "https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.2.10/iframeResizer.min.js",
       "/experience/editors/cloudinary/utils.js",
-      "/experience/editors/cloudinary/video_form.js"
+      "/experience/editors/cloudinary/imageForm.js"
     ],
     "styles": [
       "/experience/editors/cloudinary/form.css"

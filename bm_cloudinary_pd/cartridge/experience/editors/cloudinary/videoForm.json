@@ -1,12 +1,12 @@
 
 {
-  "name": "Cloudinary Advanced Image Config Form",
+  "name": "Cloudinary Image Config Form",
   "description": "Configure Image",
   "resources": {
     "scripts": [
       "https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.2.10/iframeResizer.min.js",
       "/experience/editors/cloudinary/utils.js",
-      "/experience/editors/cloudinary/advanced_video_form.js"
+      "/experience/editors/cloudinary/videoForm.js"
     ],
     "styles": [
       "/experience/editors/cloudinary/form.css"

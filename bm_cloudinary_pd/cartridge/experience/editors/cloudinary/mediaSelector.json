@@ -1,0 +1,13 @@
+{
+  "name": "Cloudinary Video Selector",
+  "description": "Select a video from a list of videos",
+  "resources": {
+    "scripts": [
+      "https://media-library.cloudinary.com/global/all.js",
+      "/experience/editors/cloudinary/mediaSelector.js"
+    ],
+    "styles": [
+      "/experience/editors/cloudinary/mediaSelector.css"
+    ]
+  }
+}

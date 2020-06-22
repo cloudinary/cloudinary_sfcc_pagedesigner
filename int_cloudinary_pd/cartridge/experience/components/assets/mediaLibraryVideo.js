@@ -160,5 +160,5 @@ module.exports.render = function (context) {
     viewmodel.playerConf = JSON.stringify(conf);
     model.viewmodel = viewmodel;
   }
-  return new Template('experience/components/assets/cloudinary_video').render(model).text;
+  return new Template('experience/components/assets/cloudinaryVideo').render(model).text;
 };

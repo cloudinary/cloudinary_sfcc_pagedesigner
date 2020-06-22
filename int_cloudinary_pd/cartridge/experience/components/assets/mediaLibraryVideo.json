@@ -1,18 +1,18 @@
 {
-  "name": "Cloudinary Image",
-  "description": "Cloudinary Image",
+  "name": "Cloudinary Video",
+  "description": "Cloudinary Video",
   "group": "Cloudinary",
   "attribute_definition_groups": [
     {
-      "id": "Image",
+      "id": "Video",
       "attribute_definitions": [
         {
-          "id": "image_sel",
+          "id": "asset_sel",
           "name": "Component configuration",
           "type": "custom",
           "required": true,
           "editor_definition": {
-            "type": "cloudinary.image_form"
+            "type": "cloudinary.videoForm"
           }
         },
         {
@@ -24,8 +24,8 @@
             "type": "cloudinary.version"
           }
         }
-      ]
-    }
-  ],
-  "region_definitions": []
-}
+        ]
+      }
+    ],
+    "region_definitions": []
+  }

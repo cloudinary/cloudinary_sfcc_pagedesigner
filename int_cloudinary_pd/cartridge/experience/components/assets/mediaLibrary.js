@@ -246,6 +246,6 @@ module.exports.render = function (context) {
     }
   }
   model.viewmodel = viewmodel;
-  return new Template('experience/components/assets/media_library').render(model).text;
+  return new Template('experience/components/assets/cloudinaryImage').render(model).text;
 
 };
