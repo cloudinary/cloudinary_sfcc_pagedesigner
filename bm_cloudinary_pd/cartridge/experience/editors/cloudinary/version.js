@@ -1,6 +1,6 @@
  'use strict';
 
-var cloudinaryApi = require('~/cartridge/scripts/cloudinary/cloudinary_api');
+var cloudinaryApi = require('~/cartridge/scripts/cloudinary/cloudinaryApi');
 var verJson = require('~/cartridge/scripts/cloudinary/version.json');
 
 module.exports.init = function (editor) {

@@ -5,7 +5,7 @@
   subscribe(
       'sfcc:ready', async ({value, config, isDisabled, isRequired, dataLocale, displayLocale, viewport, breakout}) => {
         console.log(
-            'cloudinary.video_selector::sfcc:ready', dataLocale, displayLocale, isDisabled, isRequired, value, config,
+            'cloudinary.cloudinaryApi::sfcc:ready', dataLocale, displayLocale, isDisabled, isRequired, value, config,
             viewport);
         let asset;
         if (value) {

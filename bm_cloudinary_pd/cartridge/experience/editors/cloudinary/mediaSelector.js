@@ -1,6 +1,6 @@
 'use strict';
 
-var cloudinaryApi = require('~/cartridge/scripts/cloudinary/cloudinary_api');
+var cloudinaryApi = require('~/cartridge/scripts/cloudinary/cloudinaryApi');
 var Logger = require('dw/system/Logger');
 var URLUtils = require('dw/web/URLUtils');
 var URLAction = require('dw/web/URLAction');
