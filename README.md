@@ -3,20 +3,21 @@ Cloudinary
 
 Cloudinary is a cloud service that offers a solution to any application's entire media management pipeline. 
 
-Easily upload images and videos to the cloud.  Automatically perform smart media resizing, cropping and conversion without installing any complex software.  Collaborate with Marketing and other teams on the same physical asset that gets displayed on your website or the app, so there’s no mistakes due to copying or emailing content around.  Media is seamlessly delivered through a fast CDN, and much much more. 
+Easily upload images and videos to the cloud.  Automatically perform smart media resizing, cropping and conversion without installing any complex software.  Collaborate with Marketing and other teams on the same physical asset that gets displayed on your website or the app, so there’s no mistakes due to copying or emailing content around.  Media is seamlessly delivered through a fast CDN, and much, much more. 
 
-Cloudinary offers a video component for the Salesforce B2C Commerce Page Designer.  Using this component and an accompanying Cloudinary account, you can add videos to your website pages with the click of a mouse.  Common operations such as changing video sizes, adding overlays, adapting to mobile devices are easily done through the cartridge using Cloudinary’s AI based media transformation capabilities.  Such videos are automatically transcoded to work on all popular browsers and mobile devices.  Cloudinary will optimize the videos to deliver the best quality with the least amount of bandwidth and time consumed, for a great user experience. Our comprehensive APIs and administration capabilities makes it easy to extend the cartridge functionality.
+Cloudinary offers image and video components for the Salesforce B2C Commerce Page Designer.  Using these components and an accompanying Cloudinary account, you can add images and videos to your website pages with the click of a mouse.  Common operations such as changing image and video sizes, adding overlays, adapting to mobile devices are easily done through the cartridge using Cloudinary’s AI based media transformation capabilities.  Videos are automatically transcoded to work on all popular browsers and mobile devices, and images are automatically converted to the optimal format.  Cloudinary will optimize images and videos to deliver the best quality with the least amount of bandwidth and time consumed, for a great user experience. Our comprehensive APIs and administration capabilities makes it easy to extend the cartridge functionality.
   
 
 
 ## Setup ######################################################################
 
-### Installing the video component 
-You will have to install the Cloudinary page designer cartridges into your Salesforce Commerce Cloud/Demandware Sandbox:
+### Installing the Cloudinary Page Designer Cartridge 
 
-* Clone this repository 
-* There are two projects representing two cartridges:  module_pagedesigner_custom and bm_pagedesigner_custom
-* Import the two projects into eclipse as cartridges described in this [Salesforce documentation](https://documentation.b2c.commercecloud.salesforce.com/DOC1/index.jsp?topic=%2Fcom.demandware.dochelp%2FSiteDevelopment%2FImportCartridgesIntoYourStorefront.html&cp=0_5_1_0_2)
+Install the Cloudinary page designer cartridges into your Salesforce Commerce Cloud/Demandware Sandbox:
+
+* Clone this repository. 
+* There are two projects representing two cartridges: int_cloudinary_pd and bm_cloudinary_pd
+* Import the two projects into eclipse as cartridges as described in this [Salesforce documentation](https://documentation.b2c.commercecloud.salesforce.com/DOC1/topic/com.demandware.dochelp/LegacyDevDoc/ImportCartridgesIntoYourStorefront.html?cp=0_5_22_0_12).
 * Verify that these two cartridges are deployed on your Commerce Cloud sandbox.
 
 
@@ -24,69 +25,60 @@ You will have to install the Cloudinary page designer cartridges into your Sales
 
 If you don’t have a Cloudinary account, sign up for a [free account](https://cloudinary.com/users/register/free) so you can try out image and video transformations and seamless delivery through CDN.
 
-Get your cloudname, api_key and api_secret from your Cloudinary account [as described here](https://cloudinary.com/documentation/solution_overview#access_identifiers) 
+Get your Cloud Name, API Key and API Secret from your Cloudinary account [as described here](https://cloudinary.com/documentation/how_to_integrate_cloudinary#get_familiar_with_the_cloudinary_console).
 
 ### Configuring the cartridges
 
 #### Import meta data
 
-* The meta data is available in your local git project after you cloned the repo.
-* In the Commerce Cloud Business Manager, navigate To "Administration > Site Development > Import & Export"
-* Upload and import "metadata/system-objecttype-extensions.xml" from your local git project 
-* In the Commerce Cloud Business Manager, navigate To "Administration > Operations > Import & Export" > Services > Import
-* Upload and import "metadata/services.xml" from your local git project 
+* The meta data is available in your local git project after you clone the repo.
+* In the Commerce Cloud Business Manager, navigate to **Administration > Site Development > Site Import & Export**.
+* Upload and import **import.zip** from the metadata folder.
 
 
-#### Update business manager cartridge path
+#### Update the Business Manager cartridge path
 
-* Navigate To "Administration > Sites > Manage Sites"
-* Click "Business Manager"
-* Cartridge path should look similar to "bm_pagedesigner_custom:bm_pagedesigner:bm_custom_plugin"
-* Disable and reset cache for the business manager site.
+* Navigate To **Administration > Sites > Manage Sites**.
+* Select the **Business Manager** site.
+* Add **bm_cloudinary_pd** to the cartridge path.
 
 
-#### Update site cartridge path
+#### Update the site cartridge path
 
-* Navigate to "Administration > Sites > Manage Sites"
-* Select "Sitegenesis" (or other site)
-* Cartridge path should look similar to "plugin_pagedesigner_sfra:app_storefront_base:module_pagedesigner_custom:module_pagedesigner"
-* Disable and reset cache
+* Navigate to **Administration > Sites > Manage Sites**.
+* Select the storefront site for which you want to enable the components and navigate to the **Settings** tab.
+* Add **int_cloudinary_pad** to the cartridge path.
 
 
 
 #### Update site preferences
 
-* Navigate to "Merchant Tools > Site Preferences"
-* Select "Cloudinary PageDesigner" and set these values and save.
-  - Cloudinary Cloud Name.  Provide your Cloudinary cloud name from your Cloudinary account
+* Navigate to **Merchant Tools > Site Preferences > Custom Preferences**
+* Select **CloudinaryPageDesigner** and set these values and save.
+  - Cloudinary Cloud Name.  Provide your Cloudinary cloud name from your Cloudinary account.
   - Cloudinary CNAME. If a special cname was setup from your Cloudinary account, provide it.
-  - Cloudinary Api Key.  Provide the api key from your Cloudinary account
-  - Cloudinary Api Secret.   Provide the api secret from your Cloudinary account
+  - Cloudinary Api Key.  Provide the api key from your Cloudinary account.
+  - Cloudinary Api Secret.   Provide the api secret from your Cloudinary account.
+  - Any of the other optional settings, as required.
 
 ## Using the cartridge ######################################################################
 
-### Tagging content in Cloudinary
-* Login to your cloudinary account and upload some videos and images to use as overlay logos.
-* Make sure you add a tag called "SFCCPageDesigner" to these videos and images.  
-  - This tag is used by default, but you can use any tag you want to.  But make sure you use this tag in the custom site preferences. 
-* Any assets with this tag will now be available inside the page designer interface.
-
-### Using the Cloudinary Video component
-* In the page designer, browse the availalbe components, pick the Cloudinary Video component and place it on the page. 
-* Open up the properties pane for the component.  
-  - Pick the video you want to use.
-  - Pick any presentation options you want to use.
-  - For overlays, choose to insert overlays and then select the image you want to overlay.
-  - Finally, chose options for the video player.
-* Save the settings and preview the page with gorgeous video
+### Using the Cloudinary Image and Video Components
+* In the page designer, browse the availalbe components, select the Cloudinary Image or Cloudinary Video component and drag it onto the page. 
+* Open up the configuration panel for the component.  
+  - Choose the image or video you want to use from the embedded Cloudinary media library.
+  - Select any presentation options you want to use.
+  - Select image or text overlays from the Advanced Configuration options.
+  - For videos, customize the video player from the Advanced Configuration options.
+* Save the settings and preview the page.
 
 
 ## Additional resources ##########################################################
 
 Additional resources are available at:
 
-* [Website](https://cloudinary.com)
-* [Interactive demo](https://demo.cloudinary.com/default)
+* [Cloudinary website](https://cloudinary.com)
+* [Interactive demos](https://demo.cloudinary.com/default)
 * [Documentation](https://cloudinary.com/documentation)
 * [Knowledge Base](https://support.cloudinary.com/hc/en-us)
 * [Video transformations documentation](https://cloudinary.com/documentation/video_manipulation_and_delivery)
@@ -96,7 +88,7 @@ Additional resources are available at:
 
 You can [open an issue through GitHub](https://github.com/cloudinary/cloudinary_sfcc_pagedesigner/issues).
 
-Contact us [https://cloudinary.com/contact](https://cloudinary.com/contact)
+Contact us [https://cloudinary.com/contact](https://cloudinary.com/contact).
 
 Stay tuned for updates, tips and tutorials: [Blog](https://cloudinary.com/blog), [Twitter](https://twitter.com/cloudinary), [Facebook](https://www.facebook.com/Cloudinary).
 
