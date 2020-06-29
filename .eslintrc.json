@@ -9,6 +9,8 @@
         "valid-jsdoc": ["error", { "preferType": { "Boolean": "boolean", "Number": "number", "object": "Object", "String": "string" }, "requireReturn": false}],
         "vars-on-top": "off",
         "global-require": "off",
+        "no-plusplus": "off",
+        "no-restricted-syntax": "off",
         "no-shadow": ["error", { "allow": ["err", "callback"]}],
         "max-len": "off"
     }
