@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+    <type-extension type-id="SitePreferences">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="CloudinaryPageDesignerAPIkey">
+                <display-name xml:lang="x-default">Cloudinary API Key</display-name>
+                <description xml:lang="x-default">The API Key of your Cloudinary account</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="CloudinaryPageDesignerCNAME">
+                <display-name xml:lang="x-default">Cloudinary CNAME (Optional)</display-name>
+                <description xml:lang="x-default">The CNAME from your Cloudinary account. Defaults to
+                    res.cloudinary.com
+                </description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>res.cloudinary.com</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="CloudinaryPageDesignerCloudName">
+                <display-name xml:lang="x-default">Cloudinary Cloud Name</display-name>
+                <description xml:lang="x-default">The Cloud Name of your Cloudinary account</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="CloudinaryPageDesignerUseSha256">
+                <display-name xml:lang="x-default">Use SHA-256</display-name>
+                <description xml:lang="x-default">Use SHA-256 to sign calls to Cloudinary</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="CloudinaryPageDesignerSecretKey">
+                <display-name xml:lang="x-default">Cloudinary API Secret</display-name>
+                <description xml:lang="x-default">The API Secret of your Cloudinary account</description>
+                <type>password</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="CloudinaryPageDesignerEnv">
+                <display-name xml:lang="x-default">Cloudinary Page Designer Environment</display-name>
+                <description xml:lang="x-default">Cloudinary Iframe Environment</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>https://page-designer.cloudinary.com</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="CloudinaryImageTransformationsQuality">
+                <display-name xml:lang="x-default">Default image quality</display-name>
+                <description xml:lang="x-default">Choose the quality for images</description>
+                <type>enum-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <value-definitions>
+                    <value-definition default="true">
+                        <display xml:lang="x-default">auto</display>
+                        <value>auto</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">20%</display>
+                        <value>20</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">30%</display>
+                        <value>30</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">40%</display>
+                        <value>40</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">50%</display>
+                        <value>50</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">60%</display>
+                        <value>60</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">70%</display>
+                        <value>70</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">80%</display>
+                        <value>80</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">90%</display>
+                        <value>90</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">100%</display>
+                        <value>100</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">No transformation</display>
+                        <value>none</value>
+                    </value-definition>
+                </value-definitions>
+            </attribute-definition>
+            <attribute-definition attribute-id="CloudinaryImageTransformationsDPR">
+                <display-name xml:lang="x-default">Default image Device Pixel Ratio (DPR)</display-name>
+                <description xml:lang="x-default">Set Device Pixel Ratio</description>
+                <type>enum-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <value-definitions>
+                    <value-definition default="true">
+                        <display xml:lang="x-default">auto</display>
+                        <value>auto</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">drp_1</display>
+                        <value>1</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">dpr_2</display>
+                        <value>2</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">No transformation</display>
+                        <value>none</value>
+                    </value-definition>
+                </value-definitions>
+            </attribute-definition>
+            <attribute-definition attribute-id="CloudinaryImageTransformationsFormat">
+                <display-name xml:lang="x-default">Default image format</display-name>
+                <description xml:lang="x-default">Choose the format for images</description>
+                <type>enum-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <value-definitions>
+                    <value-definition default="true">
+                        <display xml:lang="x-default">auto</display>
+                        <value>auto</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">gif</display>
+                        <value>gif</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">webp</display>
+                        <value>webp</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">jpeg</display>
+                        <value>jpeg</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">png</display>
+                        <value>png</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">No transformation</display>
+                        <value>none</value>
+                    </value-definition>
+                </value-definitions>
+            </attribute-definition>
+            <attribute-definition attribute-id="CloudinaryImageUseAltText">
+                <display-name xml:lang="x-default">Use image alt text from Cloudinary</display-name>
+                <description xml:lang="x-default">Image description from Cloudinary is used as the alt text</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="CloudinaryImageTransformations">
+                <display-name xml:lang="x-default">Default image transformations</display-name>
+                <description xml:lang="x-default">Specify transformations in the Cloudinary URL format</description>
+                <type>text</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="CloudinaryVideoFormat">
+                <display-name xml:lang="x-default">Default video format</display-name>
+                <description xml:lang="x-default">Choose the format for videos</description>
+                <type>enum-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <value-definitions>
+                    <value-definition default="true">
+                        <display xml:lang="x-default">Player default</display>
+                        <value>none</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">mp4</display>
+                        <value>mp4</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">webm</display>
+                        <value>webm</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">mp4/h265</display>
+                        <value>mp4/h265</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">webm/vp9</display>
+                        <value>webm/vp9</value>
+                    </value-definition>
+                </value-definitions>
+            </attribute-definition>
+            <attribute-definition attribute-id="CloudinaryVideoTransformations">
+                <display-name xml:lang="x-default">Default video transformations</display-name>
+                <description xml:lang="x-default">Specify transformations in the Cloudinary URL format</description>
+                <type>text</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="CloudinaryVideoTransformationsBitRate">
+                <display-name xml:lang="x-default">Default video bitrate</display-name>
+                <description xml:lang="x-default">Choose the bitrate for videos</description>
+                <type>enum-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <value-definitions>
+                    <value-definition default="true">
+                        <display xml:lang="x-default">default</display>
+                        <value>default</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">250k</display>
+                        <value>250k</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">2m</display>
+                        <value>2m</value>
+                    </value-definition>
+                </value-definitions>
+            </attribute-definition>
+            <attribute-definition attribute-id="CloudinaryVideoTransformationsQuality">
+                <display-name xml:lang="x-default">Default video quality</display-name>
+                <description xml:lang="x-default">Choose the quality for videos</description>
+                <type>enum-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <value-definitions>
+                    <value-definition default="true">
+                        <display xml:lang="x-default">Auto</display>
+                        <value>auto</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">20%</display>
+                        <value>20</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">30%</display>
+                        <value>30</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">40%</display>
+                        <value>40</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">50%</display>
+                        <value>50</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">60%</display>
+                        <value>60</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">70%</display>
+                        <value>70</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">80%</display>
+                        <value>80</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">90%</display>
+                        <value>90</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">100%</display>
+                        <value>100</value>
+                    </value-definition>
+                </value-definitions>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="CloudinaryPageDesigner">
+                <display-name xml:lang="x-default">Cloudinary Page Designer</display-name>
+                <attribute attribute-id="CloudinaryPageDesignerCloudName"/>
+                <attribute attribute-id="CloudinaryPageDesignerCNAME"/>
+                <attribute attribute-id="CloudinaryPageDesignerAPIkey"/>
+                <attribute attribute-id="CloudinaryPageDesignerSecretKey"/>
+                <attribute attribute-id="CloudinaryPageDesignerUseSha256"/>
+                <attribute attribute-id="CloudinaryImageTransformationsDPR"/>
+                <attribute attribute-id="CloudinaryImageTransformationsFormat"/>
+                <attribute attribute-id="CloudinaryImageTransformationsQuality"/>
+                <attribute attribute-id="CloudinaryImageUseAltText"/>
+                <attribute attribute-id="CloudinaryImageTransformations"/>
+                <attribute attribute-id="CloudinaryVideoFormat"/>
+                <attribute attribute-id="CloudinaryVideoTransformationsBitRate"/>
+                <attribute attribute-id="CloudinaryVideoTransformationsQuality"/>
+                <attribute attribute-id="CloudinaryVideoTransformations"/>
+                <attribute attribute-id="CloudinaryPageDesignerEnv"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+</metadata>
