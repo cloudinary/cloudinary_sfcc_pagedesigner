@@ -1,116 +1,13 @@
 (() => {
-  const SECRET_TIMESTAMP = Date.now();
+    // Page Designer ready event
 
-  // Page Designer ready event
-  subscribe(
-      'sfcc:ready', async ({value, config, isDisabled, isRequired, dataLocale, displayLocale, viewport, breakout}) => {
-        console.log(
-            'cloudinary.cloudinaryApi::sfcc:ready', dataLocale, displayLocale, isDisabled, isRequired, value, config,
-            viewport);
-        let asset;
-        if (value) {
-          if (config.imageType === 'overlay') {
-            if (((value.formValues || {}).overlayImage || {}).asset) {
-              asset = value.formValues.overlayImage.asset;
-            }
-          } else {
-            asset = config.type === 'image' ?
-                ((value.formValues || {}).image || {}).asset :
-                ((value.formValues || {}).video || {}).asset;
-          }
-        }
-        const template = obtainTemplate(viewport);
-        const clone = document.importNode(template.content, true);
-        document.body.appendChild(clone);
-
-        function insertHandler(data) {
-          var asset = (data && data.assets && data.assets.length > 0) ?
-              Object.assign(data.assets[0], {cloudName: config.cloudName}) :
-              null;
-          if (asset.resource_type !== config.type) {
-            emit({
-              type: 'sfcc:valid',
-              payload: {
-                valid: false,
-                message: 'Wrong asset type.',
-              },
-            });
-            showError('Wrong asset type.');
-          } else {
-            isAssetRestricted(config.assetInfoUrl, asset).then((restricted => {
-                  if (!restricted) {
-                    emit({
-                      type: 'sfcc:valid',
-                      payload: {
-                        valid: true,
-                      },
-                    });
-                    emit({
-                      type: 'sfcc:value',
-                      payload: asset,
-                    });
-                    emit({
-                      type: 'sfcc:breakoutApply',
-                      payload: breakout,
-                    });
-                  } else {
-                    emit({
-                      type: 'sfcc:valid',
-                      payload: {
-                        valid: false,
-                        message: 'Asset is restricted',
-                      },
-                    });
-                    showError('Asset is restricted');
-                  }
-                }),
-            );
-          }
-        }
-
-        var show = {};
-        if (asset && asset.public_id) {
-          show.asset = {
-            resource_type: asset.resource_type,
-            type: asset.type,
-            public_id: asset.public_id,
-          };
-        } else {
-          show.folder = {
-            resource_type: config.type,
-            path: null,
-          };
-        }
-
-        var ml = cloudinary.createMediaLibrary({
-              cloud_name: config.cloudName,
-              api_key: config.apiKey,
-              remove_header: true,
-              inline_container: 'div.sfcc-ml-root',
-              max_files: 1,
-              multiple: false,
-              sandboxAttributes: ['allow-scripts', 'allow-same-origin'],
-              integration: {
-                type: 'sfcc_page_designer',
-                platform: 'salesforce_commerce_cloud',
-                version: config.version,
-                environment: config.env,
-              },
-            }, {insertHandler: insertHandler},
-        );
-        ml.show(
-            show,
-        );
-
-        emit({
-          type: 'sfcc:valid',
-          payload: false,
-        });
-
-      });
-
-  function getErrorToast(errorText) {
-    let html = `
+    /**
+     * get the html for error messages
+     * @param {string} errorText the error text
+     * @returns {ChildNode} html
+     */
+    function getErrorToast(errorText) {
+        let html = `
       <div class="slds-notify_container slds-is-absolute cld-error">
       <div class="slds-notify slds-notify_toast slds-theme_error" role="status">
       <span class="slds-assistive-text">error</span>
@@ -132,50 +29,163 @@
       </div>
       </div>
       </div>`;
-    let template = document.createElement('template');
-    html = html.trim(); // Never return a text node of whitespace as the result
-    template.innerHTML = html;
-    return template.content.firstChild;
-  }
+        let template = document.createElement('template');
+        html = html.trim(); // Never return a text node of whitespace as the result
+        template.innerHTML = html;
+        return template.content.firstChild;
+    }
 
+    /**
+     * gets the html template
+     * @param {Object} viewport the viewport
+     * @returns {HTMLTemplateElement} html
+     */
+    function obtainTemplate(viewport) {
+        const template = document.createElement('template');
+        const height = viewport.height - 16; // 16px = padding top + padding bottom
+        template.innerHTML = `<div class="sfcc-ml-root" style="height: ${height}px; max-height: ${height}px;"></div>`;
+        return template;
+    }
 
-
-  function obtainTemplate(viewport) {
-    const template = document.createElement('template');
-    const height = viewport.height - 16; // 16px = padding top + padding bottom
-    template.innerHTML = `<div class="sfcc-ml-root" style="height: ${height}px; max-height: ${height}px;"></div>`;
-    return template;
-  }
-
-  const showError = (message) => {
-    let root = document.getElementsByClassName('sfcc-ml-root')[0];
-    let error = getErrorToast(message);
-    error.querySelector('#btn-close').addEventListener('click', function(e) {
-      root.removeChild(error);
-    });
-    root.appendChild(error);
-  };
-  const isAssetRestricted = (assetInfoUrl, asset) => {
-    return new Promise((resolve, reject) => {
-      fetch(assetInfoUrl + '?publicId=' + asset.public_id + '&type=' + asset.type + '&rType=' + asset.resource_type).
-          then(response => {
-            if (response.ok) {
-              response.json().then(data => {
-                if (data.status === 'ok') {
-                  if (data.info.access_control) {
-                    resolve(data.info.access_mode !== 'public' ||
-                        (data.info.access_control && data.info.access_control[0].access_type !== 'anonymous'));
-                  } else {
-                    return resolve(false);
-                  }
+    const showError = (message) => {
+        let root = document.getElementsByClassName('sfcc-ml-root')[0];
+        let error = getErrorToast(message);
+        error.querySelector('#btn-close').addEventListener('click', (e) => {
+            root.removeChild(error);
+        });
+        root.appendChild(error);
+    };
+    const isAssetRestricted = (assetInfoUrl, asset) => {
+        return new Promise((resolve) => {
+            fetch(assetInfoUrl + '?publicId=' + asset.public_id + '&type=' + asset.type + '&rType=' + asset.resource_type)
+                .then((response) => {
+                    if (response.ok) {
+                        // eslint-disable-next-line consistent-return
+                        response.json().then((data) => {
+                            if (data.status === 'ok') {
+                                if (data.info.access_control) {
+                                    resolve(data.info.access_mode !== 'public'
+                        || (data.info.access_control && data.info.access_control[0].access_type !== 'anonymous'));
+                                } else {
+                                    return resolve(false);
+                                }
+                            } else {
+                                resolve(false);
+                            }
+                        });
+                    } else {
+                        resolve(false);
+                    }
+                });
+        });
+    };
+    subscribe(
+        'sfcc:ready', async ({
+            value, config, isDisabled, isRequired, dataLocale, displayLocale, viewport, breakout
+        }) => {
+            console.log(
+                'cloudinary.cloudinaryApi::sfcc:ready', dataLocale, displayLocale, isDisabled, isRequired, value, config,
+                viewport
+            );
+            let asset;
+            if (value) {
+                if (config.imageType === 'overlay') {
+                    if (((value.formValues || {}).overlayImage || {}).asset) {
+                        asset = value.formValues.overlayImage.asset;
+                    }
                 } else {
-                  resolve(false);
+                    asset = config.type === 'image'
+                        ? ((value.formValues || {}).image || {}).asset
+                        : ((value.formValues || {}).video || {}).asset;
                 }
-              });
-            } else {
-              resolve(false);
             }
-          });
-    });
-  };
+            const template = obtainTemplate(viewport);
+            const clone = document.importNode(template.content, true);
+            document.body.appendChild(clone);
+
+            // eslint-disable-next-line require-jsdoc
+            function insertHandler(data) {
+                // eslint-disable-next-line no-shadow
+                var asset = (data && data.assets && data.assets.length > 0)
+                    ? Object.assign(data.assets[0], { cloudName: config.cloudName })
+                    : null;
+                if (asset.resource_type !== config.type) {
+                    emit({
+                        type: 'sfcc:valid',
+                        payload: {
+                            valid: false,
+                            message: 'Wrong asset type.'
+                        }
+                    });
+                    showError('Wrong asset type.');
+                } else {
+                    isAssetRestricted(config.assetInfoUrl, asset).then(((restricted) => {
+                        if (!restricted) {
+                            emit({
+                                type: 'sfcc:valid',
+                                payload: {
+                                    valid: true
+                                }
+                            });
+                            emit({
+                                type: 'sfcc:value',
+                                payload: asset
+                            });
+                            emit({
+                                type: 'sfcc:breakoutApply',
+                                payload: breakout
+                            });
+                        } else {
+                            emit({
+                                type: 'sfcc:valid',
+                                payload: {
+                                    valid: false,
+                                    message: 'Asset is restricted'
+                                }
+                            });
+                            showError('Asset is restricted');
+                        }
+                    }),);
+                }
+            }
+
+            var show = {};
+            if (asset && asset.public_id) {
+                show.asset = {
+                    resource_type: asset.resource_type,
+                    type: asset.type,
+                    public_id: asset.public_id
+                };
+            } else {
+                show.folder = {
+                    resource_type: config.type,
+                    path: null
+                };
+            }
+
+            var ml = cloudinary.createMediaLibrary({
+                cloud_name: config.cloudName,
+                api_key: config.apiKey,
+                remove_header: true,
+                inline_container: 'div.sfcc-ml-root',
+                max_files: 1,
+                multiple: false,
+                sandboxAttributes: ['allow-scripts', 'allow-same-origin'],
+                integration: {
+                    type: 'sfcc_page_designer',
+                    platform: 'salesforce_commerce_cloud',
+                    version: config.version,
+                    environment: config.env
+                }
+            }, { insertHandler: insertHandler },);
+            ml.show(
+                show,
+            );
+
+            emit({
+                type: 'sfcc:valid',
+                payload: false
+            });
+        }
+    );
 })();

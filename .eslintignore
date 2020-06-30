@@ -2,4 +2,4 @@
 
 # bm_cloudinary_pd/cartridge/static/default/experience/editors/cloudinary/*
 cartridges/int_cloudinary_pd/cartridge/static/default/*
-cartridges/bm_cloudinary_pd/cartridge/static/default/experience/editors/cloudinary/.eslintrc.js
+cartridges/bm_cloudinary_pd/cartridge/static/default/experience/editors/cloudinary/.eslintrc.json

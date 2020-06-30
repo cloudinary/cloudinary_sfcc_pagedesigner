@@ -1,6 +1,7 @@
 (() => {
-    subscribe('sfcc:ready', async ({ value, config, isDisabled, isRequired, dataLocale, displayLocale }) => {
-        fetch(config.iFrameEnv + '/version.txt', {module: 'cors'}).then((response) => {
+    subscribe('sfcc:ready', async (
+        { config }) => {
+        fetch(config.iFrameEnv + '/version.txt', { module: 'cors' }).then((response) => {
             if (response.status === 200) {
                 response.text().then((text) => {
                     console.log(text);
@@ -11,7 +12,7 @@
             }
         });
         let div = document.createElement('div');
-        div.textContent = "Cartridge version: " + config.version
+        div.textContent = 'Cartridge version: ' + config.version;
         document.body.appendChild(div);
     });
 })();
