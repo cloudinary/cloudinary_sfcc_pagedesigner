@@ -81,7 +81,7 @@ typings/
 # nuxt.js build output
 .nuxt
 
-# react / gatsby 
+# react / gatsby
 public/
 
 # vuepress build output
@@ -103,3 +103,5 @@ public/
 .vscode
 dw.json
 module_pagedesigner_pages/
+test.http
+release.sh

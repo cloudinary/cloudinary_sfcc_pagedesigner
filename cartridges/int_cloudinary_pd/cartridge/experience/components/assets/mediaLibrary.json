@@ -1,0 +1,31 @@
+{
+  "name": "Cloudinary Image",
+  "description": "Cloudinary Image",
+  "group": "Cloudinary",
+  "attribute_definition_groups": [
+    {
+      "id": "Image",
+      "attribute_definitions": [
+        {
+          "id": "image_sel",
+          "name": "Component configuration",
+          "type": "custom",
+          "required": true,
+          "editor_definition": {
+            "type": "cloudinary.imageForm"
+          }
+        },
+        {
+          "id": "version",
+          "name": "Cloudinary cartridge version",
+          "type": "custom",
+          "required": false,
+          "editor_definition": {
+            "type": "cloudinary.version"
+          }
+        }
+      ]
+    }
+  ],
+  "region_definitions": []
+}

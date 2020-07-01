@@ -1,0 +1,12 @@
+{
+  "name": "Cloudinary Video Poster Selector",
+  "description": "Select a poster",
+  "resources": {
+    "scripts": [
+      "/experience/editors/cloudinary/version.js"
+    ],
+    "styles": [
+      "https://cdnjs.cloudflare.com/ajax/libs/design-system/2.8.3/styles/salesforce-lightning-design-system.min.css"
+    ]
+  }
+}

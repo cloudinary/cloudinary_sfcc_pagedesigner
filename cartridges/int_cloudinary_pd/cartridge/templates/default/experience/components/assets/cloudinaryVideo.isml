@@ -1,0 +1,43 @@
+<iscomment>
+	Cloudinary Video Component Template:
+	This document renders an instance of the component. Multiple instances can be placed on the page.
+
+	Refer to module_pagedesigner_custom/cartridge/experience/components/assets/cloudinary_video.js
+</iscomment>
+<isscript>
+	// SFRA has a logic bug where full urls are added twice, so we need to check for duplicates before adding.
+    var assets = require('*/cartridge/scripts/assets.js');
+
+	// Video Player CSS
+	var src = 'https://unpkg.com/cloudinary-video-player/dist/cld-video-player.min.css';
+    if (assets.styles.lastIndexOf(src) < 0) {
+    	assets.addCss(src);
+	}
+
+	// Cloudinary Core JS
+	src = 'https://unpkg.com/cloudinary-core/cloudinary-core-shrinkwrap.min.js';
+    if (assets.scripts.lastIndexOf(src) < 0) {
+    	assets.addJs(src);
+	}
+
+	// Cloudinary Video Player JS
+	src = 'https://unpkg.com/cloudinary-video-player/dist/cld-video-player.min.js';
+    if (assets.scripts.lastIndexOf(src) < 0) {
+		assets.addJs(src);
+	}
+
+    assets.addJs('/js/cloudinaryVideos.js');
+</isscript>
+
+<div class="cloudinary-video-container sfdc-component-mock sfdc-component-assets-media_library_video-mock">
+    <video id="${pdict.viewmodel.id}"></video>
+<script>
+  var value = JSON.parse('<isprint value="${JSON.stringify(pdict.viewmodel)}" encoding="jsonvalue"/>');
+  window.players = window.players || [];
+  window.players.push(value);
+  window.cloudName = value.cloudName;
+  window.cname = value.cname || null;
+  console.log(value);
+</script>
+</div>
+

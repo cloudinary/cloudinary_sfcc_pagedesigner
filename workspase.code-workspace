@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"name": "Sandbox - FileSystem",
+			"uri": "ccfs://current-sandbox"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"extension.prophet.cartridges.path": "module_pagedesigner_custom:bm_pagedesigner_custom",
+		"extension.prophet.upload.enabled": true
+	}
+}

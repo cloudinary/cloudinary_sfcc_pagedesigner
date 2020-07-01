@@ -1,0 +1,14 @@
+{
+  "name": "Cloudinary Video Selector",
+  "description": "Select a video from a list of videos",
+  "resources": {
+    "scripts": [
+      "https://media-library.cloudinary.com/global/all.js",
+      "/experience/editors/cloudinary/mediaSelector.js"
+    ],
+    "styles": [
+      "/experience/editors/cloudinary/mediaSelector.css",
+      "https://cdnjs.cloudflare.com/ajax/libs/design-system/2.8.3/styles/salesforce-lightning-design-system.min.css"
+    ]
+  }
+}
