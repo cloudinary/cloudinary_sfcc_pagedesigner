@@ -1,0 +1,42 @@
+<iscomment>
+    Cloudinary Media Library Template:
+    This document renders an instance of the component. Multiple instances can be placed on the page.
+
+</iscomment>
+<isscript>
+    // SFRA has a logic bug where full urls are added twice, so we need to check for duplicates before adding.
+    assets = require('*/cartridge/scripts/assets.js');
+    // Cloudinary Core JS
+    var src = 'https://unpkg.com/cloudinary-core/cloudinary-core-shrinkwrap.min.js';
+    if (assets.scripts.lastIndexOf(src) < 0) {
+        assets.addJs(src);
+    }
+    assets.addJs('js/cloudinaryImages.js');
+</isscript>
+
+
+<!-- Uncomment this to expose the raw view model for debugging: -->
+<script>
+  var value = JSON.parse('<isprint value="${JSON.stringify(pdict.viewmodel)}" encoding="jsonvalue"/>');
+  window.cldImages = window.cldImages || [];
+  window.cldImages.push(value);
+  window.cloudName = value.cloudName;
+  window.cnamw = value.cname || null;
+  console.log(value);
+</script>
+
+
+<div class="cloudinary-media-library-container sfdc-component-mock sfdc-component-assets-media_library-mock">
+<isif condition="${pdict.viewmodel.placeholder}">
+<isif condition="${pdict.viewmodel.imageLink}">
+    <a href="${pdict.viewmodel.imageLink}">
+</isif>
+    <img class="component-media_library ml-image" src="${pdict.viewmodel.placeholder}"  data-real-url="${pdict.viewmodel.src}"
+    id="${pdict.viewmodel.id}"
+    alt="${pdict.viewmodel.altText}"
+    style="max-width: 100%">
+<isif condition="${pdict.viewmodel.imageLink}">
+</a>
+</isif>
+    </isif>
+</div>

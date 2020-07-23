@@ -1,0 +1,162 @@
+html {
+	font-family: "Salesforce Sans",Arial,sans-serif;
+	font-size: 100%;
+	line-height: 1.5;
+	color: #080707;
+	background-color: #ffffff;
+}
+
+body {
+	font-size: .8125rem;
+}
+
+.video_selector__header {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	margin-bottom: 0.5rem;
+	margin-top: 0.25rem;
+}
+
+.video_selector__header__icon {
+	display: block;
+	text-indent: -9999px;
+	width: 44px;
+	height: 29px;
+	background: url(../../components/assets/coudinaryVideo.svg) no-repeat -2px -6px;
+	background-size: 50px 50px;
+}
+
+.video_selector__header__text {
+	color: #3e3e3c;
+	font-size: .75rem;
+	font-weight: 700;
+	padding-left: 0.5rem;
+}
+
+.video_selector__container {
+	position: relative;
+	border: 1px #ccc solid;
+	width: 100%;
+	overflow-x: hidden;
+	overflow-y: visible;
+	margin-bottom: 0.5rem;
+
+	-webkit-text-size-adjust: 100%;
+	background-color: #fafaf9;
+}
+
+.video_selector__item {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	border-bottom: 1px #ccc solid;
+	padding: 10px;
+}
+
+.video_selector__item.selected {
+	background-color: #e9f5ff;
+	border: 3px double #0073d8;
+}
+
+.video_selector__image {
+	padding: 0 10px 0 0;
+}
+
+.video_selector__image img {
+	display: block;
+	border: 1px #ccc solid;
+}
+
+.video_selector__data {
+	color: #91918b;
+	font-size: 0.7rem;
+}
+
+.video_selector__data__id {
+	font-size: 0.9rem;
+	color: #080707;
+}
+
+.video_selector__data__type {
+	text-transform: capitalize;
+}
+
+.video_selector__data__format {
+	text-transform: uppercase;
+}
+
+.video_selector__data__size {}
+
+.video_selector__options {
+	margin-bottom: 0.5rem;
+}
+
+.video_selector__checkbox {
+	margin-bottom: 1rem;
+}
+
+.video_selector__checkbox__label {}
+
+.video_selector__checkbox__input {}
+
+.video_selector__checkbox__text {
+    margin-left: 0.5rem;
+}
+
+.video_selector__input {}
+
+.video_selector__input__label {}
+
+.video_selector__input__input {}
+
+.video_selector__input__text {}
+
+.video_selector__options_reveal {
+    display: none;
+}
+
+.video_selector__options_reveal.checked {
+    display: block;
+}
+
+.video_selector__options__row {
+    display: flex;
+}
+
+.video_selector__options__col {
+    width: 100%;
+}
+
+.video_selector__alignment {}
+
+.aligner__label {}
+
+.aligner__container {}
+
+.aligner__row {
+    display: flex;
+}
+
+.aligner__col {
+    display: block;
+    width: 2rem;
+    height: 2rem;
+    border: 1px #ccc solid;
+    background-color: #fafaf9;
+}
+
+.aligner__col:hover,
+.aligner__col.selected {
+	background-color: #e9f5ff;
+	border: 3px double #0073d8;
+}
+.cld-error {
+	position: absolute;
+	top: 30%;
+	left: 50%;
+}
+
+.slds-modal > div > footer > button.slds-button.slds-button_brand {
+	display: none;
+}
