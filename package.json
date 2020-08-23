@@ -1,7 +1,9 @@
 {
   "name": "cloudinary_sfcc_pagedesigner",
-  "version": "0.25.0",
+  "version": "20.0.1",
   "scripts": {
+    "lint": "npm run lint:js",
+    "lint:js": "sgmf-scripts --lint js",
     "test": "jest"
   },
   "dependencies": {},

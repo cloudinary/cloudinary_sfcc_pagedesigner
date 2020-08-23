@@ -65,6 +65,7 @@ const handleIframeMessage = (message, ifrm, value = null, config) => {
                                 data.value.url = json.url;
                                 ifrm.contentWindow.postMessage(data.value, '*');
                             }
+                            // eslint-disable-next-line no-console
                         }).catch((e) => { console.log(e); });
                     }
                 });

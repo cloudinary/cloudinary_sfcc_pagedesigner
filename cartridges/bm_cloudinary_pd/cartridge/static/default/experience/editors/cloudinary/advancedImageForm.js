@@ -70,5 +70,4 @@ const handleIframeMessage = (message, ifrm, value = null) => {
             break;
         }
     }
-    console.log(message);
 };

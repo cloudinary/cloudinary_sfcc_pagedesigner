@@ -1,22 +1,11 @@
 'use strict';
 
-var currentSite = require('dw/system/Site').getCurrent();
+var currentSite = require('dw/system/Site')
+    .getCurrent();
 var LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
-var cloudName = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCloudName');
 var MessageDigest = require('dw/crypto/MessageDigest');
 var Encoding = require('dw/crypto/Encoding');
 var Bytes = require('dw/util/Bytes');
-
-var cloudinaryService = LocalServiceRegistry.createService('cloudinaryPageDesignerAPI', {
-    createRequest: function (service, param) {
-        service.setAuthentication('NONE');
-        return param || null;
-    },
-    parseResponse: function (service, client) {
-        return client;
-    }
-});
-var serviceURL = cloudinaryService.URL;
 
 /**
  * strigify a json for API call
@@ -40,13 +29,7 @@ function generateResponsiveBreakpointsString(breakpoints) {
  * @returns {string} signature
  */
 function bodySignature(body) {
-    var hasher = null;
-    var useSha256 = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerUseSha256') === true;
-    if (useSha256) {
-        hasher = new MessageDigest(MessageDigest.DIGEST_SHA_256);
-    } else {
-        hasher = new MessageDigest(MessageDigest.DIGEST_SHA_1);
-    }
+    var hasher = new MessageDigest(MessageDigest.DIGEST_SHA_256);
     var fieldsArray = [];
     for (var i in body) {
         if (body[i] === '' || body[i] == null) {
@@ -57,12 +40,14 @@ function bodySignature(body) {
         } else if (Array.isArray(body[i])) {
             fieldsArray.push(i + '=' + body[i].map(function (el) {
                 return JSON.stringify(el);
-            }).join(','));
+            })
+                .join(','));
         } else {
             fieldsArray.push(i + '=' + body[i]);
         }
     }
-    var fields = fieldsArray.sort().join('&');
+    var fields = fieldsArray.sort()
+        .join('&');
     var toSignStr = fields + currentSite.getCustomPreferenceValue('CloudinaryPageDesignerSecretKey');
     var toSign = new Bytes(toSignStr);
     return Encoding.toHex(hasher.digestBytes(toSign));
@@ -73,29 +58,38 @@ function bodySignature(body) {
  * @param {Object} body request body
  * @param {string} fileType the file type video|image
  * @param {string} callType the action to take
- * @returns {{ok: boolean, message: string}}
+ * @returns {{ok: boolean, message: string}} call result
  */
 function callService(body, fileType, callType) {
+    var cloudinaryService = LocalServiceRegistry.createService('cloudinary.https.api', {
+        createRequest: function (service, param) {
+            service.setRequestMethod('POST');
+            service.setAuthentication('NONE');
+            service.addHeader('Content-Type', 'application/json');
+            // eslint-disable-next-line no-param-reassign
+            service.URL += '/' + fileType + '/' + callType;
+            return param || null;
+        },
+        parseResponse: function (service, response) {
+            if (response.statusCode === 200 && response.statusMessage === 'OK') {
+                return JSON.parse(response.text);
+            }
+            return response;
+        },
+        filterLogMessage: function (msg) {
+            return msg;
+        }
+    });
     var serviceResponse;
     var cloudinaryResponse = {
         ok: false,
         message: ''
     };
-
     try {
-        cloudinaryService.setRequestMethod('POST');
-        cloudinaryService.setURL(serviceURL + '/' + cloudName + '/' + fileType + '/' + callType);
-        cloudinaryService.addHeader('Content-Type', 'application/json');
-
         serviceResponse = cloudinaryService.call(JSON.stringify(body));
-
         if (serviceResponse.ok) {
-            if (serviceResponse.object.statusCode === '200') {
-                cloudinaryResponse.ok = true;
-                cloudinaryResponse.message = serviceResponse.object.text;
-            } else {
-                cloudinaryResponse.message = serviceResponse.object.errorText;
-            }
+            cloudinaryResponse.ok = true;
+            cloudinaryResponse.message = serviceResponse.object;
         } else {
             cloudinaryResponse.message = serviceResponse.errorMessage;
         }
@@ -107,18 +101,8 @@ function callService(body, fileType, callType) {
     return cloudinaryResponse;
 }
 
-/**
- * creates a basic authentication string
- * @returns {string} basic authentication
- */
-function createBasicAuthStr() {
-    var bytes = new Bytes(currentSite.getCustomPreferenceValue('CloudinaryPageDesignerAPIkey') + ':' + currentSite.getCustomPreferenceValue('CloudinaryPageDesignerSecretKey'));
-    return Encoding.toBase64(bytes);
-}
-
 module.exports = {
     addSignatureToBody: bodySignature,
     callService: callService,
-    stringifyJson: generateResponsiveBreakpointsString,
-    createBasicAuthStr: createBasicAuthStr
+    stringifyJson: generateResponsiveBreakpointsString
 };

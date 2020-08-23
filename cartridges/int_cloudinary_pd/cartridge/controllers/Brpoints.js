@@ -47,9 +47,9 @@ function getBreackpoints(publicId) {
     body.signature = utils.addSignatureToBody(body);
     body.responsive_breakpoints = utils.stringifyJson(body.responsive_breakpoints);
     body.api_key = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerAPIkey');
-    var res = utils.callService(body, 'image', 'explicit');
-    if (res.ok) {
-        var result = JSON.parse(res.message);
+    var r = utils.callService(body, 'image', 'explicit');
+    if (r.ok) {
+        var result = r.message;
         return getBreackpointsFromResponse(result);
     }
     return [1280, 768, 375];

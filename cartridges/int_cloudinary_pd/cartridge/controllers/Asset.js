@@ -1,29 +1,39 @@
 'use strict';
 
 var server = require('server');
-var currentSite = require('dw/system/Site').getCurrent();
-var utils = require('*/cartridge/experience/utils/utils');
+var LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
 // var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
-var HTTPClient = require('dw/net/HTTPClient');
 
 /**
  * Gets the asset info from cloudinary
  * @param {string} publicId asset publicId
  * @param {string} type type of asset
  * @param {string} rType asset file type image|video
- * @param {string} cloudName cloudinary cloud name
  * @returns {null|Object} asset object
  */
-function getAssetInfo(publicId, type, rType, cloudName) {
-    var httpClient = new HTTPClient();
-    httpClient.open('GET', 'https://api.cloudinary.com/v1_1/'
-      + encodeURIComponent(cloudName + '/resources/' + rType + '/' + type + '/' + publicId));
-    var authStr = utils.createBasicAuthStr();
-    httpClient.setRequestHeader('Authorization', 'Basic ' + authStr);
-    httpClient.setRequestHeader('Content-Type', 'application/json');
-    httpClient.send();
-    if (httpClient.statusCode === 200) {
-        return JSON.parse(httpClient.getText());
+function getAssetInfo(publicId, type, rType) {
+    var cloudinaryService = LocalServiceRegistry.createService('cloudinary.https.api', {
+        createRequest: function (service, param) {
+            service.setRequestMethod('GET');
+            service.addHeader('Content-Type', 'application/json');
+            var urlPart = encodeURIComponent('/resources/' + rType + '/' + type + '/' + publicId);
+            // eslint-disable-next-line no-param-reassign
+            service.URL += urlPart;
+            return param || null;
+        },
+        parseResponse: function (service, response) {
+            if (response.statusCode === 200 && response.statusMessage === 'OK') {
+                return JSON.parse(response.text);
+            }
+            return response;
+        },
+        filterLogMessage: function (msg) {
+            return msg;
+        }
+    });
+    var res = cloudinaryService.call();
+    if (res.ok) {
+        return res.object;
     }
     return null;
 }
@@ -32,9 +42,8 @@ server.get('info', server.middleware.https, function (req, res, next) {
     var publicId = req.querystring.publicId;
     var type = req.querystring.type;
     var rType = req.querystring.rType;
-    var cloudName = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCloudName');
     if (publicId) {
-        var info = getAssetInfo(publicId, type, rType, cloudName);
+        var info = getAssetInfo(publicId, type, rType);
         res.json({
             status: 'ok',
             info: info

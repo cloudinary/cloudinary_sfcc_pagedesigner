@@ -50,7 +50,7 @@
     const showError = (message) => {
         let root = document.getElementsByClassName('sfcc-ml-root')[0];
         let error = getErrorToast(message);
-        error.querySelector('#btn-close').addEventListener('click', (e) => {
+        error.querySelector('#btn-close').addEventListener('click', () => {
             root.removeChild(error);
         });
         root.appendChild(error);
@@ -81,12 +81,8 @@
     };
     subscribe(
         'sfcc:ready', async ({
-            value, config, isDisabled, isRequired, dataLocale, displayLocale, viewport, breakout
+            value, config, viewport, breakout
         }) => {
-            console.log(
-                'cloudinary.cloudinaryApi::sfcc:ready', dataLocale, displayLocale, isDisabled, isRequired, value, config,
-                viewport
-            );
             let asset;
             if (value) {
                 if (config.imageType === 'overlay') {
