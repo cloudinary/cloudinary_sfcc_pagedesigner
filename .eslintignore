@@ -1,5 +1,5 @@
 # Created by .ignore support plugin (hsz.mobi)
 
 # bm_cloudinary_pd/cartridge/static/default/experience/editors/cloudinary/*
-cartridges/int_cloudinary_pd/cartridge/static/default/*
+cartridges/int_cloudinary_pd/cartridges/static/default/*
 cartridges/bm_cloudinary_pd/cartridge/static/default/experience/editors/cloudinary/.eslintrc.json
