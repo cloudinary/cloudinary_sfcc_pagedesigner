@@ -1,7 +1,6 @@
 window.addEventListener('load', renderImgs);
 
 function renderImgs() {
-    console.log('render images');
     let conf = {
         cloud_name: window.cloudName
     }
