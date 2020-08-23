@@ -25,7 +25,7 @@ function renderImgs() {
             var breakpoints = JSON.parse(imageConf.breakpoints);
             if (breakpoints && breakpoints.length > 0) {
                 for (let br of breakpoints) {
-                    var trs = [{ crop: 'scale', width: br }].concat(t);
+                    var trs = t.concat([{ crop: 'scale', width: br }]);
                     var s = cld.url(imageConf.publicId, { transformation: trs });
                     brs.push(s + ' ' + br + 'w');
                 }
@@ -46,7 +46,7 @@ function renderImgs() {
 const onError = (err) => {
     let target = event.currentTarget;
     target.onerror = null;
-    target.removeAttribute('srcset'); 
+    target.removeAttribute('srcset');
     target.src = 'https://product-assets-res.cloudinary.com/image/upload/w_250,co_rgb:c23834,e_colorize:100,f_png/PageDesigner/warning.png';
     return true;
 }
