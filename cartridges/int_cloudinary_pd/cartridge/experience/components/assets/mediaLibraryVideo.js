@@ -184,12 +184,11 @@ function hasVideo(val) {
     return val.formValues && val.formValues.video && val.formValues.video.asset;
 }
 
-module.exports.render = function (context) {
-    var val = context.content.asset_sel;
-    var model = new HashMap();
+module.exports.preRender = function (context, editorId) {
+    var val = context.content[editorId];
+    var viewmodel = {};
     if (!val.playerConf.empty && hasVideo(val)) {
         var cname = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCNAME');
-        var viewmodel = {};
         var conf = JSON.parse(val.playerConf);
         var publicId = conf.publicId;
         var format = currentSite.getCustomPreferenceValue('CloudinaryVideoFormat');
@@ -204,7 +203,12 @@ module.exports.render = function (context) {
         viewmodel.public_id = publicId;
         viewmodel.id = idSafeString(randomString(16));
         viewmodel.playerConf = JSON.stringify(conf);
-        model.viewmodel = viewmodel;
     }
+    return viewmodel;
+};
+
+module.exports.render = function (context) {
+    var model = new HashMap();
+    model.viewmodel = module.exports.preRender(context, 'asset_sel');
     return new Template('experience/components/assets/cloudinaryVideo').render(model).text;
 };
