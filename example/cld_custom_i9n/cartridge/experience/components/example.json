@@ -1,0 +1,31 @@
+{
+  "name": "Cloudinary Image integration",
+  "description": "Cloudinary Image integration",
+  "group": "Acme",
+  "attribute_definition_groups": [
+    {
+      "id": "content",
+      "name": "Content",
+      "description": "The content to show in this component",
+      "attribute_definitions": [
+        {
+          "id": "cld_image",
+          "name": "Image from cloudinary",
+          "type": "custom",
+          "required": true,
+          "editor_definition": {
+            "type": "cloudinary.imageForm"
+          }
+        },
+        {
+          "id": "headline",
+          "name": "Headline",
+          "description": "This is the headline",
+          "type": "string",
+          "required": false
+        }
+      ]
+    }
+  ],
+  "region_definitions": []
+}

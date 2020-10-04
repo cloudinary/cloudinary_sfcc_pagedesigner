@@ -65,31 +65,36 @@ function randomString(length) {
 function idSafeString(str) {
     return 'id' + str.toLowerCase().replace(/[^a-zA-Z0-9-:.]/, '');
 }
-module.exports.render = function (context) {
-    var model = new HashMap();
+
+module.exports.preRender = function (context, editorId) {
     var viewmodel = {};
-    var cname = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCNAME');
-    if (context.content.image_sel && context.content.image_sel.imageUrl) {
-        viewmodel.id = idSafeString(context.content.image_sel.public_id + randomString(12));
-        viewmodel.publicId = context.content.image_sel.public_id;
+    if (context.content[editorId] && context.content[editorId].imageUrl) {
+        var cname = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCNAME');
+        viewmodel.id = idSafeString(context.content[editorId].public_id + randomString(12));
+        viewmodel.publicId = context.content[editorId].public_id;
         viewmodel.cloudName = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCloudName');
         if (cname !== 'res.cloudinary.com') {
             viewmodel.cname = cname;
         }
-        viewmodel.placeholder = context.content.image_sel.placeholderUrl || context.content.image_sel.imageUrl;
-        viewmodel.breakpoints = context.content.image_sel.breakpoints;
-        viewmodel.sizes = context.content.image_sel.sizes;
-        viewmodel.src = context.content.image_sel.imageUrl;
-        if (context.content.image_sel.imageLinkData) {
-            viewmodel.imageLink = buildLinkUrl(JSON.parse(context.content.image_sel.imageLinkData));
+        viewmodel.placeholder = context.content[editorId].placeholderUrl || context.content[editorId].imageUrl;
+        viewmodel.breakpoints = context.content[editorId].breakpoints;
+        viewmodel.sizes = context.content[editorId].sizes;
+        viewmodel.src = context.content[editorId].imageUrl;
+        if (context.content[editorId].imageLinkData) {
+            viewmodel.imageLink = buildLinkUrl(JSON.parse(context.content[editorId].imageLinkData));
         }
-        viewmodel.altText = context.content.image_sel.alt;
-        if (context.content.image_sel.isTransformationOverride) {
-            viewmodel.transformation = context.content.image_sel.transformation;
+        viewmodel.altText = context.content[editorId].alt;
+        if (context.content[editorId].isTransformationOverride) {
+            viewmodel.transformation = context.content[editorId].transformation;
         } else {
-            viewmodel.transformation = replaceGlobalTransformations(context.content.image_sel.transformation);
+            viewmodel.transformation = replaceGlobalTransformations(context.content[editorId].transformation);
         }
     }
-    model.viewmodel = viewmodel;
+    return viewmodel;
+};
+
+module.exports.render = function (context) {
+    var model = new HashMap();
+    model.viewmodel = module.exports.preRender(context, 'image_sel');
     return new Template('experience/components/assets/cloudinaryImage').render(model).text;
 };
