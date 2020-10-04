@@ -146,12 +146,16 @@
             }
 
             var show = {};
+            let deepTransform = null;
             if (asset && asset.public_id) {
                 show.asset = {
                     resource_type: asset.resource_type,
                     type: asset.type,
                     public_id: asset.public_id
                 };
+                if (asset.derived && asset.derived.length > 0) {
+                    deepTransform = { url: asset.derived[0].secure_url };
+                }
             } else {
                 show.folder = {
                     resource_type: config.type,
@@ -167,6 +171,7 @@
                 max_files: 1,
                 multiple: false,
                 sandboxAttributes: ['allow-scripts', 'allow-same-origin'],
+                transformation: deepTransform,
                 integration: {
                     type: 'sfcc_page_designer',
                     platform: 'salesforce_commerce_cloud',
