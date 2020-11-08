@@ -29,14 +29,18 @@ $(document).ready(function () {
     if (!document.cloudinaryInit) {
         document.cloudinaryInit = true;
         setTimeout(function () {
-            // console.log('Cloudinary: Waiting 0.5 seconds');
             let conf = {
                 cloud_name: window.cloudName
             }
             if (window.cname) {
-                conf.cname = window.cname
+                conf.secure_distribution = window.cname;
+                conf.private_cdn = true;
             }
             cld = cloudinary.Cloudinary.new(conf);
+            let config = cld.config();
+            if (config.secure === false) {
+                delete cld.config({cname: window.cname}).secure_distribution;
+            }
             initializeCloudinaryPlayers();
         }, 100);
     }
