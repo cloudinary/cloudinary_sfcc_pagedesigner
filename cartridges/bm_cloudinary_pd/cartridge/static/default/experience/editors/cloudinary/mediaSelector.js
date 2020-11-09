@@ -63,7 +63,7 @@
                         // eslint-disable-next-line consistent-return
                         response.json().then((data) => {
                             if (data.status === 'ok') {
-                                if (data.info.access_control) {
+                                if (data.info && data.info.access_control) {
                                     resolve(data.info.access_mode !== 'public'
                         || (data.info.access_control && data.info.access_control[0].access_type !== 'anonymous'));
                                 } else {

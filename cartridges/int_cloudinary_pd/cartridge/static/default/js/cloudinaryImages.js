@@ -5,9 +5,14 @@ function renderImgs() {
         cloud_name: window.cloudName
     }
     if (window.cname) {
-        conf.cname = window.cname
+        conf.secure_distribution = window.cname;
+        conf.private_cdn = true;
     }
     cld = cloudinary.Cloudinary.new(conf);
+    let config = cld.config();
+    if (config.secure === false) {
+        delete cld.config({cname: window.cname}).secure_distribution;
+    }
     for (var imageConf of cldImages) {
         if (imageConf.id) {
             var trans = JSON.parse(imageConf.transformation);
