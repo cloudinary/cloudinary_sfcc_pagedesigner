@@ -47,7 +47,7 @@ Get your Cloud Name, API Key and API Secret from your Cloudinary account [as des
 
 * Navigate to **Administration > Sites > Manage Sites**.
 * Select the storefront site for which you want to enable the components and navigate to the **Settings** tab.
-* Add **int_cloudinary_pad** to the cartridge path.
+* Add **int_cloudinary_pd** to the cartridge path.
 
 
 
