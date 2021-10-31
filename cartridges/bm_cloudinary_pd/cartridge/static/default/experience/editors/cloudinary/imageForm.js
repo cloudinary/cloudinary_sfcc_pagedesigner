@@ -1,7 +1,7 @@
 const getIframeUrl = (value, config) => {
     let val = encodeURIComponent(JSON.stringify(cldUtils.dehydrate(value)));
     let global = encodeURIComponent(JSON.stringify(config.globalTrans));
-    return config.iFrameEnv + '/image-side-panel?cloudName=' + config.cloudName + '&canme=' + config.cname + '&value=' + val + '&global=' + global;
+    return config.iFrameEnv + '/image-side-panel?cloudName=' + config.cloudName + '&cname=' + config.cname + '&value=' + val + '&global=' + global;
 };
 
 const reInitIframe = (value, config) => {
