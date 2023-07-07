@@ -21,7 +21,7 @@
     "node-fetch": "^2.6.1",
     "request-promise": "^4.2.5",
     "sgmf-scripts": "^2.4.1",
-    "stylelint": "^13.6.1",
+    "stylelint": "^15.10.1",
     "stylelint-config-standard": "^20.0.0"
   }
 }
