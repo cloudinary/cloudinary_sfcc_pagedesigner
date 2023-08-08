@@ -11,6 +11,12 @@
     if (assets.scripts.lastIndexOf(src) < 0) {
         assets.addJs(src);
     }
+    
+    // Cloudinary Gallery JS Url to render CLD Gallery on PDP
+    src = 'https://product-gallery.cloudinary.com/all.js';
+    if (assets.scripts.lastIndexOf(src) < 0) {
+        assets.addJs(src);
+    }
     assets.addJs('js/cloudinaryImages.js');
 </isscript>
 
