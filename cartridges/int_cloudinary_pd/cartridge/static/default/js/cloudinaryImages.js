@@ -36,7 +36,7 @@ function renderImgs() {
             }
             var img = document.getElementById(imageConf.id);
             if (img) {
-                img.src = url;
+                img.src = url + '?_i=AH';
                 img.onerror = onError;
                 if (brs.length > 0) {
                     img.srcset = brs.join(',');

@@ -77,9 +77,10 @@ module.exports.preRender = function (context, editorId) {
             viewmodel.cname = cname;
         }
         viewmodel.placeholder = context.content[editorId].placeholderUrl || context.content[editorId].imageUrl;
+        viewmodel.placeholder = viewmodel.placeholder + '?_i=AH';
         viewmodel.breakpoints = context.content[editorId].breakpoints;
         viewmodel.sizes = context.content[editorId].sizes;
-        viewmodel.src = context.content[editorId].imageUrl;
+        viewmodel.src = context.content[editorId].imageUrl + '?_i=AH';
         if (context.content[editorId].imageLinkData) {
             viewmodel.imageLink = buildLinkUrl(JSON.parse(context.content[editorId].imageLinkData));
         }

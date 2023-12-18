@@ -154,6 +154,8 @@ function callEagerTransformations(conf, publicId) {
         }
         // eslint-disable-next-line no-param-reassign
         conf.sourceConfig.transformation = trans;
+        conf.sourceConfig.video.url = conf.sourceConfig.video.url + '?_i=AH';
+        conf.sourceConfig.poster = conf.sourceConfig.poster + '?_i=AH';
         var body = {
             timestamp: (Date.now() / 1000).toFixed(),
             type: 'upload',
