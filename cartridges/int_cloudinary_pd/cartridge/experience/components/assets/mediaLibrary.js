@@ -82,6 +82,7 @@ module.exports.preRender = function (context, editorId) {
         viewmodel.breakpoints = context.content[editorId].breakpoints;
         viewmodel.sizes = context.content[editorId].sizes;
         viewmodel.src = context.content[editorId].imageUrl + constants.CLD_TRACKING_PARAM;
+        viewmodel.cldTrackingParam = constants.CLD_TRACKING_PARAM;
         if (context.content[editorId].imageLinkData) {
             viewmodel.imageLink = buildLinkUrl(JSON.parse(context.content[editorId].imageLinkData));
         }
