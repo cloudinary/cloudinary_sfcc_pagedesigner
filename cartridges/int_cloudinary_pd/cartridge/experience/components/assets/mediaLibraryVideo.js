@@ -5,6 +5,8 @@ var HashMap = require('dw/util/HashMap');
 var currentSite = require('dw/system/Site').getCurrent();
 var utils = require('*/cartridge/experience/utils/utils');
 var log = require('dw/system').Logger.getLogger('Cloudinary', '');
+var constants = require('*/cartridge/experience/utils/constants').cloudinaryConstants;
+
 
 if (typeof Object.assign !== 'function') {
     // Must be writable: true, enumerable: false, configurable: true
@@ -154,8 +156,8 @@ function callEagerTransformations(conf, publicId) {
         }
         // eslint-disable-next-line no-param-reassign
         conf.sourceConfig.transformation = trans;
-        conf.sourceConfig.video.url = conf.sourceConfig.video.url + '?_i=AH';
-        conf.sourceConfig.poster = conf.sourceConfig.poster + '?_i=AH';
+        conf.sourceConfig.video.url = conf.sourceConfig.video.url + constants.CLD_TRACKING_PARAM;
+        conf.sourceConfig.poster = conf.sourceConfig.poster + constants.CLD_TRACKING_PARAM;
         var body = {
             timestamp: (Date.now() / 1000).toFixed(),
             type: 'upload',

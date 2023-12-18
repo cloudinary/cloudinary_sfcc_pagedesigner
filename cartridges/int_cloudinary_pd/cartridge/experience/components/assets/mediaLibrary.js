@@ -6,6 +6,7 @@ var currentSite = require('dw/system/Site').getCurrent();
 var URLUtils = require('dw/web/URLUtils');
 var URLAction = require('dw/web/URLAction');
 var URLParamter = require('dw/web/URLParameter');
+var constants = require('*/cartridge/experience/utils/constants').cloudinaryConstants;
 
 /**
  * build a url from array
@@ -77,10 +78,10 @@ module.exports.preRender = function (context, editorId) {
             viewmodel.cname = cname;
         }
         viewmodel.placeholder = context.content[editorId].placeholderUrl || context.content[editorId].imageUrl;
-        viewmodel.placeholder = viewmodel.placeholder + '?_i=AH';
+        viewmodel.placeholder = viewmodel.placeholder + constants.CLD_TRACKING_PARAM;
         viewmodel.breakpoints = context.content[editorId].breakpoints;
         viewmodel.sizes = context.content[editorId].sizes;
-        viewmodel.src = context.content[editorId].imageUrl + '?_i=AH';
+        viewmodel.src = context.content[editorId].imageUrl + constants.CLD_TRACKING_PARAM;
         if (context.content[editorId].imageLinkData) {
             viewmodel.imageLink = buildLinkUrl(JSON.parse(context.content[editorId].imageLinkData));
         }
