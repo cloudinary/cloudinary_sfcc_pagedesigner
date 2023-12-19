@@ -31,6 +31,7 @@ function renderImgs() {
                 for (let br of breakpoints) {
                     var trs = t.concat([{ crop: 'scale', width: br }]);
                     var s = cld.url(imageConf.publicId, { transformation: trs });
+                    s = s + imageConf.cldTrackingParam;
                     brs.push(s + ' ' + br + 'w');
                 }
             }
