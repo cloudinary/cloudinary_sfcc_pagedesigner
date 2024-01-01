@@ -7,7 +7,6 @@ var utils = require('*/cartridge/experience/utils/utils');
 var log = require('dw/system').Logger.getLogger('Cloudinary', '');
 var constants = require('*/cartridge/experience/utils/constants').cloudinaryConstants;
 
-
 if (typeof Object.assign !== 'function') {
     // Must be writable: true, enumerable: false, configurable: true
     Object.defineProperty(Object, 'assign', {
@@ -203,6 +202,7 @@ module.exports.preRender = function (context, editorId) {
             viewmodel.cname = cname;
         }
         conf = callEagerTransformations(conf, publicId);
+        conf.sourceConfig.queryParams = { '_i': 'AH' };
         viewmodel.cloudName = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCloudName');
         viewmodel.public_id = publicId;
         viewmodel.id = idSafeString(randomString(16));
