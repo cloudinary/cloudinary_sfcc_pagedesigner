@@ -157,6 +157,7 @@ function callEagerTransformations(conf, publicId) {
         conf.sourceConfig.transformation = trans;
         conf.sourceConfig.video.url = conf.sourceConfig.video.url + constants.CLD_TRACKING_PARAM;
         conf.sourceConfig.poster = conf.sourceConfig.poster + constants.CLD_TRACKING_PARAM;
+        conf.playerConfig.fluid = true;
         var body = {
             timestamp: (Date.now() / 1000).toFixed(),
             type: 'upload',

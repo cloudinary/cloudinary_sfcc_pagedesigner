@@ -14,8 +14,6 @@ function initializeCloudinaryPlayers() {
             })
         }
     });
-    console.log(players);
-
 }
 
 
