@@ -3,6 +3,7 @@
 var server = require('server');
 var LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
 // var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
+var constants = require('*/cartridge/experience/utils/constants').cloudinaryConstants;
 
 /**
  * Gets the asset info from cloudinary
@@ -16,6 +17,7 @@ function getAssetInfo(publicId, type, rType) {
         createRequest: function (service, param) {
             service.setRequestMethod('GET');
             service.addHeader('Content-Type', 'application/json');
+            service.addHeader('User-Agent', constants.API_TRACKING_PARAM);
             var urlPart = encodeURIComponent('/resources/' + rType + '/' + type + '/' + publicId);
             // eslint-disable-next-line no-param-reassign
             service.URL += urlPart;

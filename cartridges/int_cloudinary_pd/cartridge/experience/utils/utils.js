@@ -6,6 +6,7 @@ var LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
 var MessageDigest = require('dw/crypto/MessageDigest');
 var Encoding = require('dw/crypto/Encoding');
 var Bytes = require('dw/util/Bytes');
+var constants = require('*/cartridge/experience/utils/constants').cloudinaryConstants;
 
 /**
  * strigify a json for API call
@@ -66,6 +67,7 @@ function callService(body, fileType, callType) {
             service.setRequestMethod('POST');
             service.setAuthentication('NONE');
             service.addHeader('Content-Type', 'application/json');
+            service.addHeader('User-Agent', constants.API_TRACKING_PARAM);
             // eslint-disable-next-line no-param-reassign
             service.URL += '/' + fileType + '/' + callType;
             return param || null;

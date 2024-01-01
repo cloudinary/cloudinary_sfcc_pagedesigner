@@ -5,6 +5,7 @@ var HashMap = require('dw/util/HashMap');
 
 var LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
 var currentSite = require('dw/system/Site').getCurrent();
+var constants = require('*/cartridge/experience/utils/constants').cloudinaryConstants;
 
 var data = {
     getAPIKey: function () {
@@ -67,6 +68,7 @@ function callService(body, fileType, callType) {
         cloudinaryService.setRequestMethod('POST');
         cloudinaryService.setURL(serviceURL + '/' + data.getCloudName() + '/' + fileType + '/' + callType);
         cloudinaryService.addHeader('Content-Type', 'application/json');
+        cloudinaryService.addHeader('User-Agent', constants.API_TRACKING_PARAM);
 
         serviceResponse = cloudinaryService.call(JSON.stringify(body));
 
