@@ -155,7 +155,6 @@ function callEagerTransformations(conf, publicId) {
         }
         // eslint-disable-next-line no-param-reassign
         conf.sourceConfig.transformation = trans;
-        conf.sourceConfig.video.url = conf.sourceConfig.video.url + constants.CLD_TRACKING_PARAM;
         conf.sourceConfig.poster = conf.sourceConfig.poster + constants.CLD_TRACKING_PARAM;
         conf.playerConfig.fluid = true;
         var body = {
@@ -203,7 +202,9 @@ module.exports.preRender = function (context, editorId) {
             viewmodel.cname = cname;
         }
         conf = callEagerTransformations(conf, publicId);
-        conf.sourceConfig.queryParams = { '_i': 'AH' };
+        const queryParams = {};
+        queryParams[constants.CLD_TRACKING_PARAM.slice(1).split('=')[0]] = constants.CLD_TRACKING_PARAM.slice(1).split('=')[1];
+        conf.sourceConfig.queryParams = queryParams;
         viewmodel.cloudName = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCloudName');
         viewmodel.public_id = publicId;
         viewmodel.id = idSafeString(randomString(16));
