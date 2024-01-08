@@ -70,6 +70,14 @@ function callService(body, fileType, callType) {
         cloudinaryService.addHeader('Content-Type', 'application/json');
         cloudinaryService.addHeader('User-Agent', constants.API_TRACKING_PARAM);
 
+        const credential = cloudinaryService.getConfiguration().getCredential();
+        var url = credential.getURL();
+        // add cloud name if placeholder [cloudname] is present
+        if (url.indexOf(constants.CLD_LIST_SERVICE_CLOUDNAME_PLACEHOLDER) > -1) {
+            url = url.replace(constants.CLD_LIST_SERVICE_CLOUDNAME_PLACEHOLDER, constants.CLD_CLOUDNAME);
+        }
+        cloudinaryService.setURL(url);
+
         serviceResponse = cloudinaryService.call(JSON.stringify(body));
 
         if (serviceResponse.ok) {

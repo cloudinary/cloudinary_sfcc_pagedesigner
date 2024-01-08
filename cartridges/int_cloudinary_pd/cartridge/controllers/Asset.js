@@ -19,6 +19,15 @@ function getAssetInfo(publicId, type, rType) {
             service.addHeader('Content-Type', 'application/json');
             service.addHeader('User-Agent', constants.API_TRACKING_PARAM);
             var urlPart = encodeURIComponent('/resources/' + rType + '/' + type + '/' + publicId);
+
+            const credential = service.getConfiguration().getCredential();
+            var url = credential.getURL();
+            // add cloud name if placeholder [cloudname] is present
+            if (url.indexOf(constants.CLD_LIST_SERVICE_CLOUDNAME_PLACEHOLDER) > -1) {
+                url = url.replace(constants.CLD_LIST_SERVICE_CLOUDNAME_PLACEHOLDER, constants.CLD_CLOUDNAME);
+            }
+            service.setURL(url);
+
             // eslint-disable-next-line no-param-reassign
             service.URL += urlPart;
             return param || null;
