@@ -44,6 +44,10 @@ const handleIframeMessage = (message, ifrm, value = null, config) => {
                     title: 'Cloudinary Image'
                 }
             }, (data) => {
+                // check if the image has transformation
+                if (!data.value.derived || data.value.derived.length === 0) {
+                    data.value.derived = [{raw_transformation: ''}];
+                }
                 getBreackpoints(config.breakpointsUrl, data.value.public_id, ifrm);
                 data.value.origin = message.source;
                 ifrm.contentWindow.postMessage(data.value, '*');
