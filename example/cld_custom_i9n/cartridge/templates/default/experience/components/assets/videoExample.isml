@@ -3,9 +3,11 @@
 <isscript>
     // SFRA has a logic bug where full urls are added twice, so we need to check for duplicates before adding.
     var assets = require('*/cartridge/scripts/assets.js');
+	var verJson = require('*/cartridge/scripts/cloudinary/version.json');
+
 
     // Video Player CSS
-    var src = 'https://unpkg.com/cloudinary-video-player@1.8.0/dist/cld-video-player.min.css';
+    var src = 'https://unpkg.com/cloudinary-video-player@'+verJson.videoPlayerVersion+'/dist/cld-video-player.min.css';
     if (assets.styles.lastIndexOf(src) < 0) {
         assets.addCss(src);
     }
@@ -17,7 +19,7 @@
     }
 
     // Cloudinary Video Player JS
-    src = 'https://unpkg.com/cloudinary-video-player@1.8.0/dist/cld-video-player.min.js';
+    src = 'https://unpkg.com/cloudinary-video-player@'+verJson.videoPlayerVersion+'/dist/cld-video-player.min.js';
     if (assets.scripts.lastIndexOf(src) < 0) {
         assets.addJs(src);
     }
