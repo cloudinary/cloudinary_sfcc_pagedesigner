@@ -9,7 +9,7 @@
     var assets = require('*/cartridge/scripts/assets.js');
 
 	// Video Player CSS
-	var src = 'https://unpkg.com/cloudinary-video-player@1.8.0/dist/cld-video-player.min.css';
+	var src = 'https://unpkg.com/cloudinary-video-player@1.10.4/dist/cld-video-player.min.css';
     if (assets.styles.lastIndexOf(src) < 0) {
     	assets.addCss(src);
 	}
@@ -21,7 +21,7 @@
 	}
 
 	// Cloudinary Video Player JS
-	src = 'https://unpkg.com/cloudinary-video-player@1.8.0/dist/cld-video-player.min.js';
+	src = 'https://unpkg.com/cloudinary-video-player@1.10.4/dist/cld-video-player.min.js';
     if (assets.scripts.lastIndexOf(src) < 0) {
 		assets.addJs(src);
 	}
@@ -43,6 +43,6 @@
   window.players.push(value);
   window.cloudName = value.cloudName;
   window.cname = value.cname || null;
-  console.log(value);
 </script>
 </div>
+
