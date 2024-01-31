@@ -18,7 +18,6 @@ const run = () => {
       xml = xml.concat(defTemplate.replace('__NAME__', name).replace('__VAL__', val));
     }
     xml = xml.concat('</value-definitions>');
-    console.log(xml);
     process.exit();
   } else {
     console.log('Useage --in= path to values json --prefix= value prefix');
