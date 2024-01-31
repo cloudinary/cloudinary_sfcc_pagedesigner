@@ -8,10 +8,10 @@ function renderImgs() {
         conf.secure_distribution = window.cname;
         conf.private_cdn = true;
     }
-    cld = cloudinary.Cloudinary.new(conf);
+    cld = cloudinary.default.Cloudinary.new(conf);
     let config = cld.config();
     if (config.secure === false) {
-        delete cld.config({cname: window.cname}).secure_distribution;
+        delete cld.config({ cname: window.cname }).secure_distribution;
     }
     for (var imageConf of cldImages) {
         if (imageConf.id) {
@@ -31,12 +31,13 @@ function renderImgs() {
                 for (let br of breakpoints) {
                     var trs = t.concat([{ crop: 'scale', width: br }]);
                     var s = cld.url(imageConf.publicId, { transformation: trs });
+                    s = s + imageConf.cldTrackingParam;
                     brs.push(s + ' ' + br + 'w');
                 }
             }
             var img = document.getElementById(imageConf.id);
             if (img) {
-                img.src = url;
+                img.src = url + imageConf.cldTrackingParam;
                 img.onerror = onError;
                 if (brs.length > 0) {
                     img.srcset = brs.join(',');

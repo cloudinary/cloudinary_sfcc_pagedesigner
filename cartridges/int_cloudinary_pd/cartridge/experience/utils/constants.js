@@ -6,5 +6,6 @@ var sitePrefs = Site.getCurrent().getPreferences();
 module.exports.cloudinaryConstants = {
     API_TRACKING_PARAM: 'CloudinarySalesForcePageDesigner/' + verJson.version + ' (CommerceCloud ' + System.compatibilityMode + ') SFPD',
     CLD_LIST_SERVICE_CLOUDNAME_PLACEHOLDER: '[cloudname]',
-    CLD_CLOUDNAME: sitePrefs.getCustom().CloudinaryPageDesignerCloudName
+    CLD_CLOUDNAME: sitePrefs.getCustom().CloudinaryPageDesignerCloudName,
+    CLD_TRACKING_PARAM: '?_i=AH'
 };

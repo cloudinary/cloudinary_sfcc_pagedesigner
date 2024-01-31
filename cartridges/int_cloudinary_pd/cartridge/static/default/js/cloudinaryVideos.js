@@ -14,8 +14,6 @@ function initializeCloudinaryPlayers() {
             })
         }
     });
-    console.log(players);
-
 }
 
 
@@ -37,10 +35,6 @@ $(document).ready(function () {
                 conf.private_cdn = true;
             }
             cld = cloudinary.Cloudinary.new(conf);
-            let config = cld.config();
-            if (config.secure === false) {
-                delete cld.config({cname: window.cname}).secure_distribution;
-            }
             initializeCloudinaryPlayers();
         }, 100);
     }
