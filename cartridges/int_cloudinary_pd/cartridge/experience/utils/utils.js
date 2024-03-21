@@ -6,7 +6,7 @@ var LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
 var MessageDigest = require('dw/crypto/MessageDigest');
 var Encoding = require('dw/crypto/Encoding');
 var Bytes = require('dw/util/Bytes');
-var constants = require('*/cartridge/experience/utils/constants').cloudinaryConstants;
+var constants = require('*/cartridge/experience/utils/cloudinaryConstants').cloudinaryConstants;
 
 /**
  * strigify a json for API call

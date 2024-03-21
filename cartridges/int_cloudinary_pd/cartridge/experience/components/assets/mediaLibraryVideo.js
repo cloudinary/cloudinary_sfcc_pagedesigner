@@ -5,7 +5,7 @@ var HashMap = require('dw/util/HashMap');
 var currentSite = require('dw/system/Site').getCurrent();
 var utils = require('*/cartridge/experience/utils/utils');
 var log = require('dw/system').Logger.getLogger('Cloudinary', '');
-var constants = require('*/cartridge/experience/utils/constants').cloudinaryConstants;
+var constants = require('*/cartridge/experience/utils/cloudinaryConstants').cloudinaryConstants;
 
 if (typeof Object.assign !== 'function') {
     // Must be writable: true, enumerable: false, configurable: true
