@@ -8,6 +8,7 @@ var URLAction = require('dw/web/URLAction');
 var URLParamter = require('dw/web/URLParameter');
 var constants = require('*/cartridge/experience/utils/constants').cloudinaryConstants;
 
+var Logger = require('dw/system/Logger');
 
 /**
  * Replaces the global transformations so if they change
@@ -72,7 +73,11 @@ module.exports.preRender = function (context, editorId) {
         viewmodel.src = context.content[editorId].imageUrl + constants.CLD_TRACKING_PARAM;
         viewmodel.cldTrackingParam = constants.CLD_TRACKING_PARAM;
         if (context.content[editorId].imageLinkData) {
-            viewmodel.imageLink = JSON.parse(context.content[editorId].imageLinkData);
+            try {
+                viewmodel.imageLink = JSON.parse(context.content[editorId].imageLinkData);
+            } catch (error) {
+                Logger.error('Error while parsing JSON at {0} : {1}', error.lineNumber, error);
+            }
         }
         viewmodel.altText = context.content[editorId].alt;
         if (context.content[editorId].isTransformationOverride) {
