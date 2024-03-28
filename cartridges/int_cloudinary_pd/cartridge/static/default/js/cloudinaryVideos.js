@@ -1,9 +1,11 @@
 function initializeCloudinaryPlayers() {
+    const convertToSnakeCase = obj => JSON.parse(JSON.stringify(obj).replace(/"([^"]+)":/g, (_, p1) => `"${p1.replace(/([a-z])([A-Z])/g, '$1_$2').toLowerCase()}":`));
     window.players.forEach(player => {
         if (player) {
-            var pCnf = JSON.parse(player.playerConf);
-            var p = cld.videoPlayer(player.id, pCnf.playerConfig);
-            p.fluid(true);
+            const pCnf = JSON.parse(player.playerConf);
+            const p = cld.videoPlayer(player.id, pCnf.playerConfig);
+            pCnf.sourceConfig['transformation'] = convertToSnakeCase(pCnf.sourceConfig.transformation)
+            pCnf.playerConfig['cloudName'] = pCnf.cloudName;
             p.source(pCnf.publicId, pCnf.sourceConfig);
             p.on('error', function(e) {
                 const error = e.Player.videojs.error();
