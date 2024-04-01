@@ -5,7 +5,7 @@ var HashMap = require('dw/util/HashMap');
 
 var LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
 var currentSite = require('dw/system/Site').getCurrent();
-var constants = require('*/cartridge/experience/utils/constants').cloudinaryConstants;
+var constants = require('int_cloudinary_pd/cartridge/experience/utils/cloudinaryConstants').cloudinaryConstants;
 
 var data = {
     getAPIKey: function () {
@@ -39,8 +39,6 @@ var cloudinaryService = LocalServiceRegistry.createService('cloudinary.https.api
     }
 });
 
-var serviceURL = cloudinaryService.URL;
-
 /**
  * Addes cloudinery prefix to log entries
  * @param {Error} e error to log
@@ -66,7 +64,6 @@ function callService(body, fileType, callType) {
 
     try {
         cloudinaryService.setRequestMethod('POST');
-        cloudinaryService.setURL(serviceURL + '/' + data.getCloudName() + '/' + fileType + '/' + callType);
         cloudinaryService.addHeader('Content-Type', 'application/json');
         cloudinaryService.addHeader('User-Agent', constants.API_TRACKING_PARAM);
 
@@ -76,7 +73,7 @@ function callService(body, fileType, callType) {
         if (url.indexOf(constants.CLD_LIST_SERVICE_CLOUDNAME_PLACEHOLDER) > -1) {
             url = url.replace(constants.CLD_LIST_SERVICE_CLOUDNAME_PLACEHOLDER, constants.CLD_CLOUDNAME);
         }
-        cloudinaryService.setURL(url);
+        cloudinaryService.setURL(url + '/' + fileType + '/' + callType);
 
         serviceResponse = cloudinaryService.call(JSON.stringify(body));
 
