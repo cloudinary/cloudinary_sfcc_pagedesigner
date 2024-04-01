@@ -6,6 +6,7 @@ var LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
 var MessageDigest = require('dw/crypto/MessageDigest');
 var Encoding = require('dw/crypto/Encoding');
 var Bytes = require('dw/util/Bytes');
+var constants = require('~/cartridge/experience/utils/cloudinaryConstants').cloudinaryConstants;
 
 /**
  * strigify a json for API call
@@ -63,9 +64,18 @@ function bodySignature(body) {
 function callService(body, fileType, callType) {
     var cloudinaryService = LocalServiceRegistry.createService('cloudinary.https.api', {
         createRequest: function (service, param) {
+            const credential = service.getConfiguration().getCredential();
+            var url = credential.getURL();
             service.setRequestMethod('POST');
             service.setAuthentication('NONE');
             service.addHeader('Content-Type', 'application/json');
+            service.addHeader('User-Agent', constants.API_TRACKING_PARAM);
+            
+            // add cloud name if placeholder [cloudname] is present
+            if (url.indexOf(constants.CLD_LIST_SERVICE_CLOUDNAME_PLACEHOLDER) > -1) {
+                url = url.replace(constants.CLD_LIST_SERVICE_CLOUDNAME_PLACEHOLDER, constants.CLD_CLOUDNAME);
+            }
+            service.setURL(url);
             // eslint-disable-next-line no-param-reassign
             service.URL += '/' + fileType + '/' + callType;
             return param || null;

@@ -5,6 +5,7 @@ var HashMap = require('dw/util/HashMap');
 var currentSite = require('dw/system/Site').getCurrent();
 var utils = require('*/cartridge/experience/utils/utils');
 var log = require('dw/system').Logger.getLogger('Cloudinary', '');
+var constants = require('~/cartridge/experience/utils/cloudinaryConstants').cloudinaryConstants;
 
 if (typeof Object.assign !== 'function') {
     // Must be writable: true, enumerable: false, configurable: true
@@ -154,6 +155,8 @@ function callEagerTransformations(conf, publicId) {
         }
         // eslint-disable-next-line no-param-reassign
         conf.sourceConfig.transformation = trans;
+        conf.sourceConfig.poster = conf.sourceConfig.poster + constants.CLD_TRACKING_PARAM;
+        conf.playerConfig.fluid = true;
         var body = {
             timestamp: (Date.now() / 1000).toFixed(),
             type: 'upload',
@@ -199,6 +202,9 @@ module.exports.preRender = function (context, editorId) {
             viewmodel.cname = cname;
         }
         conf = callEagerTransformations(conf, publicId);
+        const queryParams = {};
+        queryParams[constants.CLD_TRACKING_PARAM.slice(1).split('=')[0]] = constants.CLD_TRACKING_PARAM.slice(1).split('=')[1];
+        conf.sourceConfig.queryParams = queryParams;
         viewmodel.cloudName = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCloudName');
         viewmodel.public_id = publicId;
         viewmodel.id = idSafeString(randomString(16));

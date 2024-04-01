@@ -44,6 +44,10 @@ const handleIframeMessage = (message, ifrm, value = null, config) => {
                     title: 'Cloudinary Image'
                 }
             }, (data) => {
+                // check if the image has transformation
+                if (!data.value.derived || data.value.derived.length === 0) {
+                    data.value.derived = [{raw_transformation: ''}];
+                }
                 getBreackpoints(config.breakpointsUrl, data.value.public_id, ifrm);
                 data.value.origin = message.source;
                 ifrm.contentWindow.postMessage(data.value, '*');
@@ -62,7 +66,12 @@ const handleIframeMessage = (message, ifrm, value = null, config) => {
                     if (response.status === 200) {
                         response.json().then((json) => {
                             if (json.status === 'ok') {
-                                data.value.url = json.url;
+                                if (data.value.value ===  'null') {
+                                    data.value.value = " ";
+                                    data.value.url = "";
+                                } else {
+                                    data.value.url = json.url;
+                                }
                                 ifrm.contentWindow.postMessage(data.value, '*');
                             }
                             // eslint-disable-next-line no-console
