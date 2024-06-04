@@ -62,7 +62,7 @@ function bodySignature(body) {
  * @returns {{ok: boolean, message: string}} call result
  */
 function callService(body, fileType, callType) {
-    var cloudinaryService = LocalServiceRegistry.createService('cloudinary.https.api', {
+    var cloudinaryService = LocalServiceRegistry.createService('cloudinaryPageDesignerAPI', {
         createRequest: function (service, param) {
             const credential = service.getConfiguration().getCredential();
             var url = credential.getURL();

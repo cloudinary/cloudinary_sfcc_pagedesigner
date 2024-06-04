@@ -13,7 +13,7 @@ var constants = require('~/cartridge/experience/utils/cloudinaryConstants').clou
  * @returns {null|Object} asset object
  */
 function getAssetInfo(publicId, type, rType) {
-    var cloudinaryService = LocalServiceRegistry.createService('cloudinary.https.api', {
+    var cloudinaryService = LocalServiceRegistry.createService('cloudinaryPageDesignerAPI', {
         createRequest: function (service, param) {
             service.setRequestMethod('GET');
             service.addHeader('Content-Type', 'application/json');
