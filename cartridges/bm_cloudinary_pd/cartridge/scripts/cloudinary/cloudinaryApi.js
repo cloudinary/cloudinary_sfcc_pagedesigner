@@ -29,7 +29,7 @@ var data = {
 };
 
 // define service
-var cloudinaryService = LocalServiceRegistry.createService('cloudinary.https.api', {
+var cloudinaryService = LocalServiceRegistry.createService('cloudinaryPageDesignerAPI', {
     createRequest: function (service, param) {
         service.setAuthentication('NONE');
         return param || null;
