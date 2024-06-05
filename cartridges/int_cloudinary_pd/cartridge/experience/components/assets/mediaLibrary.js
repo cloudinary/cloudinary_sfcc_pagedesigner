@@ -6,8 +6,7 @@ var currentSite = require('dw/system/Site').getCurrent();
 var URLUtils = require('dw/web/URLUtils');
 var URLAction = require('dw/web/URLAction');
 var URLParamter = require('dw/web/URLParameter');
-var constants = require('~/cartridge/experience/utils/cloudinaryConstants').cloudinaryConstants;
-
+var constants = require('~/cartridge/experience/utils/cloudinaryPDConstants').cloudinaryPDConstants;
 var Logger = require('dw/system/Logger');
 
 /**
