@@ -5,7 +5,7 @@ var HashMap = require('dw/util/HashMap');
 
 var LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
 var currentSite = require('dw/system/Site').getCurrent();
-var constants = require('int_cloudinary_pd/cartridge/experience/utils/cloudinaryConstants').cloudinaryConstants;
+var constants = require('int_cloudinary_pd/cartridge/experience/utils/cloudinaryPDConstants').cloudinaryPDConstants;
 
 var data = {
     getAPIKey: function () {
