@@ -57,6 +57,7 @@ function getBreackpoints(publicId) {
 
 server.get('Points', server.middleware.https, function (req, res, next) {
     var publicId = req.querystring.publicId;
+    res.setHttpHeader('Access-Control-Allow-Origin', '*');
     if (publicId) {
         var brs = getBreackpoints(publicId);
         res.json({

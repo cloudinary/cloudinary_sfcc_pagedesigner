@@ -53,6 +53,7 @@ server.get('info', server.middleware.https, function (req, res, next) {
     var publicId = req.querystring.publicId;
     var type = req.querystring.type;
     var rType = req.querystring.rType;
+    res.setHttpHeader('Access-Control-Allow-Origin', '*');
     if (publicId) {
         var info = getAssetInfo(publicId, type, rType);
         res.json({
