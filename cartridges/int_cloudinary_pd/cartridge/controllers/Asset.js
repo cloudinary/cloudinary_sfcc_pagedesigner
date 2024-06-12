@@ -2,7 +2,7 @@
 
 var server = require('server');
 var LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
-// var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
+var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 var constants = require('~/cartridge/experience/utils/cloudinaryPDConstants').cloudinaryPDConstants;
 
 /**

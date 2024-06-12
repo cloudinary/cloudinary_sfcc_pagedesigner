@@ -17,7 +17,7 @@ module.exports.init = function (editor) {
     var linkUrlAct = new URLAction('Links-url', currentSite.getID());
     editor.configuration.put('breakpointsUrl', URLUtils.abs(act).toString());
     editor.configuration.put('linkBuilderUrl', URLUtils.abs(linkUrlAct).toString());
-    editor.configuration.put('csfr', csrf);
+    editor.configuration.put('csrf', csrf);
     conf.put('type', 'image');
     editor.configuration.put('cloudName', cloudinaryApi.data.getCloudName());
     editor.configuration.put('cname', cloudinaryApi.data.getCloudinaryCNAME());
