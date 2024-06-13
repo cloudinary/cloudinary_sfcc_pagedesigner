@@ -4,7 +4,7 @@ var server = require('server');
 var currentSite = require('dw/system/Site').getCurrent();
 var utils = require('*/cartridge/experience/utils/utils');
 
-// var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
+var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 
 /**
  * Parses the responce from cloudinary
