@@ -8,12 +8,12 @@ var URLParamter = require('dw/web/URLParameter');
 
 server.get('url', server.middleware.https, function (req, res, next) {
     var linkArr = (req.querystring && req.querystring.linkData) ? JSON.parse(decodeURIComponent(req.querystring.linkData)) : null;
+    res.setHttpHeader('Access-Control-Allow-Origin', '*');
     if (linkArr && linkArr.length > 0) {
         // eslint-disable-next-line new-cap
-        var url = new URLUtils.abs(new URLAction(linkArr[0], currentSite.name), new URLParamter(linkArr[1], linkArr[2]));
         var link = {
             status: 'ok',
-            url: url.toString()
+            url: linkArr.toString()
         };
         res.json(link);
     } else {
