@@ -5,7 +5,10 @@
 </iscomment>
 <isscript>
     // SFRA has a logic bug where full urls are added twice, so we need to check for duplicates before adding.
-    assets = require('*/cartridge/scripts/assets.js');
+    var assets = require('*/cartridge/scripts/assets.js');
+    var verJson = require('*/cartridge/scripts/cloudinary/version.json');
+    pdict.viewmodel.videoPlayerVersion = verJson.videoPlayerVersion;
+
     assets.addJs('js/cloudinaryImages.js');
 </isscript>
 
@@ -15,6 +18,15 @@
   window.cldImages.push(value);
   window.cloudName = value.cloudName;
   window.cname = value.cname || null;
+
+  // Cloudinary Core JS
+  const script = document.querySelector('script[src="https://unpkg.com/cloudinary-video-player@'+value.videoPlayerVersion+'/dist/cld-video-player.min.js"]');
+   if (script === null) {
+      var src = 'https://unpkg.com/cloudinary-core/cloudinary-core-shrinkwrap.min.js';
+      var shrinkWrap = document.createElement('script');
+      shrinkWrap.src = src;
+      document.body.appendChild(shrinkWrap);
+    }
 </script>
 
 

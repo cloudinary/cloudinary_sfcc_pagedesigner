@@ -8,7 +8,7 @@ function renderImgs() {
         conf.secure_distribution = window.cname;
         conf.private_cdn = true;
     }
-    cld = cloudinary.default.Cloudinary.new(conf);
+    const cld = cloudinary.default.Cloudinary.new(conf);
     let config = cld.config();
     if (config.secure === false) {
         delete cld.config({ cname: window.cname }).secure_distribution;

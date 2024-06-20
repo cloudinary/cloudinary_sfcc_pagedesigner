@@ -9,15 +9,14 @@
     var assets = require('*/cartridge/scripts/assets.js');
 	var verJson = require('*/cartridge/scripts/cloudinary/version.json');
 
-
 	// Video Player CSS
-    var src = 'https://unpkg.com/cloudinary-video-player@'+verJson.videoPlayerVersion+'/dist/cld-video-player.min.css';
+	var src = 'https://unpkg.com/cloudinary-video-player@'+verJson.videoPlayerVersion+'/dist/cld-video-player.min.css';
     if (assets.styles.lastIndexOf(src) < 0) {
     	assets.addCss(src);
 	}
 
 	// Cloudinary Video Player JS
-    src = 'https://unpkg.com/cloudinary-video-player@'+verJson.videoPlayerVersion+'/dist/cld-video-player.min.js';
+	src = 'https://unpkg.com/cloudinary-video-player@'+verJson.videoPlayerVersion+'/dist/cld-video-player.min.js';
     if (assets.scripts.lastIndexOf(src) < 0) {
 		assets.addJs(src);
 	}
@@ -33,5 +32,11 @@
   window.players.push(value);
   window.cloudName = value.cloudName;
   window.cname = value.cname || null;
+
+  // Check if the Cloudinary Core JS is inculded
+  const shrinkWrapJs = document.querySelector('script[src="https://unpkg.com/cloudinary-core/cloudinary-core-shrinkwrap.min.js"]');
+  if (shrinkWrapJs) {
+	shrinkWrapJs.parentNode.removeChild(shrinkWrapJs);
+  }
 </script>
 </div>

@@ -30,6 +30,11 @@
       window.players.push(value);
       window.cloudName = value.cloudName;
       window.cname = value.cname || null;
+
+      // Check if the Cloudinary Core JS is inculded
+      const shrinkWrapJs = document.querySelector('script[src="https://unpkg.com/cloudinary-core/cloudinary-core-shrinkwrap.min.js"]');
+      if (shrinkWrapJs) {
+        shrinkWrapJs.parentNode.removeChild(shrinkWrapJs);
+      }
     </script>
 </div>
-
