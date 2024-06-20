@@ -3,44 +3,43 @@
     This document renders an instance of the component. Multiple instances can be placed on the page.
 
 </iscomment>
+<isset name="sitePref" value="${dw.system.Site.current.preferences.custom}" scope="page" />
 <isscript>
     // SFRA has a logic bug where full urls are added twice, so we need to check for duplicates before adding.
     var assets = require('*/cartridge/scripts/assets.js');
-    var verJson = require('*/cartridge/scripts/cloudinary/version.json');
-    pdict.viewmodel.videoPlayerVersion = verJson.videoPlayerVersion;
+    pdict.viewmodel.CLDPDVideoPlayerJSURL = sitePref.CLDPDVideoPlayerJSURL;
+    pdict.viewmodel.CLDPDShrinkwrapJSURL = sitePref.CLDPDShrinkwrapJSURL;
 
     assets.addJs('js/cloudinaryImages.js');
 </isscript>
 
 <script>
-  var value = JSON.parse('<isprint value="${JSON.stringify(pdict.viewmodel)}" encoding="jsonvalue"/>');
-  window.cldImages = window.cldImages || [];
-  window.cldImages.push(value);
-  window.cloudName = value.cloudName;
-  window.cname = value.cname || null;
+    var value = JSON.parse('<isprint value="${JSON.stringify(pdict.viewmodel)}" encoding="jsonvalue"/>');
+    window.cldImages = window.cldImages || [];
+    window.cldImages.push(value);
+    window.cloudName = value.cloudName;
+    window.cname = value.cname || null;
 
-  // Cloudinary Core JS
-  const script = document.querySelector('script[src="https://unpkg.com/cloudinary-video-player@'+value.videoPlayerVersion+'/dist/cld-video-player.min.js"]');
-   if (script === null) {
-      var src = 'https://unpkg.com/cloudinary-core/cloudinary-core-shrinkwrap.min.js';
-      var shrinkWrap = document.createElement('script');
-      shrinkWrap.src = src;
-      document.body.appendChild(shrinkWrap);
+    // Cloudinary Core JS
+    const script = document.querySelector('script[src="'+value.CLDPDVideoPlayerJSURL+'"]');
+    if (script === null) {
+        var shrinkWrap = document.createElement('script');
+        shrinkWrap.src = value.CLDPDShrinkwrapJSURL;
+        document.body.appendChild(shrinkWrap);
     }
 </script>
 
 
 <div class="cloudinary-media-library-container sfdc-component-mock sfdc-component-assets-media_library-mock">
-<isif condition="${pdict.viewmodel.placeholder}">
-<isif condition="${pdict.viewmodel.imageLink}">
-    <a href="${pdict.viewmodel.imageLink}">
-</isif>
-    <img class="component-media_library ml-image" src="${pdict.viewmodel.placeholder}"  data-real-url="${pdict.viewmodel.src}"
-    id="${pdict.viewmodel.id}"
-    alt="${pdict.viewmodel.altText}"
-    style="max-width: 100%">
-<isif condition="${pdict.viewmodel.imageLink}">
-</a>
-</isif>
+    <isif condition="${pdict.viewmodel.placeholder}">
+        <isif condition="${pdict.viewmodel.imageLink}">
+            <a href="${pdict.viewmodel.imageLink}">
+        </isif>
+        <img class="component-media_library ml-image" src="${pdict.viewmodel.placeholder}"
+            data-real-url="${pdict.viewmodel.src}" id="${pdict.viewmodel.id}" alt="${pdict.viewmodel.altText}"
+            style="max-width: 100%">
+        <isif condition="${pdict.viewmodel.imageLink}">
+            </a>
+        </isif>
     </isif>
 </div>

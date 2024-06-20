@@ -4,23 +4,24 @@
 
 	Refer to module_pagedesigner_custom/cartridge/experience/components/assets/cloudinary_video.js
 </iscomment>
+<isset name="sitePref" value="${dw.system.Site.current.preferences.custom}" scope="page" />
+
 <isscript>
 	// SFRA has a logic bug where full urls are added twice, so we need to check for duplicates before adding.
     var assets = require('*/cartridge/scripts/assets.js');
-	var verJson = require('*/cartridge/scripts/cloudinary/version.json');
 
 	// Video Player CSS
-	var src = 'https://unpkg.com/cloudinary-video-player@'+verJson.videoPlayerVersion+'/dist/cld-video-player.min.css';
+	var src = sitePref.CLDPDVideoPlayerCSSURL;
     if (assets.styles.lastIndexOf(src) < 0) {
     	assets.addCss(src);
 	}
 
 	// Cloudinary Video Player JS
-	src = 'https://unpkg.com/cloudinary-video-player@'+verJson.videoPlayerVersion+'/dist/cld-video-player.min.js';
+	src = sitePref.CLDPDVideoPlayerJSURL;
     if (assets.scripts.lastIndexOf(src) < 0) {
 		assets.addJs(src);
 	}
-
+	pdict.viewmodel.CLDPDShrinkwrapJSURL = sitePref.CLDPDShrinkwrapJSURL;
     assets.addJs('/js/cloudinaryVideos.js');
 </isscript>
 
@@ -34,7 +35,7 @@
   window.cname = value.cname || null;
 
   // Check if the Cloudinary Core JS is inculded
-  const shrinkWrapJs = document.querySelector('script[src="https://unpkg.com/cloudinary-core/cloudinary-core-shrinkwrap.min.js"]');
+  const shrinkWrapJs = document.querySelector('script[src="'+value.CLDPDShrinkwrapJSURL+'"]');
   if (shrinkWrapJs) {
 	shrinkWrapJs.parentNode.removeChild(shrinkWrapJs);
   }
