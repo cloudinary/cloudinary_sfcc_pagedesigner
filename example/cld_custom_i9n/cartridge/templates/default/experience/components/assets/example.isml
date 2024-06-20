@@ -1,10 +1,9 @@
-<!--- TEMPLATENAME: example.isml --->
+<iscomment> TEMPLATENAME: example.isml </iscomment>
 <isset name="sitePref" value="${dw.system.Site.current.preferences.custom}" scope="page" />
 
 <isscript>
     // SFRA has a logic bug where full urls are added twice, so we need to check for duplicates before adding.
     var assets = require('*/cartridge/scripts/assets.js');
-    var verJson = require('*/cartridge/scripts/cloudinary/version.json');
     pdict.viewmodel.CLDPDVideoPlayerJSURL = sitePref.CLDPDVideoPlayerJSURL;
     pdict.viewmodel.CLDPDShrinkwrapJSURL = sitePref.CLDPDShrinkwrapJSURL;
 
