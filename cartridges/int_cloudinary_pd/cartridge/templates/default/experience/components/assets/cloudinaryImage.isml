@@ -21,7 +21,7 @@
     window.cname = value.cname || null;
 
     // Cloudinary Core JS
-    const script = document.querySelector('script[src="'+value.CLDPDVideoPlayerJSURL+'"]');
+    var script = document.querySelector('script[src="'+value.CLDPDVideoPlayerJSURL+'"]');
     if (script === null) {
         var shrinkWrap = document.createElement('script');
         shrinkWrap.src = value.CLDPDShrinkwrapJSURL;

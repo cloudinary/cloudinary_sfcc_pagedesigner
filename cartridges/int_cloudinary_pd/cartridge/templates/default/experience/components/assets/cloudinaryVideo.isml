@@ -28,16 +28,16 @@
 <div class="cloudinary-video-container sfdc-component-mock sfdc-component-assets-media_library_video-mock">
 	<video id="${pdict.viewmodel.id}"></video>
 	<script>
-  var value = JSON.parse('<isprint value="${JSON.stringify(pdict.viewmodel)}" encoding="jsonvalue"/>');
-  window.players = window.players || [];
-  window.players.push(value);
-  window.cloudName = value.cloudName;
-  window.cname = value.cname || null;
+		var value = JSON.parse('<isprint value="${JSON.stringify(pdict.viewmodel)}" encoding="jsonvalue"/>');
+		window.players = window.players || [];
+		window.players.push(value);
+		window.cloudName = value.cloudName;
+		window.cname = value.cname || null;
 
-  // Check if the Cloudinary Core JS is inculded
-  const shrinkWrapJs = document.querySelector('script[src="'+value.CLDPDShrinkwrapJSURL+'"]');
-  if (shrinkWrapJs) {
-	shrinkWrapJs.parentNode.removeChild(shrinkWrapJs);
-  }
-</script>
+		// Check if the Cloudinary Core JS is inculded
+		var shrinkWrapJs = document.querySelector('script[src="'+value.CLDPDShrinkwrapJSURL+'"]');
+		if (shrinkWrapJs) {
+			shrinkWrapJs.parentNode.removeChild(shrinkWrapJs);
+		}
+	</script>
 </div>
