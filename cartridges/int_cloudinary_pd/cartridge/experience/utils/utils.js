@@ -1,28 +1,7 @@
 'use strict';
 
-var currentSite = require('dw/system/Site')
-    .getCurrent();
 var LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
-var MessageDigest = require('dw/crypto/MessageDigest');
-var Encoding = require('dw/crypto/Encoding');
-var Bytes = require('dw/util/Bytes');
 var constants = require('~/cartridge/experience/utils/cloudinaryPDConstants').cloudinaryPDConstants;
-
-/**
- * strigify a json for API call
- * @param {Array} breakpoints array of transformations
- * @returns {string|null} stringifyed json
- */
-function generateResponsiveBreakpointsString(breakpoints) {
-    if (breakpoints == null) {
-        return null;
-    }
-    if (!Array.isArray(breakpoints)) {
-        // eslint-disable-next-line no-param-reassign
-        breakpoints = [breakpoints];
-    }
-    return JSON.stringify(breakpoints);
-}
 
 /**
  * Make an API call to cloudinary
@@ -82,6 +61,5 @@ function callService(body, fileType, callType) {
 }
 
 module.exports = {
-    callService: callService,
-    stringifyJson: generateResponsiveBreakpointsString
+    callService: callService
 };

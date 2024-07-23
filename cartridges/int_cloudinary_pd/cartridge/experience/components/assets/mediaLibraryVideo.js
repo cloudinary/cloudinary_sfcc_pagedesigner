@@ -136,7 +136,7 @@ function buildGlobalStr(global) {
 }
 
 /**
- * Maks an egger transformation API call
+ * Make the video transformation
  * @param {Object} conf configuration object
  * @returns {Object} the configuration object
  */

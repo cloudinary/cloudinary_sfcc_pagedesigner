@@ -12,10 +12,6 @@ var data = {
         return currentSite.getCustomPreferenceValue('CloudinaryPageDesignerAPIkey');
     },
 
-    getSecretKey: function () {
-        return currentSite.getCustomPreferenceValue('CloudinaryPageDesignerSecretKey');
-    },
-
     getCloudinaryCNAME: function () {
         return currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCNAME');
     },
