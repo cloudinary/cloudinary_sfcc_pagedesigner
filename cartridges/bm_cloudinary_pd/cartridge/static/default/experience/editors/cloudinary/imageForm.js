@@ -11,16 +11,6 @@ const reInitIframe = (value, config) => {
     }
 };
 
-const getBreackpoints = (brUrl, publicId, ifrm) => {
-    fetch(brUrl + '?publicId=' + publicId).then((response) => {
-        if (response.ok) {
-            response.json().then((data) => {
-                ifrm.contentWindow.postMessage(data, '*');
-            });
-        }
-    });
-};
-
 const handleIframeMessage = (message, ifrm, value = null, config) => {
     if (message.action) {
         switch (message.action) {
@@ -48,7 +38,6 @@ const handleIframeMessage = (message, ifrm, value = null, config) => {
                 if (!data.value.derived || data.value.derived.length === 0) {
                     data.value.derived = [{raw_transformation: ''}];
                 }
-                getBreackpoints(config.breakpointsUrl, data.value.public_id, ifrm);
                 data.value.origin = message.source;
                 ifrm.contentWindow.postMessage(data.value, '*');
             });

@@ -13,9 +13,7 @@ module.exports.init = function (editor) {
     var csrf = new HashMap();
     csrf.put(CSRF.getTokenName(), CSRF.generateToken());
     var currentSite = Site.getCurrent();
-    var act = new URLAction('Brpoints-Points', currentSite.getID());
     var linkUrlAct = new URLAction('Links-url', currentSite.getID());
-    editor.configuration.put('breakpointsUrl', URLUtils.abs(act).toString());
     editor.configuration.put('linkBuilderUrl', URLUtils.abs(linkUrlAct).toString());
     editor.configuration.put('csrf', csrf);
     conf.put('type', 'image');

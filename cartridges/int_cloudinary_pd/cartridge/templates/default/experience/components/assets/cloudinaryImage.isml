@@ -9,8 +9,6 @@
     var assets = require('*/cartridge/scripts/assets.js');
     pdict.viewmodel.CLDPDVideoPlayerJSURL = sitePref.CLDPDVideoPlayerJSURL;
     pdict.viewmodel.CLDPDShrinkwrapJSURL = sitePref.CLDPDShrinkwrapJSURL;
-
-    assets.addJs('js/cloudinaryImages.js');
 </isscript>
 
 <script>
@@ -29,15 +27,21 @@
     }
 </script>
 
-
 <div class="cloudinary-media-library-container sfdc-component-mock sfdc-component-assets-media_library-mock">
     <isif condition="${pdict.viewmodel.placeholder}">
         <isif condition="${pdict.viewmodel.imageLink}">
             <a href="${pdict.viewmodel.imageLink}">
         </isif>
-        <img class="component-media_library ml-image" src="${pdict.viewmodel.placeholder}"
+        <img class="component-media_library ml-image" src="${pdict.viewmodel.src}"
             data-real-url="${pdict.viewmodel.src}" id="${pdict.viewmodel.id}" alt="${pdict.viewmodel.altText}"
-            style="max-width: 100%">
+            <isif condition="${pdict.viewmodel.srcset}">
+                srcset="${pdict.viewmodel.srcset}"
+            </isif>
+            <isif condition="${pdict.viewmodel.sizes}">
+                sizes="${pdict.viewmodel.sizes}"
+            </isif>
+            onerror="this.onerror=null; this.src='https://product-assets-res.cloudinary.com/image/upload/w_250,co_rgb:c23834,e_colorize:100,f_png/PageDesigner/warning.png'; this.setAttribute('srcset', 'https://product-assets-res.cloudinary.com/image/upload/w_250,co_rgb:c23834,e_colorize:100,f_png/PageDesigner/warning.png'); this.removeAttribute('sizes')"
+            style="max-width: 100%" />
         <isif condition="${pdict.viewmodel.imageLink}">
             </a>
         </isif>

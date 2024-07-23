@@ -55,6 +55,29 @@ function idSafeString(str) {
     return 'id' + str.toLowerCase().replace(/[^a-zA-Z0-9-:.]/, '');
 }
 
+/**
+ * generate breakpoints for images
+ * @param {Object} viewmodel the string to clean
+ * @returns {string} a clean string
+ */
+function generateBreakPoints(viewmodel) {
+    let brs = [];
+    var breakPoints = 'CloudinaryPageDesignerBreakpoints' in currentSite.preferences.custom ? JSON.parse(currentSite.getCustomPreferenceValue('CloudinaryPageDesignerBreakpoints')) : null;
+    if (breakPoints) {
+        breakPoints.forEach((br) => {
+            var addBreakpoint = 'image/upload/c_scale,w_' + br;
+            var splitUrl = viewmodel.src.split('image/upload/');
+            var breakpointUrl = splitUrl[0] + addBreakpoint + ',' + splitUrl[1];
+            brs.push(breakpointUrl + ' ' + br + 'w');
+        })
+    }
+
+    if (brs.length > 0) {
+        return brs.join(',');
+    }
+    return;
+}
+
 module.exports.preRender = function (context, editorId) {
     var viewmodel = {};
     if (context.content[editorId] && context.content[editorId].imageUrl) {
@@ -84,6 +107,7 @@ module.exports.preRender = function (context, editorId) {
         } else {
             viewmodel.transformation = replaceGlobalTransformations(context.content[editorId].transformation);
         }
+        viewmodel.srcset = generateBreakPoints(viewmodel);
     }
     return viewmodel;
 };

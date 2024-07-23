@@ -25,36 +25,6 @@ function generateResponsiveBreakpointsString(breakpoints) {
 }
 
 /**
- * returns signature for request body
- * @param {Object} body the request body object
- * @returns {string} signature
- */
-function bodySignature(body) {
-    var hasher = new MessageDigest(MessageDigest.DIGEST_SHA_256);
-    var fieldsArray = [];
-    for (var i in body) {
-        if (body[i] === '' || body[i] == null) {
-            // eslint-disable-next-line no-param-reassign
-            delete body[i];
-        } else if (i === 'responsive_breakpoints') {
-            fieldsArray.push(i + '=' + generateResponsiveBreakpointsString(body[i]));
-        } else if (Array.isArray(body[i])) {
-            fieldsArray.push(i + '=' + body[i].map(function (el) {
-                return JSON.stringify(el);
-            })
-                .join(','));
-        } else {
-            fieldsArray.push(i + '=' + body[i]);
-        }
-    }
-    var fields = fieldsArray.sort()
-        .join('&');
-    var toSignStr = fields + currentSite.getCustomPreferenceValue('CloudinaryPageDesignerSecretKey');
-    var toSign = new Bytes(toSignStr);
-    return Encoding.toHex(hasher.digestBytes(toSign));
-}
-
-/**
  * Make an API call to cloudinary
  * @param {Object} body request body
  * @param {string} fileType the file type video|image
@@ -112,7 +82,6 @@ function callService(body, fileType, callType) {
 }
 
 module.exports = {
-    addSignatureToBody: bodySignature,
     callService: callService,
     stringifyJson: generateResponsiveBreakpointsString
 };
