@@ -3,7 +3,6 @@
 var Template = require('dw/util/Template');
 var HashMap = require('dw/util/HashMap');
 var currentSite = require('dw/system/Site').getCurrent();
-var utils = require('*/cartridge/experience/utils/utils');
 var log = require('dw/system').Logger.getLogger('Cloudinary', '');
 var constants = require('~/cartridge/experience/utils/cloudinaryPDConstants').cloudinaryPDConstants;
 
