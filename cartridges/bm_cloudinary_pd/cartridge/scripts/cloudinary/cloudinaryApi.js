@@ -12,10 +12,6 @@ var data = {
         return currentSite.getCustomPreferenceValue('CloudinaryPageDesignerAPIkey');
     },
 
-    getSecretKey: function () {
-        return currentSite.getCustomPreferenceValue('CloudinaryPageDesignerSecretKey');
-    },
-
     getCloudinaryCNAME: function () {
         return currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCNAME');
     },
@@ -40,7 +36,7 @@ var cloudinaryService = LocalServiceRegistry.createService('cloudinaryPageDesign
 });
 
 /**
- * Addes cloudinery prefix to log entries
+ * Added cloudinary prefix to log entries
  * @param {Error} e error to log
  */
 function logger(e) {

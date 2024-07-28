@@ -3,7 +3,6 @@
 var Template = require('dw/util/Template');
 var HashMap = require('dw/util/HashMap');
 var currentSite = require('dw/system/Site').getCurrent();
-var utils = require('*/cartridge/experience/utils/utils');
 var log = require('dw/system').Logger.getLogger('Cloudinary', '');
 var constants = require('~/cartridge/experience/utils/cloudinaryPDConstants').cloudinaryPDConstants;
 
@@ -136,12 +135,11 @@ function buildGlobalStr(global) {
 }
 
 /**
- * Maks an egger transformation API call
+ * Make the video transformation
  * @param {Object} conf configuration object
- * @param {string} publicId the asset public id
  * @returns {Object} the configuration object
  */
-function callEagerTransformations(conf, publicId) {
+function videoPlayerConfigs(conf) {
     try {
         var str = conf.transStr;
         var trans = Array.isArray(conf.sourceConfig.transformation) ? conf.sourceConfig.transformation : [];
@@ -157,20 +155,6 @@ function callEagerTransformations(conf, publicId) {
         conf.sourceConfig.transformation = trans;
         conf.sourceConfig.poster = conf.sourceConfig.poster + constants.CLD_TRACKING_PARAM;
         conf.playerConfig.fluid = true;
-        var body = {
-            timestamp: (Date.now() / 1000).toFixed(),
-            type: 'upload',
-            public_id: publicId,
-            eager: str,
-            eager_async: true
-        };
-        body.signature = utils.addSignatureToBody(body);
-        body.api_key = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerAPIkey');
-        var res = utils.callService(body, 'video', 'explicit');
-        if (!res.ok) {
-            log.error('Error call explicit video transformations');
-            log.error(res.message);
-        }
     } catch (e) {
         log.error('Error call explicit video transformations');
         log.error(e.message);
@@ -201,7 +185,7 @@ module.exports.preRender = function (context, editorId) {
         if (cname !== 'res.cloudinary.com') {
             viewmodel.cname = cname;
         }
-        conf = callEagerTransformations(conf, publicId);
+        conf = videoPlayerConfigs(conf);
         const queryParams = {};
         queryParams[constants.CLD_TRACKING_PARAM.slice(1).split('=')[0]] = constants.CLD_TRACKING_PARAM.slice(1).split('=')[1];
         conf.sourceConfig.queryParams = queryParams;
