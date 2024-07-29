@@ -62,12 +62,18 @@ function idSafeString(str) {
  */
 function generateBreakPoints(viewmodel) {
     let brs = [];
-    var breakPoints = 'CloudinaryPageDesignerBreakpoints' in currentSite.preferences.custom ? JSON.parse(currentSite.getCustomPreferenceValue('CloudinaryPageDesignerBreakpoints')) : null;
+    const breakPoints = 'CloudinaryPageDesignerBreakpoints' in currentSite.preferences.custom ? JSON.parse(currentSite.getCustomPreferenceValue('CloudinaryPageDesignerBreakpoints')) : null;
+    const startIndex = viewmodel.src.indexOf('dpr_');
+    const endIndex = startIndex !== -1 ? viewmodel.src.indexOf(',', startIndex) : null;
+    if (endIndex !== -1) {
+        const substring =  viewmodel.src.substring(startIndex, endIndex + 1);
+        viewmodel.src = viewmodel.src.replace(substring, '');
+    }
     if (breakPoints) {
         breakPoints.forEach((br) => {
-            var addBreakpoint = 'image/upload/c_scale,w_' + br;
-            var splitUrl = viewmodel.src.split('image/upload/');
-            var breakpointUrl = splitUrl[0] + addBreakpoint + ',' + splitUrl[1];
+            const addBreakpoint = 'image/upload/c_scale,w_' + br;
+            const splitUrl = viewmodel.src.split('image/upload/');
+            const breakpointUrl = splitUrl[0] + addBreakpoint + ',' + splitUrl[1];
             brs.push(breakpointUrl + ' ' + br + 'w');
         })
     }
