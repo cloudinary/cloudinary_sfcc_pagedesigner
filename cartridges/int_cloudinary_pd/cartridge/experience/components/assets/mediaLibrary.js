@@ -63,16 +63,12 @@ function idSafeString(str) {
 function generateBreakPoints(viewmodel) {
     let brs = [];
     const breakPoints = 'CloudinaryPageDesignerBreakpoints' in currentSite.preferences.custom ? JSON.parse(currentSite.getCustomPreferenceValue('CloudinaryPageDesignerBreakpoints')) : null;
-    const startIndex = viewmodel.src.indexOf('dpr_');
-    const endIndex = startIndex !== -1 ? viewmodel.src.indexOf(',', startIndex) : null;
-    if (endIndex !== -1) {
-        const substring =  viewmodel.src.substring(startIndex, endIndex + 1);
-        viewmodel.src = viewmodel.src.replace(substring, '');
-    }
+    const isDpr = viewmodel.src.indexOf('dpr_');
+    const srcNoDpr = isDpr !== -1 ? viewmodel.src.replace(/dpr_[^,]*,/, '') : viewmodel.src;
     if (breakPoints) {
         breakPoints.forEach((br) => {
             const addBreakpoint = 'image/upload/c_scale,w_' + br;
-            const splitUrl = viewmodel.src.split('image/upload/');
+            const splitUrl = srcNoDpr.split('image/upload/');
             const breakpointUrl = splitUrl[0] + addBreakpoint + ',' + splitUrl[1];
             brs.push(breakpointUrl + ' ' + br + 'w');
         })
