@@ -63,8 +63,7 @@ function idSafeString(str) {
 function generateBreakPoints(viewmodel) {
     let brs = [];
     const breakPoints = 'CloudinaryPageDesignerBreakpoints' in currentSite.preferences.custom ? JSON.parse(currentSite.getCustomPreferenceValue('CloudinaryPageDesignerBreakpoints')) : null;
-    const isDpr = viewmodel.src.indexOf('dpr_');
-    const srcNoDpr = isDpr !== -1 ? viewmodel.src.replace(/dpr_[^,]*,/, '') : viewmodel.src;
+    const srcNoDpr = viewmodel.src.replace(/dpr_[^,]*,/, '');
     if (breakPoints) {
         breakPoints.forEach((br) => {
             const addBreakpoint = 'image/upload/c_scale,w_' + br;
