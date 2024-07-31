@@ -35,10 +35,8 @@
         </isif>
         <img class="component-media_library ml-image" src="${pdict.viewmodel.src}"
             data-real-url="${pdict.viewmodel.src}" id="${pdict.viewmodel.id}" alt="${pdict.viewmodel.altText}"
-            <isif condition="${pdict.viewmodel.srcset}">
+            <isif condition="${pdict.viewmodel.srcset && pdict.viewmodel.sizes}">
                 srcset="${pdict.viewmodel.srcset}"
-            </isif>
-            <isif condition="${pdict.viewmodel.sizes}">
                 sizes="${pdict.viewmodel.sizes}"
             </isif>
             onerror="this.onerror=null; this.src='${URLUtils.staticURL('/images/cloudinary-warning.png')}'; this.setAttribute('srcset', '${URLUtils.staticURL('/images/cloudinary-warning.png')}'); this.removeAttribute('sizes')"
