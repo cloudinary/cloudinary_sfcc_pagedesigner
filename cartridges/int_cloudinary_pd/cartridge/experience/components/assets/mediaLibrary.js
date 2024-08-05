@@ -92,7 +92,7 @@ module.exports.preRender = function (context, editorId) {
         viewmodel.placeholder = context.content[editorId].placeholderUrl || context.content[editorId].imageUrl;
         viewmodel.placeholder = viewmodel.placeholder + constants.CLD_TRACKING_PARAM;
         viewmodel.breakpoints = context.content[editorId].breakpoints;
-        viewmodel.sizes = context.content[editorId].sizes;
+        viewmodel.sizes = context.content[editorId].sizes || '90vw';
         viewmodel.src = context.content[editorId].imageUrl + constants.CLD_TRACKING_PARAM;
         viewmodel.cldTrackingParam = constants.CLD_TRACKING_PARAM;
         if (context.content[editorId].imageLinkData) {
