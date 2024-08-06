@@ -1,13 +1,6 @@
 'use strict';
 
-var Template = require('dw/util/Template');
-var HashMap = require('dw/util/HashMap');
 var currentSite = require('dw/system/Site').getCurrent();
-var URLUtils = require('dw/web/URLUtils');
-var URLAction = require('dw/web/URLAction');
-var URLParamter = require('dw/web/URLParameter');
-var constants = require('~/cartridge/experience/utils/cloudinaryPDConstants').cloudinaryPDConstants;
-var Logger = require('dw/system/Logger');
 
 /**
  * Replaces the global transformations so if they change
@@ -80,6 +73,8 @@ function generateBreakPoints(viewmodel) {
 }
 
 module.exports.preRender = function (context, editorId) {
+    var Logger = require('dw/system/Logger');
+    var constants = require('~/cartridge/experience/utils/cloudinaryPDConstants').cloudinaryPDConstants;
     var viewmodel = {};
     if (context.content[editorId] && context.content[editorId].imageUrl) {
         var cname = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCNAME');
@@ -114,6 +109,8 @@ module.exports.preRender = function (context, editorId) {
 };
 
 module.exports.render = function (context) {
+    var Template = require('dw/util/Template');
+    var HashMap = require('dw/util/HashMap');
     var model = new HashMap();
     model.viewmodel = module.exports.preRender(context, 'image_sel');
     return new Template('experience/components/assets/cloudinaryImage').render(model).text;

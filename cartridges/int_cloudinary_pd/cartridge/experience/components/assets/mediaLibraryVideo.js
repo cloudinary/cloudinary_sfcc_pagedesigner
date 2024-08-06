@@ -1,9 +1,6 @@
 'use strict';
 
-var Template = require('dw/util/Template');
-var HashMap = require('dw/util/HashMap');
 var currentSite = require('dw/system/Site').getCurrent();
-var log = require('dw/system').Logger.getLogger('Cloudinary', '');
 var constants = require('~/cartridge/experience/utils/cloudinaryPDConstants').cloudinaryPDConstants;
 
 if (typeof Object.assign !== 'function') {
@@ -140,6 +137,7 @@ function buildGlobalStr(global) {
  * @returns {Object} the configuration object
  */
 function videoPlayerConfigs(conf) {
+    var log = require('dw/system').Logger.getLogger('Cloudinary', '');
     try {
         var str = conf.transStr;
         var trans = Array.isArray(conf.sourceConfig.transformation) ? conf.sourceConfig.transformation : [];
@@ -198,6 +196,8 @@ module.exports.preRender = function (context, editorId) {
 };
 
 module.exports.render = function (context) {
+    var Template = require('dw/util/Template');
+    var HashMap = require('dw/util/HashMap');
     var model = new HashMap();
     model.viewmodel = module.exports.preRender(context, 'asset_sel');
     return new Template('experience/components/assets/cloudinaryVideo').render(model).text;

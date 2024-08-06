@@ -1,9 +1,6 @@
 'use strict';
 
 var server = require('server');
-var LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
-var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
-var constants = require('~/cartridge/experience/utils/cloudinaryPDConstants').cloudinaryPDConstants;
 
 /**
  * Gets the asset info from cloudinary
@@ -11,8 +8,10 @@ var constants = require('~/cartridge/experience/utils/cloudinaryPDConstants').cl
  * @param {string} type type of asset
  * @param {string} rType asset file type image|video
  * @returns {null|Object} asset object
- */
+*/
 function getAssetInfo(publicId, type, rType) {
+    var LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
+    var constants = require('~/cartridge/experience/utils/cloudinaryPDConstants').cloudinaryPDConstants;
     var cloudinaryService = LocalServiceRegistry.createService('cloudinaryPageDesignerAPI', {
         createRequest: function (service, param) {
             service.setRequestMethod('GET');
