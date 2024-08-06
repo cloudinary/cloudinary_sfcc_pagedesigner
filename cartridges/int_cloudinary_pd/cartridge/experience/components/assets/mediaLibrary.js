@@ -1,6 +1,5 @@
 'use strict';
 
-var currentSite = require('dw/system/Site').getCurrent();
 
 /**
  * Replaces the global transformations so if they change
@@ -8,6 +7,8 @@ var currentSite = require('dw/system/Site').getCurrent();
  * @returns {string} serialized JSON
  */
 function replaceGlobalTransformations(trans) {
+    var currentSite = require('dw/system/Site').getCurrent();
+
     var t = JSON.parse(trans);
     var global = {
         dpr: currentSite.getCustomPreferenceValue('CloudinaryImageTransformationsDPR').getValue(),
@@ -54,6 +55,8 @@ function idSafeString(str) {
  * @returns {string} a clean string
  */
 function generateBreakPoints(viewmodel) {
+    var currentSite = require('dw/system/Site').getCurrent();
+
     let brs = [];
     const breakPoints = 'CloudinaryPageDesignerBreakpoints' in currentSite.preferences.custom ? JSON.parse(currentSite.getCustomPreferenceValue('CloudinaryPageDesignerBreakpoints')) : null;
     const srcNoDpr = viewmodel.src.replace(/dpr_[^,]*,/, '');
@@ -69,7 +72,6 @@ function generateBreakPoints(viewmodel) {
     if (brs.length > 0) {
         return brs.join(',');
     }
-    return;
 }
 
 module.exports.preRender = function (context, editorId) {

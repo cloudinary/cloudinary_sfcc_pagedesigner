@@ -1,8 +1,5 @@
 'use strict';
 
-var currentSite = require('dw/system/Site').getCurrent();
-var constants = require('~/cartridge/experience/utils/cloudinaryPDConstants').cloudinaryPDConstants;
-
 if (typeof Object.assign !== 'function') {
     // Must be writable: true, enumerable: false, configurable: true
     Object.defineProperty(Object, 'assign', {
@@ -46,6 +43,7 @@ function isObjectEmpty(obj) {
  * @returns {Array} array of transformations
  */
 function getVideoTransfomations() {
+    var currentSite = require('dw/system/Site').getCurrent();
     var quality = currentSite.getCustomPreferenceValue('CloudinaryVideoTransformationsQuality');
     var bitRate = currentSite.getCustomPreferenceValue('CloudinaryVideoTransformationsBitRate');
     var global = currentSite.getCustomPreferenceValue('CloudinaryVideoTransformations');
@@ -138,6 +136,8 @@ function buildGlobalStr(global) {
  */
 function videoPlayerConfigs(conf) {
     var log = require('dw/system').Logger.getLogger('Cloudinary', '');
+    var constants = require('~/cartridge/experience/utils/cloudinaryPDConstants').cloudinaryPDConstants;
+
     try {
         var str = conf.transStr;
         var trans = Array.isArray(conf.sourceConfig.transformation) ? conf.sourceConfig.transformation : [];
@@ -170,6 +170,9 @@ function hasVideo(val) {
 }
 
 module.exports.preRender = function (context, editorId) {
+    var currentSite = require('dw/system/Site').getCurrent();
+    var constants = require('~/cartridge/experience/utils/cloudinaryPDConstants').cloudinaryPDConstants;
+
     var val = context.content[editorId];
     var viewmodel = {};
     if (!val.playerConf.empty && hasVideo(val)) {

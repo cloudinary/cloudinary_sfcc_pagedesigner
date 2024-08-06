@@ -3,7 +3,7 @@ function initializeCloudinaryPlayers() {
     window.players.forEach(player => {
         if (player) {
             const pCnf = JSON.parse(player.playerConf);
-            const p = cld.videoPlayer(player.id, pCnf.playerConfig);
+            const p = window.cld.videoPlayer(player.id, pCnf.playerConfig);
             pCnf.sourceConfig['transformation'] = convertToSnakeCase(pCnf.sourceConfig.transformation)
             pCnf.playerConfig['cloudName'] = pCnf.cloudName;
             p.source(pCnf.publicId, pCnf.sourceConfig);
@@ -35,7 +35,7 @@ $(document).ready(function () {
             conf.secure_distribution = window.cname;
             conf.private_cdn = true;
         }
-        cld = cloudinary.Cloudinary.new(conf);
+        window.cld = window.cloudinary.Cloudinary.new(conf);
         initializeCloudinaryPlayers();
     }
 });
