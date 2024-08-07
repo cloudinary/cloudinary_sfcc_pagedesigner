@@ -77,6 +77,8 @@ function generateBreakPoints(viewmodel) {
 module.exports.preRender = function (context, editorId) {
     var Logger = require('dw/system/Logger');
     var constants = require('~/cartridge/experience/utils/cloudinaryPDConstants').cloudinaryPDConstants;
+    var currentSite = require('dw/system/Site').getCurrent();
+    
     var viewmodel = {};
     if (context.content[editorId] && context.content[editorId].imageUrl) {
         var cname = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCNAME');
