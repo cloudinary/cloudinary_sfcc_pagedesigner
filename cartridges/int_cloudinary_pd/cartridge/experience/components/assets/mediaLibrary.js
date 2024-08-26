@@ -1,13 +1,5 @@
 'use strict';
 
-var Template = require('dw/util/Template');
-var HashMap = require('dw/util/HashMap');
-var currentSite = require('dw/system/Site').getCurrent();
-var URLUtils = require('dw/web/URLUtils');
-var URLAction = require('dw/web/URLAction');
-var URLParamter = require('dw/web/URLParameter');
-var constants = require('~/cartridge/experience/utils/cloudinaryPDConstants').cloudinaryPDConstants;
-var Logger = require('dw/system/Logger');
 
 /**
  * Replaces the global transformations so if they change
@@ -15,6 +7,8 @@ var Logger = require('dw/system/Logger');
  * @returns {string} serialized JSON
  */
 function replaceGlobalTransformations(trans) {
+    var currentSite = require('dw/system/Site').getCurrent();
+
     var t = JSON.parse(trans);
     var global = {
         dpr: currentSite.getCustomPreferenceValue('CloudinaryImageTransformationsDPR').getValue(),
@@ -61,6 +55,8 @@ function idSafeString(str) {
  * @returns {string} a clean string
  */
 function generateBreakPoints(viewmodel) {
+    var currentSite = require('dw/system/Site').getCurrent();
+
     let brs = [];
     const breakPoints = 'CloudinaryPageDesignerBreakpoints' in currentSite.preferences.custom ? JSON.parse(currentSite.getCustomPreferenceValue('CloudinaryPageDesignerBreakpoints')) : null;
     const srcNoDpr = viewmodel.src.replace(/dpr_[^,]*,/, '');
@@ -76,10 +72,13 @@ function generateBreakPoints(viewmodel) {
     if (brs.length > 0) {
         return brs.join(',');
     }
-    return;
 }
 
 module.exports.preRender = function (context, editorId) {
+    var Logger = require('dw/system/Logger');
+    var constants = require('~/cartridge/experience/utils/cloudinaryPDConstants').cloudinaryPDConstants;
+    var currentSite = require('dw/system/Site').getCurrent();
+    
     var viewmodel = {};
     if (context.content[editorId] && context.content[editorId].imageUrl) {
         var cname = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCNAME');
@@ -114,6 +113,8 @@ module.exports.preRender = function (context, editorId) {
 };
 
 module.exports.render = function (context) {
+    var Template = require('dw/util/Template');
+    var HashMap = require('dw/util/HashMap');
     var model = new HashMap();
     model.viewmodel = module.exports.preRender(context, 'image_sel');
     return new Template('experience/components/assets/cloudinaryImage').render(model).text;

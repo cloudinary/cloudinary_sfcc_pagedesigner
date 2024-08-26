@@ -21,7 +21,6 @@
     if (assets.scripts.lastIndexOf(src) < 0) {
 		assets.addJs(src);
 	}
-	pdict.viewmodel.CLDPDShrinkwrapJSURL = sitePref.CLDPDShrinkwrapJSURL;
     assets.addJs('/js/cloudinaryVideos.js');
 </isscript>
 
@@ -33,11 +32,5 @@
 		window.players.push(value);
 		window.cloudName = value.cloudName;
 		window.cname = value.cname || null;
-
-		// Check if the Cloudinary Core JS is inculded
-		var shrinkWrapJs = document.querySelector('script[src="'+value.CLDPDShrinkwrapJSURL+'"]');
-		if (shrinkWrapJs) {
-			shrinkWrapJs.parentNode.removeChild(shrinkWrapJs);
-		}
 	</script>
 </div>
