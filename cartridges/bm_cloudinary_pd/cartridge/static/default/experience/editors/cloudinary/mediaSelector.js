@@ -116,6 +116,12 @@
                     showError('Wrong asset type.');
                 } else {
                     isAssetRestricted(config.assetInfoUrl, asset).then(((restricted) => {
+                        if (asset.resource_type === 'image') {
+                            localStorage.setItem('imagePath', asset.public_id.substring(0, asset.public_id.lastIndexOf('/')));
+                        } else {
+                            localStorage.setItem('videoPath', asset.public_id.substring(0, asset.public_id.lastIndexOf('/')));
+                        }
+
                         if (!restricted) {
                             emit({
                                 type: 'sfcc:valid',
@@ -159,7 +165,7 @@
             } else {
                 show.folder = {
                     resource_type: config.type,
-                    path: null
+                    path: config.type === 'image' ? localStorage.getItem('imagePath') : localStorage.getItem('videoPath')
                 };
             }
 
