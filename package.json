@@ -1,6 +1,6 @@
 {
   "name": "cloudinary_sfcc_pagedesigner",
-  "version": "24.1.4",
+  "version": "24.1.5",
   "scripts": {
     "lint": "npm run lint:js",
     "lint:js": "sgmf-scripts --lint js",
