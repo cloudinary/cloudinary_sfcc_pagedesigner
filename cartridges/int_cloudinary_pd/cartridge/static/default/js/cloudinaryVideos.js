@@ -1,4 +1,7 @@
-function initializeCloudinaryPlayers() {
+'use strict';
+
+window.initializeCloudinaryPlayers = function () {
+    window.cld = window.cloudinary.Cloudinary.new(window.conf);
     const convertToSnakeCase = obj => JSON.parse(JSON.stringify(obj).replace(/"([^"]+)":/g, (_, p1) => `"${p1.replace(/([a-z])([A-Z])/g, '$1_$2').toLowerCase()}":`));
     window.players.forEach(player => {
         if (player) {
@@ -35,7 +38,7 @@ $(document).ready(function () {
             conf.secure_distribution = window.cname;
             conf.private_cdn = true;
         }
-        window.cld = window.cloudinary.Cloudinary.new(conf);
-        initializeCloudinaryPlayers();
+        window.conf = conf;
+        window.initializeCloudinaryPlayers();
     }
 });
