@@ -16,11 +16,6 @@
     	assets.addCss(src);
 	}
 
-	// Cloudinary Video Player JS
-	src = sitePref.CLDPDVideoPlayerJSURL;
-    if (assets.scripts.lastIndexOf(src) < 0) {
-		assets.addJs(src);
-	}
     assets.addJs('/js/cloudinaryVideos.js');
 </isscript>
 
@@ -32,6 +27,6 @@
 		window.players.push(value);
 		window.cloudName = value.cloudName;
 		window.cname = value.cname || null;
-		window.cldPDVideoPlayer = cloudinary;
 	</script>
+	<script  src="${sitePref.CLDPDVideoPlayerJSURL}" onload="window.cldPDVideoPlayer = cloudinary;"></script>
 </div>
