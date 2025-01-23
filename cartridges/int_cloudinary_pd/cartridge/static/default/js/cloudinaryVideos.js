@@ -16,6 +16,7 @@ function initializeCloudinaryPlayers() {
                 const p = cld.videoPlayer(player.id, pCnf.playerConfig);
                 pCnf.sourceConfig['transformation'] = convertToSnakeCase(pCnf.sourceConfig.transformation)
                 pCnf.playerConfig['cloudName'] = pCnf.cloudName;
+                pCnf.sourceConfig['cloud_name'] = pCnf.cloudName;
                 p.source(pCnf.publicId, pCnf.sourceConfig);
                 p.on('error', function (e) {
                     const error = e.Player.videojs.error();
