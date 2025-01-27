@@ -1,4 +1,5 @@
-function initializeCloudinaryPlayers() {
+window.initializeCloudinaryPlayers = function () {
+
     if (!document.cloudinaryInit) {
         document.cloudinaryInit = true;
         let conf = {
@@ -10,6 +11,7 @@ function initializeCloudinaryPlayers() {
         }
         var cld = window.cldPDVideoPlayer.Cloudinary.new(conf);
         const convertToSnakeCase = obj => JSON.parse(JSON.stringify(obj).replace(/"([^"]+)":/g, (_, p1) => `"${p1.replace(/([a-z])([A-Z])/g, '$1_$2').toLowerCase()}":`));
+
         window.players.forEach(player => {
             if (player) {
                 const pCnf = JSON.parse(player.playerConf);
@@ -37,5 +39,6 @@ $(document).ready(function () {
      * it waits until streaming videos fully load. We need to delay initializing
      * Cloudinary video player a little bit.
      */
-    initializeCloudinaryPlayers();
+
+    window.initializeCloudinaryPlayers();
 });
