@@ -6,6 +6,14 @@
 <div class="cloudinary-video-container sfdc-component-mock sfdc-component-assets-media_library_video-mock">
 	<video id="${pdict.viewmodel.id}"></video>
 </div>
+<script>
+	var value = JSON.parse('<isprint value="${JSON.stringify(pdict.viewmodel)}" encoding="jsonvalue"/>');
+	window.players = window.players || [];
+	window.players.push(value);
+	window.cloudName = value.cloudName;
+	window.cname = value.cname || null;
+</script>
+
 <isscript>
 	// SFRA has a logic bug where full urls are added twice, so we need to check for duplicates before adding.
 	var assets = require('*/cartridge/scripts/assets.js');
@@ -18,11 +26,3 @@
 	
 	assets.addJs('/js/cloudinaryVideos.js');
 </isscript>
-
-<script>
-	var value = JSON.parse('<isprint value="${JSON.stringify(pdict.viewmodel)}" encoding="jsonvalue"/>');
-	window.players = window.players || [];
-	window.players.push(value);
-	window.cloudName = value.cloudName;
-	window.cname = value.cname || null;
-</script>
