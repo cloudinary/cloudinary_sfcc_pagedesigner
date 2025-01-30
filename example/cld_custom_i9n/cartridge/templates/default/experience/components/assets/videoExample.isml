@@ -1,40 +1,28 @@
 <iscomment> TEMPLATENAME: example.isml </iscomment>
 <isset name="sitePref" value="${dw.system.Site.current.preferences.custom}" scope="page" />
-
-<isscript>
-    // SFRA has a logic bug where full urls are added twice, so we need to check for duplicates before adding.
-    var assets = require('*/cartridge/scripts/assets.js');
-
-    // Video Player CSS
-    var src = sitePref.CLDPDVideoPlayerCSSURL;
-    if (assets.styles.lastIndexOf(src) < 0) {
-        assets.addCss(src);
-    }
-
-    // Cloudinary Video Player JS
-    src = sitePref.CLDPDVideoPlayerJSURL;
-    if (assets.scripts.lastIndexOf(src) < 0) {
-        assets.addJs(src);
-    }
-
-    pdict.viewmodel.CLDPDShrinkwrapJSURL = sitePref.CLDPDShrinkwrapJSURL;
-    assets.addJs('/js/cloudinaryVideos.js');
-</isscript>
+<script src="${sitePref.CLDPDVideoPlayerJSURL}" onload="window.cldPDVideoPlayer = cloudinary"></script>
 
 <h2>${pdict.headline}</h2>
 <div class="cloudinary-video-container sfdc-component-mock sfdc-component-assets-media_library_video-mock">
-    <video id="${pdict.viewmodel.id}"></video>
-    <script>
-        var value = JSON.parse('<isprint value="${JSON.stringify(pdict.viewmodel)}" encoding="jsonvalue"/>');
-        window.players = window.players || [];
-        window.players.push(value);
-        window.cloudName = value.cloudName;
-        window.cname = value.cname || null;
-
-        // Check if the Cloudinary Core JS is inculded
-        const shrinkWrapJs = document.querySelector('script[src="'+value.CLDPDShrinkwrapJSURL+'"]');
-        if (shrinkWrapJs) {
-            shrinkWrapJs.parentNode.removeChild(shrinkWrapJs);
-        }
-    </script>
+	<video id="${pdict.viewmodel.id}"></video>
 </div>
+<script>
+	var value = JSON.parse('<isprint value="${JSON.stringify(pdict.viewmodel)}" encoding="jsonvalue"/>');
+	window.players = window.players || [];
+	window.players.push(value);
+	window.cloudName = value.cloudName;
+	window.cname = value.cname || null;
+</script>
+
+<isscript>
+	// SFRA has a logic bug where full urls are added twice, so we need to check for duplicates before adding.
+	var assets = require('*/cartridge/scripts/assets.js');
+
+	// Video Player CSS
+	var src = sitePref.CLDPDVideoPlayerCSSURL;
+	if (assets.styles.lastIndexOf(src) < 0) {
+		assets.addCss(src);
+	}
+	
+	assets.addJs('/js/cloudinaryVideos.js');
+</isscript>
