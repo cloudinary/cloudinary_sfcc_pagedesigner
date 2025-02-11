@@ -16,6 +16,13 @@
           }
         },
         {
+          "id": "videoPosterTransformation",
+          "name": "Video poster transformation",
+          "description": "Transformation for video poster.",
+          "type": "string",
+          "required": false
+        },
+        {
           "id": "version",
           "name": "Cloudinary cartridge version",
           "type": "custom",
