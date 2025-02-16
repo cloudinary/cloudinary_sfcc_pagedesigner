@@ -193,6 +193,10 @@ module.exports.preRender = function (context, editorId) {
         viewmodel.cloudName = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCloudName');
         viewmodel.public_id = publicId;
         viewmodel.id = idSafeString(randomString(16));
+        const videoPosterTrans = 'videoPosterTransformation' in context.content ? context.content.videoPosterTransformation : currentSite.getCustomPreferenceValue('CloudinaryVideoPosterTransformations');
+        if (videoPosterTrans) {
+            conf.sourceConfig.poster = conf.sourceConfig.poster.replace('upload', ('upload/' + videoPosterTrans));
+        }
         viewmodel.playerConf = JSON.stringify(conf);
     }
     return viewmodel;
