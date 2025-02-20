@@ -17,8 +17,8 @@
         },
         {
           "id": "videoPosterTransformation",
-          "name": "Video poster transformation",
-          "description": "Transformation for video poster.",
+          "name": "Poster image transformation",
+          "description": "Specify a custom transformation. This overrides the poster transformation set in the advanced configuration settings.",
           "type": "string",
           "required": false
         },
@@ -31,8 +31,8 @@
             "type": "cloudinary.version"
           }
         }
-        ]
-      }
-    ],
-    "region_definitions": []
-  }
+      ]
+    }
+  ],
+  "region_definitions": []
+}
