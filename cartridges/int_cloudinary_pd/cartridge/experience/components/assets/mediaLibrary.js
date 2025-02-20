@@ -76,6 +76,7 @@ function generateBreakPoints(viewmodel) {
 
 module.exports.preRender = function (context, editorId) {
     var Logger = require('dw/system/Logger');
+    var URLUtils = require('dw/web/URLUtils');
     var constants = require('~/cartridge/experience/utils/cloudinaryPDConstants').cloudinaryPDConstants;
     var currentSite = require('dw/system/Site').getCurrent();
     
@@ -96,7 +97,8 @@ module.exports.preRender = function (context, editorId) {
         viewmodel.cldTrackingParam = constants.CLD_TRACKING_PARAM;
         if (context.content[editorId].imageLinkData) {
             try {
-                viewmodel.imageLink = JSON.parse(context.content[editorId].imageLinkData);
+                const imageLink = JSON.parse(context.content[editorId].imageLinkData);
+                viewmodel.imageLink = URLUtils.https.apply(null, imageLink);
             } catch (error) {
                 Logger.error('Error while parsing JSON at {0} : {1}', error.lineNumber, error);
             }
