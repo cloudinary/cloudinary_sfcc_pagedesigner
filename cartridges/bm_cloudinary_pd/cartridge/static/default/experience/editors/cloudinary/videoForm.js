@@ -76,9 +76,11 @@ const handleIframeMessage = (message, ifrm, value = null) => {
         case 'invalid':
             emit({
                 type: 'sfcc:valid',
-                payload: {
-                    valid: false
-                }
+                payload: null
+            });
+            emit({
+                type: 'sfcc:value',
+                payload: null
             });
             break;
         case 'ready':
