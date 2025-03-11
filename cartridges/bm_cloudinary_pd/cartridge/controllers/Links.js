@@ -1,11 +1,12 @@
 'use strict';
 
 var guard = require('~/cartridge/scripts/guard');
-var Response = require('~/cartridge/scripts/util/Response');
 
 var params = request.httpParameterMap;
 
-function url () {
+function url() {
+    var Response = require('~/cartridge/scripts/util/Response');
+
     var linkArr = (params.linkData) ? JSON.parse(decodeURIComponent(params.linkData.value)) : null;
     if (linkArr && linkArr.length > 0) {
         // eslint-disable-next-line new-cap

@@ -1,7 +1,6 @@
 'use strict';
 
 var guard = require('~/cartridge/scripts/guard');
-var Response = require('~/cartridge/scripts/util/Response');
 
 var params = request.httpParameterMap;
 
@@ -51,11 +50,12 @@ function getAssetInfo(publicId, type, rType) {
     return null;
 }
 
-function info () {
+function info() {
+    var Response = require('~/cartridge/scripts/util/Response');
+
     var publicId = params.publicId.value;
     var type = params.type.value;
     var rType = params.rType.value;
-    // Response.setHttpHeader('Access-Control-Allow-Origin', '*');
     if (publicId) {
         var info = getAssetInfo(publicId, type, rType);
         Response.renderJSON({
