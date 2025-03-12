@@ -10,7 +10,7 @@
           "id": "asset_sel",
           "name": "Component configuration",
           "type": "custom",
-          "required": true,
+          "required": false,
           "editor_definition": {
             "type": "cloudinary.videoForm"
           }
