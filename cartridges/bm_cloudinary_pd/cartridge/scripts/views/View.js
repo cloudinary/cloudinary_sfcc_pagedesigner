@@ -4,10 +4,7 @@
  * @module views/View
  */
 
-var ISML = require('dw/template/ISML');
-
 var Class = require('~/cartridge/scripts/util/Class').Class;
-var object = require('~/cartridge/scripts/object');
 
 /**
  * View class to pass parameters to the templates and renders the templates.
@@ -31,6 +28,7 @@ var View = Class.extend({
      * @returns {module:views/View~View}
      */
     init: function (params) {
+        var object = require('~/cartridge/scripts/object');
         // Copies all properties of params to the view.
         if (params) {
             object.extend(this, params);
@@ -61,6 +59,7 @@ var View = Class.extend({
         this.View = this;
         // provide Meta
         this.Meta = require('~/cartridge/scripts/meta');
+        var ISML = require('dw/template/ISML');
         // backward compatibility
         this.CurrentForms = session.forms;
         this.CurrentHttpParameterMap = request.httpParameterMap;
@@ -76,7 +75,8 @@ var View = Class.extend({
         }
         return this;
 
-}});
+    }
+});
 
 /** @type {module:views/View~View.prototype} */
 module.exports = View;
