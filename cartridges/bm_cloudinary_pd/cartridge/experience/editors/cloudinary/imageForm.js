@@ -5,16 +5,14 @@ var HashMap = require('dw/util/HashMap');
 var cloudinaryApi = require('*/cartridge/scripts/cloudinary/cloudinaryApi');
 var URLUtils = require('dw/web/URLUtils');
 var URLAction = require('dw/web/URLAction');
-var Site = require('dw/system/Site');
 var CSRF = require('dw/web/CSRFProtection');
 
 module.exports.init = function (editor) {
     var conf = new HashMap();
     var csrf = new HashMap();
     csrf.put(CSRF.getTokenName(), CSRF.generateToken());
-    var currentSite = Site.getCurrent();
-    var linkUrlAct = new URLAction('Links-url', currentSite.getID());
-    editor.configuration.put('linkBuilderUrl', URLUtils.abs(linkUrlAct).toString());
+    var linkUrlAct = URLUtils.abs('Links-url').toString();
+    editor.configuration.put('linkBuilderUrl', linkUrlAct);
     editor.configuration.put('csrf', csrf);
     conf.put('type', 'image');
     editor.configuration.put('cloudName', cloudinaryApi.data.getCloudName());
