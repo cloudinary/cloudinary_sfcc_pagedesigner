@@ -7,16 +7,15 @@ function initializeCloudinaryPlayers() {
         conf.private_cdn = true;
     }
     const cld = window.cldPDVideoPlayer.Cloudinary.new(conf);
-    const convertToSnakeCase = obj => JSON.parse(JSON.stringify(obj).replace(/"([^"]+)":/g, (_, p1) => `"${p1.replace(/([a-z])([A-Z])/g, '$1_$2').toLowerCase()}":`));
 
     window.players.forEach(player => {
         if (player) {
-            const pCnf = JSON.parse(player.playerConf);
-            const p = cld.videoPlayer(player.id, pCnf.playerConfig);
-            pCnf.sourceConfig['transformation'] = convertToSnakeCase(pCnf.sourceConfig.transformation)
-            pCnf.playerConfig['cloudName'] = pCnf.cloudName;
-            pCnf.sourceConfig['cloud_name'] = pCnf.cloudName;
-            p.source(pCnf.publicId, pCnf.sourceConfig);
+            const pCnf = JSON.parse(player.widgetOptions);
+            const playerConfig = pCnf.playerConfig;
+            const sourceConfig = pCnf.sourceConfig;
+            const widgetOptions = {...playerConfig, ...sourceConfig}
+            const p = cld.videoPlayer(player.id, widgetOptions);
+            p.source(player.public_id, {});
             p.on('error', function (e) {
                 const error = e.Player.videojs.error();
                 if (error && error.code === 10) {

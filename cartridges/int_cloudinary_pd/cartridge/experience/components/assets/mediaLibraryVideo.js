@@ -169,6 +169,36 @@ function hasVideo(val) {
     return val.formValues && val.formValues.video && val.formValues.video.asset;
 }
 
+/**
+ * Get cloudinary video transformations.
+ *
+ * @param {string} context - context
+ *
+ * @returns {array} transformation
+ */
+function getCloudinaryVideoTransformation(context) {
+    var constants = require('~/cartridge/experience/utils/cloudinaryPDConstants').cloudinaryPDConstants;
+    var currentSite = require('dw/system/Site').getCurrent();
+
+    let transformation = [];
+
+    var globalVideoTranformFormat = currentSite.getCustomPreferenceValue('CloudinaryVideoFormat');
+    if (!empty(globalVideoTranformFormat) && globalVideoTranformFormat.value !== 'null') {
+        transformation.push({ 'format': globalVideoTranformFormat.value });
+    }
+
+    var globalVideoQuality = currentSite.getCustomPreferenceValue('CloudinaryVideoTransformationsQuality');
+    if (!empty(globalVideoQuality) && globalVideoQuality.value !== 'null') {
+        transformation.push({ 'quality': globalVideoQuality.value });
+    }
+
+    var globalVideoTrans = 'videoPosterTransformation' in context.content ? context.content.videoPosterTransformation : currentSite.getCustomPreferenceValue('CloudinaryVideoPosterTransformations');
+    if (!empty(globalVideoTrans)) {
+        transformation.push({ 'raw_transformation': globalVideoTrans });
+    }
+    return transformation;
+}
+
 module.exports.preRender = function (context, editorId) {
     var currentSite = require('dw/system/Site').getCurrent();
     var constants = require('~/cartridge/experience/utils/cloudinaryPDConstants').cloudinaryPDConstants;
@@ -187,17 +217,20 @@ module.exports.preRender = function (context, editorId) {
             viewmodel.cname = cname;
         }
         conf = videoPlayerConfigs(conf);
+        conf.sourceConfig.posterOptions = {};
         const queryParams = {};
         queryParams[constants.CLD_TRACKING_PARAM.slice(1).split('=')[0]] = constants.CLD_TRACKING_PARAM.slice(1).split('=')[1];
         conf.sourceConfig.queryParams = queryParams;
         viewmodel.cloudName = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCloudName');
         viewmodel.public_id = publicId;
         viewmodel.id = idSafeString(randomString(16));
-        const videoPosterTrans = 'videoPosterTransformation' in context.content ? context.content.videoPosterTransformation : currentSite.getCustomPreferenceValue('CloudinaryVideoPosterTransformations');
+        const videoPosterTrans = getCloudinaryVideoTransformation(context);
         if (videoPosterTrans) {
-            conf.sourceConfig.poster = conf.sourceConfig.poster.replace('upload', ('upload/' + videoPosterTrans));
+            conf.sourceConfig.posterOptions.transformation = videoPosterTrans;
         }
-        viewmodel.playerConf = JSON.stringify(conf);
+
+        var widgetOptions = { playerConfig: conf.playerConfig, sourceConfig: conf.sourceConfig };
+        viewmodel.widgetOptions = JSON.stringify(widgetOptions);
     }
     return viewmodel;
 };
