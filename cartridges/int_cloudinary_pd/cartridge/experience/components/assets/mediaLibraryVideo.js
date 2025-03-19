@@ -177,14 +177,13 @@ function hasVideo(val) {
  * @returns {array} transformation
  */
 function getCloudinaryVideoTransformation(context) {
-    var constants = require('~/cartridge/experience/utils/cloudinaryPDConstants').cloudinaryPDConstants;
     var currentSite = require('dw/system/Site').getCurrent();
 
     let transformation = [];
 
-    var globalVideoTranformFormat = currentSite.getCustomPreferenceValue('CloudinaryVideoFormat');
-    if (!empty(globalVideoTranformFormat) && globalVideoTranformFormat.value !== 'null') {
-        transformation.push({ 'format': globalVideoTranformFormat.value });
+    var globalVideoTransformFormat = currentSite.getCustomPreferenceValue('CloudinaryVideoFormat');
+    if (!empty(globalVideoTransformFormat) && globalVideoTransformFormat.value !== 'null') {
+        transformation.push({ 'format': globalVideoTransformFormat.value });
     }
 
     var globalVideoQuality = currentSite.getCustomPreferenceValue('CloudinaryVideoTransformationsQuality');
