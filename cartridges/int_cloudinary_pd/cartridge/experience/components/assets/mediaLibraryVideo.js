@@ -136,7 +136,6 @@ function buildGlobalStr(global) {
  */
 function videoPlayerConfigs(conf) {
     var log = require('dw/system').Logger.getLogger('Cloudinary', '');
-    var constants = require('~/cartridge/experience/utils/cloudinaryPDConstants').cloudinaryPDConstants;
 
     try {
         var str = conf.transStr;
@@ -151,7 +150,6 @@ function videoPlayerConfigs(conf) {
         }
         // eslint-disable-next-line no-param-reassign
         conf.sourceConfig.transformation = trans;
-        conf.sourceConfig.poster = conf.sourceConfig.poster + constants.CLD_TRACKING_PARAM;
         conf.playerConfig.fluid = true;
     } catch (e) {
         log.error('Error call explicit video transformations');
