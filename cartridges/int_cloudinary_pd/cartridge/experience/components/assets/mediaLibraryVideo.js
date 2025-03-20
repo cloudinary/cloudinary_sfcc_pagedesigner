@@ -216,7 +216,7 @@ module.exports.preRender = function (context, editorId) {
             viewmodel.cname = cname;
         }
         conf = videoPlayerConfigs(conf);
-        conf.sourceConfig.posterOptions = {};
+        conf.playerConfig.posterOptions = {};
         const queryParams = {};
         queryParams[constants.CLD_TRACKING_PARAM.slice(1).split('=')[0]] = constants.CLD_TRACKING_PARAM.slice(1).split('=')[1];
         conf.sourceConfig.queryParams = queryParams;
@@ -225,7 +225,8 @@ module.exports.preRender = function (context, editorId) {
         viewmodel.id = idSafeString(randomString(16));
         const videoPosterTrans = getCloudinaryVideoTransformation(context);
         if (videoPosterTrans) {
-            conf.sourceConfig.posterOptions.transformation = videoPosterTrans;
+            conf.playerConfig.posterOptions.transformation = videoPosterTrans;
+            delete conf.sourceConfig.poster;
         }
 
         var widgetOptions = { playerConfig: conf.playerConfig, sourceConfig: conf.sourceConfig };

@@ -11,11 +11,8 @@ function initializeCloudinaryPlayers() {
     window.players.forEach(player => {
         if (player) {
             const pCnf = JSON.parse(player.widgetOptions);
-            const playerConfig = pCnf.playerConfig;
-            const sourceConfig = pCnf.sourceConfig;
-            const widgetOptions = {...playerConfig, ...sourceConfig}
-            const p = cld.videoPlayer(player.id, widgetOptions);
-            p.source(player.public_id, {});
+            const p = cld.videoPlayer(player.id, pCnf.playerConfig);
+            p.source(player.public_id, pCnf.sourceConfig);
             p.on('error', function (e) {
                 const error = e.Player.videojs.error();
                 if (error && error.code === 10) {
