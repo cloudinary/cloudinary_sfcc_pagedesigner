@@ -3,7 +3,6 @@
 var cloudinaryApi = require('*/cartridge/scripts/cloudinary/cloudinaryApi');
 var URLUtils = require('dw/web/URLUtils');
 var URLAction = require('dw/web/URLAction');
-var Site = require('dw/system/Site');
 var verJson = require('*/cartridge/scripts/cloudinary/version.json');
 
 module.exports.init = function (editor) {
@@ -19,7 +18,6 @@ module.exports.init = function (editor) {
     }
     editor.configuration.put('env', env);
     editor.configuration.put('version', verJson.version);
-    var currentSite = Site.getCurrent();
-    var act = new URLAction('Asset-info', currentSite.getID());
-    editor.configuration.put('assetInfoUrl', URLUtils.abs(act).toString());
+    var act = URLUtils.abs('Asset-info').toString();
+    editor.configuration.put('assetInfoUrl', act);
 };

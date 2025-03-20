@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<extensions xmlns="http://www.demandware.com/xml/bmmodules/2007-12-11" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.demandware.com/xml/bmmodules/2007-12-11 bmext.xsd">
+
+	<!-- =============================================================== -->
+	<!-- ==                                                           == -->
+	<!-- ==  ADMINISTRATION MENU EXTENSIONS                           == -->
+	<!-- ==                                                           == -->
+	<!-- =============================================================== -->
+	<!--
+	A custom menu item in the Administration section
+-->
+	<menuitem id="cloudinary-medialibrary-item" position="99999" site="true">
+		<name xml:lang="x-default"></name>
+		<short_description xml:lang="x-default">
+		</short_description>
+	</menuitem>
+
+	<menuaction id="cloudinary_asset_info_id03" menupath="cloudinary-medialibrary-item" position="100" site="true">
+		<name xml:lang="x-default"></name>
+		<short_description xml:lang="x-default">
+			Cloudinary Asset
+		</short_description>
+		<description xml:lang="x-default">
+	 		Cloudinary Asset
+		</description>
+		<!-- no icon specified -->
+		<exec pipeline="Asset" node="info"/>
+		<icon>icons/logo.svg</icon>
+
+	</menuaction>
+
+	<menuaction id="cloudinary_link_id04" menupath="cloudinary-medialibrary-item" position="100" site="true">
+		<name xml:lang="x-default"></name>
+		<short_description xml:lang="x-default">
+	  		Cloudinary Link
+		</short_description>
+		<description xml:lang="x-default">
+	  		Cloudinary Link
+		</description>
+		<!-- no icon specified -->
+		<exec pipeline="Links" node="url"/>
+		<icon>icons/logo.svg</icon>
+	</menuaction>
+</extensions>
