@@ -23,6 +23,13 @@
           "required": false
         },
         {
+          "id": "videoAspectRatio",
+          "name": "Video Aspect Ratio",
+          "description": "Specify a custom aspect ratio. This overrides the aspect ratio set in the advanced configuration settings.",
+          "type": "string",
+          "required": false
+        },
+        {
           "id": "version",
           "name": "Cloudinary cartridge version",
           "type": "custom",

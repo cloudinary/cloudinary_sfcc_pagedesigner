@@ -226,6 +226,13 @@ module.exports.preRender = function (context, editorId) {
             conf.playerConfig.posterOptions.transformation = videoPosterTrans;
             delete conf.sourceConfig.poster;
         }
+        var videoAspectRatio = 'videoAspectRatio' in context.content ? context.content.videoAspectRatio : null;
+
+        if (!empty(videoAspectRatio)) {
+            conf.sourceConfig.transformation.push({
+                'aspect_ratio': videoAspectRatio
+            });
+        }
 
         var widgetOptions = { playerConfig: conf.playerConfig, sourceConfig: conf.sourceConfig };
         viewmodel.widgetOptions = JSON.stringify(widgetOptions);
