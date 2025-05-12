@@ -175,7 +175,7 @@ module.exports.preRender = function (context, editorId) {
 
     var val = context.content[editorId];
     var viewmodel = {};
-    if (!val.playerConf.empty && hasVideo(val)) {
+    if (!empty(val) && !val.playerConf.empty && hasVideo(val)) {
         var cname = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCNAME');
         var conf = JSON.parse(val.playerConf);
         var publicId = conf.publicId;
