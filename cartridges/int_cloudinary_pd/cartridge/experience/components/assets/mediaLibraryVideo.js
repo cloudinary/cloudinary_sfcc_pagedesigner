@@ -228,7 +228,7 @@ module.exports.preRender = function (context, editorId) {
         }
 
         if ('videoAspectRatio' in context.content) {
-            conf.playerConfig.aspectRatio = videoAspectRatio;
+            conf.playerConfig.aspectRatio = context.content.videoAspectRatio;
         }
 
         var widgetOptions = { playerConfig: conf.playerConfig, sourceConfig: conf.sourceConfig };
