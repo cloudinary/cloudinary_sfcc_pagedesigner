@@ -18,7 +18,14 @@
         {
           "id": "videoPosterTransformation",
           "name": "Poster image transformation",
-          "description": "Specify a custom transformation. This overrides the poster transformation set in the advanced configuration settings.",
+          "description": "Specify a custom transformation using URL syntax. This overrides any other transformations, including those in the advanced configuration settings.",
+          "type": "string",
+          "required": false
+        },
+        {
+          "id": "videoAspectRatio",
+          "name": "Video aspect ratio",
+          "description": "Specify a custom transformation using URL syntax. This overrides any other transformations, including those in the advanced configuration settings.",
           "type": "string",
           "required": false
         },
