@@ -9,7 +9,7 @@ function initializeCloudinaryPlayers() {
     const cld = window.cldPDVideoPlayer.Cloudinary.new(conf);
 
     window.players.forEach(player => {
-        if (player) {
+        if (player && player.widgetOptions) {
             const pCnf = JSON.parse(player.widgetOptions);
             const p = cld.videoPlayer(player.id, pCnf.playerConfig);
             p.source(player.public_id, pCnf.sourceConfig);
