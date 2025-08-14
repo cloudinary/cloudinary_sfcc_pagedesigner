@@ -203,7 +203,7 @@ module.exports.preRender = function (context, editorId) {
 
     var val = context.content[editorId];
     var viewmodel = {};
-    if (!val.playerConf.empty && hasVideo(val)) {
+    if (!empty(val) && !val.playerConf.empty && hasVideo(val)) {
         var cname = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCNAME');
         var conf = JSON.parse(val.playerConf);
         var publicId = conf.publicId;
@@ -226,6 +226,10 @@ module.exports.preRender = function (context, editorId) {
         if (videoPosterTrans) {
             conf.playerConfig.posterOptions.transformation = videoPosterTrans;
             delete conf.sourceConfig.poster;
+        }
+
+        if ('videoAspectRatio' in context.content) {
+            conf.playerConfig.aspectRatio = context.content.videoAspectRatio;
         }
 
         var widgetOptions = { playerConfig: conf.playerConfig, sourceConfig: conf.sourceConfig };
