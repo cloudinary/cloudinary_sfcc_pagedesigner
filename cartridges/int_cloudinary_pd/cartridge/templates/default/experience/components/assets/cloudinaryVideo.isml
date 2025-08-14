@@ -8,6 +8,9 @@
 <div class="cloudinary-video-container sfdc-component-mock sfdc-component-assets-media_library_video-mock">
 	<video id="${pdict.viewmodel.id}"></video>
 </div>
+<isif condition="${pdict.viewmodel.CLDPDVideoPlayerJSURLDomain}">
+    <link rel="preconnect" href="${'https://' + pdict.viewmodel.CLDPDVideoPlayerJSURLDomain}" />
+</isif>
 <script>
     var value = JSON.parse('<isprint value="${JSON.stringify(pdict.viewmodel)}" encoding="jsonvalue"/>');
     window.players = window.players || [];

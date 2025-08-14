@@ -1,7 +1,9 @@
 <iscomment> TEMPLATENAME: example.isml </iscomment>
 <isset name="sitePref" value="${dw.system.Site.current.preferences.custom}" scope="page" />
 <script src="${sitePref.CLDPDVideoPlayerJSURL}" onload="window.cldPDVideoPlayer = cloudinary"></script>
-
+<isif condition="${pdict.viewmodel.CLDPDVideoPlayerJSURLDomain}">
+    <link rel="preconnect" href="${'https://' + pdict.viewmodel.CLDPDVideoPlayerJSURLDomain}" />
+</isif>
 <h2>${pdict.headline}</h2>
 <div class="cloudinary-video-container sfdc-component-mock sfdc-component-assets-media_library_video-mock">
 	<video id="${pdict.viewmodel.id}"></video>

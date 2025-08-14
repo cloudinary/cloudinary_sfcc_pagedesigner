@@ -199,6 +199,7 @@ function getCloudinaryVideoTransformation(context) {
 module.exports.preRender = function (context, editorId) {
     var currentSite = require('dw/system/Site').getCurrent();
     var constants = require('~/cartridge/experience/utils/cloudinaryPDConstants').cloudinaryPDConstants;
+    var cloudinaryUtils = require('~/cartridge/experience/utils/cloudinaryUtils');
 
     var val = context.content[editorId];
     var viewmodel = {};
@@ -229,6 +230,7 @@ module.exports.preRender = function (context, editorId) {
 
         var widgetOptions = { playerConfig: conf.playerConfig, sourceConfig: conf.sourceConfig };
         viewmodel.widgetOptions = JSON.stringify(widgetOptions);
+        viewmodel.CLDPDVideoPlayerJSURLDomain = cloudinaryUtils.extractTheDomain(constants.SITE_PREFS.CLDPDVideoPlayerJSURL);
     }
     return viewmodel;
 };
