@@ -79,7 +79,6 @@ module.exports.preRender = function (context, editorId) {
     var URLUtils = require('dw/web/URLUtils');
     var constants = require('~/cartridge/experience/utils/cloudinaryPDConstants').cloudinaryPDConstants;
     var currentSite = require('dw/system/Site').getCurrent();
-    var cloudinaryUtils = require('~/cartridge/experience/utils/cloudinaryUtils');
     
     var viewmodel = {};
     if (context.content[editorId] && context.content[editorId].imageUrl) {
@@ -111,7 +110,7 @@ module.exports.preRender = function (context, editorId) {
             viewmodel.transformation = replaceGlobalTransformations(context.content[editorId].transformation);
         }
         viewmodel.srcset = generateBreakPoints(viewmodel);
-        viewmodel.CloudinaryPageDesignerCNAME = cloudinaryUtils.extractTheDomain(constants.SITE_PREFS.CloudinaryPageDesignerCNAME);
+        viewmodel.CloudinaryPageDesignerCNAME = constants.SITE_PREFS.CloudinaryPageDesignerCNAME;
     }
     return viewmodel;
 };
