@@ -6,9 +6,6 @@
 <isset name="sitePref" value="${dw.system.Site.current.preferences.custom}" scope="page" />
 
 <isif condition="${Object.keys(pdict.viewmodel).length > 0}">
-    <isif condition="${pdict.viewmodel.CLDPDVideoPlayerJSURLDomain}">
-        <link rel="preconnect" href="${'https://' + pdict.viewmodel.CLDPDVideoPlayerJSURLDomain}" />
-    </isif>
     <script src="${sitePref.CLDPDVideoPlayerJSURL}" onload="window.cldPDVideoPlayer = cloudinary"></script>
     <div class="cloudinary-video-container sfdc-component-mock sfdc-component-assets-media_library_video-mock">
         <video id="${pdict.viewmodel.id}"></video>
