@@ -10,7 +10,9 @@
     window.cloudName = value.cloudName;
     window.cname = value.cname || null;
 </script>
-
+<isif condition="${pdict.viewmodel.CloudinaryPageDesignerCNAME}">
+    <link rel="preconnect" href="${'https://' + pdict.viewmodel.CloudinaryPageDesignerCNAME}" />
+</isif>
 <div class="cloudinary-media-library-container sfdc-component-mock sfdc-component-assets-media_library-mock">
     <isif condition="${pdict.viewmodel.src}">
         <isif condition="${pdict.viewmodel.imageLink}">

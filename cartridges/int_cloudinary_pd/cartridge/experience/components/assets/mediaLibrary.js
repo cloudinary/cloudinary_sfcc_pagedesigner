@@ -110,6 +110,7 @@ module.exports.preRender = function (context, editorId) {
             viewmodel.transformation = replaceGlobalTransformations(context.content[editorId].transformation);
         }
         viewmodel.srcset = generateBreakPoints(viewmodel);
+        viewmodel.CloudinaryPageDesignerCNAME = constants.SITE_PREFS.CloudinaryPageDesignerCNAME;
     }
     return viewmodel;
 };
