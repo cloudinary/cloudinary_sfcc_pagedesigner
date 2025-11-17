@@ -24,13 +24,6 @@
         },
         {
           "id": "videoAspectRatio",
-          "name": "Video aspect ratio",
-          "description": "Specify a custom transformation using URL syntax. This overrides any other transformations, including those in the advanced configuration settings.",
-          "type": "string",
-          "required": false
-        },
-        {
-          "id": "videoAspectRatio",
           "name": "Video Aspect Ratio",
           "description": "Specify a custom aspect ratio. This overrides the aspect ratio set in the advanced configuration settings.",
           "type": "string",
