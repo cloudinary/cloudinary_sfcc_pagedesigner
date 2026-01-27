@@ -114,10 +114,10 @@ const handleIframeMessage = (message, ifrm, value = null, config) => {
         iFrame.setAttribute('scrolling', 'no');
         iFrame.setAttribute('name', Date.now().toString());
         document.body.appendChild(iFrame);
-        let ifrm = document.querySelector('iframe');
         window.addEventListener('message', (event) => {
-            if (event.origin === config.iFrameEnv) {
-                handleIframeMessage(event.data, ifrm, value, config);
+            console.debug('iFrame event', event);
+            if (event.origin === cldUtils.getOrigin(config.iFrameEnv)) {
+                handleIframeMessage(event.data, iFrame, value, config);
             }
         });
         window.config = config;

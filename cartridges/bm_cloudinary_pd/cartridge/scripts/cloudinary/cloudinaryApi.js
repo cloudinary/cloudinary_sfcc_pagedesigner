@@ -14,6 +14,7 @@ var data = {
     getCloudName: function () {
         return currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCloudName');
     },
+
     getIframeEnv: function () {
         return currentSite.getCustomPreferenceValue('CloudinaryPageDesignerEnv');
     }
