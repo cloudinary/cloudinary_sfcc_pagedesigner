@@ -2,6 +2,22 @@
 
 var currentSite = require('dw/system/Site').getCurrent();
 
+/**
+ * Returns the domain with protocol from full URL.
+ * @param {string} originalPath - full URL
+ * @returns {string} domain with protocol
+ */
+function extractTheDomain(originalPath) {
+    if (!originalPath) return '';
+
+    var match = originalPath.match(/^(https?:\/\/[^\/]+)/);
+    if (match && match[1]) {
+        return match[1];
+    }
+    return originalPath;
+}
+
+
 var data = {
     getAPIKey: function () {
         return currentSite.getCustomPreferenceValue('CloudinaryPageDesignerAPIkey');
@@ -14,8 +30,13 @@ var data = {
     getCloudName: function () {
         return currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCloudName');
     },
+
     getIframeEnv: function () {
         return currentSite.getCustomPreferenceValue('CloudinaryPageDesignerEnv');
+    },
+
+    getIframeEnvDomain: function (){
+        return extractTheDomain(currentSite.getCustomPreferenceValue('CloudinaryPageDesignerEnv'))
     }
 };
 
