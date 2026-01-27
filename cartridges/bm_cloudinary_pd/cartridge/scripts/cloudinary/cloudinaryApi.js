@@ -7,7 +7,7 @@ var currentSite = require('dw/system/Site').getCurrent();
  * @param {string} originalPath - full URL
  * @returns {string} domain with protocol
  */
-function extractTheDomain(originalPath) {
+function getOrigin(originalPath) {
     if (!originalPath) return '';
 
     var match = originalPath.match(/^(https?:\/\/[^\/]+)/);
@@ -35,8 +35,8 @@ var data = {
         return currentSite.getCustomPreferenceValue('CloudinaryPageDesignerEnv');
     },
 
-    getIframeEnvDomain: function (){
-        return extractTheDomain(currentSite.getCustomPreferenceValue('CloudinaryPageDesignerEnv'))
+    getIframeEnvOrigin: function (){
+        return getOrigin(currentSite.getCustomPreferenceValue('CloudinaryPageDesignerEnv'))
     }
 };
 
