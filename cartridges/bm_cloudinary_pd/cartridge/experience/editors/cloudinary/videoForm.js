@@ -13,5 +13,5 @@ module.exports.init = function (editor) {
     var adv = PageMgr.getCustomEditor('cloudinary.advancedVideoForm', conf);
     editor.dependencies.put('advBreakout', adv);
     editor.dependencies.put('breakout', videoSelector);
-    editor.configuration.put('iFrameEnv', cloudinaryApi.data.getIframeEnvOrigin());
+    editor.configuration.put('iFrameEnv', cloudinaryApi.data.getIframeEnv());
 };

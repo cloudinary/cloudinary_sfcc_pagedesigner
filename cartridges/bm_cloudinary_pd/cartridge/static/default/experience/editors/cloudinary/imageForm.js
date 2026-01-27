@@ -116,7 +116,7 @@ const handleIframeMessage = (message, ifrm, value = null, config) => {
         document.body.appendChild(iFrame);
         window.addEventListener('message', (event) => {
             console.debug('iFrame event', event);
-            if (event.origin === config.iFrameEnv) {
+            if (event.origin === cldUtils.getOrigin(config.iFrameEnv)) {
                 handleIframeMessage(event.data, iFrame, value, config);
             }
         });

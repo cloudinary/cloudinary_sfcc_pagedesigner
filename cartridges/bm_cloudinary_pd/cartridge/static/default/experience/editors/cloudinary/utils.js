@@ -34,5 +34,14 @@ window.cldUtils = {
             }
         }
         return value;
+    },
+    getOrigin: function(originalPath) {
+        if (!originalPath) return '';
+
+        var match = originalPath.match(/^(https?:\/\/[^\/]+)/);
+        if (match && match[1]) {
+            return match[1];
+        }
+        return originalPath;
     }
 };
