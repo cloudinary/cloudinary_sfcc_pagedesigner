@@ -116,7 +116,7 @@ const handleIframeMessage = (message, ifrm, value = null, config) => {
         document.body.appendChild(iFrame);
         let ifrm = document.querySelector('iframe');
         window.addEventListener('message', (event) => {
-            if (event.origin === config.iFrameEnv) {
+            if (event.origin === config.iFrameEnv && config.iFrameEnv.includes('cloudinary.com')) {
                 handleIframeMessage(event.data, ifrm, value, config);
             }
         });
