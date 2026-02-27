@@ -8,5 +8,6 @@ module.exports.cloudinaryPDConstants = {
     API_TRACKING_PARAM: 'CloudinarySalesForcePageDesigner/' + verJson.version + ' (CommerceCloud ' + System.compatibilityMode + ') SFPD',
     CLD_LIST_SERVICE_CLOUDNAME_PLACEHOLDER: '[cloudname]',
     CLD_CLOUDNAME: sitePrefs.getCustom().CloudinaryPageDesignerCloudName,
+    CLD_VIDEO_OPTIONS: sitePrefs.getCustom().CloudinaryPageDesignerVideoPlayerOptions,
     SITE_PREFS: sitePrefs.getCustom()
 };

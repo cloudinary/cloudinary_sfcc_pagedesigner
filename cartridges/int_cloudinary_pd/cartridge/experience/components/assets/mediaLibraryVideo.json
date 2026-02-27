@@ -16,6 +16,13 @@
           }
         },
         {
+          "id": "overrideGlobalConfigs",
+          "name": "Override player options with global configurations",
+          "description": "If enabled, player configuration from the iframe (playerConfig) will override the global video player options. If disabled, global configurations will take priority.",
+          "type": "boolean",
+          "required": false
+        },
+        {
           "id": "videoPosterTransformation",
           "name": "Poster image transformation",
           "description": "Specify a custom transformation using URL syntax. This overrides any other transformations, including those in the advanced configuration settings.",
