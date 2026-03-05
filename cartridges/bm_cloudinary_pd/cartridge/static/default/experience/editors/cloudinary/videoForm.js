@@ -11,7 +11,6 @@
         iFrame.setAttribute('scrolling', 'no');
         document.body.appendChild(iFrame);
         window.addEventListener('message', (event) => {
-            console.debug('iFrame event', event.data, iFrame, value, config);
             if (event.origin === cldUtils.getOrigin(config.iFrameEnv)) {
                 handleIframeMessage(event.data, iFrame, value, config);
             }
