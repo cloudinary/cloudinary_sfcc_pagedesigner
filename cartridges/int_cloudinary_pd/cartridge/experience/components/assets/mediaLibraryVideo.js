@@ -216,15 +216,15 @@ function getContentVideoPlayerOptions() {
     var logger = require('dw/system/Logger').getLogger('int_cloudinary_pd', 'int_cloudinary_pd');
     var constants = require('~/cartridge/experience/utils/cloudinaryPDConstants').cloudinaryPDConstants;
 
-    var videoPlayeroptions = {};
+    var videoPlayerOptions = {};
 
     try {
-        videoPlayeroptions = JSON.parse(constants.CLD_VIDEO_OPTIONS);
+        videoPlayerOptions = JSON.parse(constants.CLD_VIDEO_OPTIONS);
     } catch (ex) {
         logger.error('Error occurred while getting video player options for the page designer video: ' + ex);
     }
 
-    return videoPlayeroptions;
+    return videoPlayerOptions;
 };
 
 /**
@@ -239,22 +239,18 @@ function mergePlayerConfig(videoPlayerOptions, configurations, overrideGlobalCon
     overrideGlobalConfigs = normalizeBoolean(overrideGlobalConfigs);
     var mergedConfigs = {};
     var defaults = videoPlayerOptions || {};
-    var overrides = configurations;
-    var key;
-    for (key in defaults) {
+    for (var key in defaults) {
         if (defaults.hasOwnProperty(key)) {
             mergedConfigs[key] = normalizeBoolean(defaults[key]);
         }
     }
-    for (key in overrides) {
-        if (overrides.hasOwnProperty(key)) {
-            var overrideVal = normalizeBoolean(overrides[key]);
+    for (var key in configurations) {
+        if (configurations.hasOwnProperty(key)) {
+            var overrideVal = normalizeBoolean(configurations[key]);
             if (overrideGlobalConfigs === true) {
                 mergedConfigs[key] = overrideVal;
-            } else {
-                if (!defaults.hasOwnProperty(key)) {
-                    mergedConfigs[key] = overrideVal;
-                }
+            } else if(!defaults.hasOwnProperty(key)) {
+                mergedConfigs[key] = overrideVal;
             }
         }
     }
