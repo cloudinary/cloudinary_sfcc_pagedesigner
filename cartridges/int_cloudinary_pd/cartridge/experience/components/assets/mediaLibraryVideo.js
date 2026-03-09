@@ -196,6 +196,67 @@ function getCloudinaryVideoTransformation(context) {
     return transformation;
 }
 
+/**
+ * Convert "true"/"false" strings to boolean
+ */
+function normalizeBoolean(value) {
+    if (value === "true") return true;
+    if (value === "false") return false;
+    return value;
+}
+
+/**
+ * Retrieves the video player options stored either on content library custom attribute
+ * or in custom preference. It gives preference to library if options specified
+ * otherwise it will fetch from custom preference.
+ *
+ * @returns {Object} video player options object
+ */
+function getContentVideoPlayerOptions() {
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary_pd', 'int_cloudinary_pd');
+    var constants = require('~/cartridge/experience/utils/cloudinaryPDConstants').cloudinaryPDConstants;
+
+    var videoPlayerOptions = {};
+
+    try {
+        videoPlayerOptions = JSON.parse(constants.CLD_VIDEO_OPTIONS);
+    } catch (ex) {
+        logger.error('Error occurred while getting video player options for the page designer video: ' + ex);
+    }
+
+    return videoPlayerOptions;
+};
+
+/**
+ * Merge the player configs coming from iFrame and from the custom preference
+ *
+ * @param {Object} videoPlayerOptions video player options object from preference
+ * @param {Object} configurations video player configuration object from iframe
+ * @param {Boolean} overrideGlobalConfigs override the global configs
+ * @returns {Object} video player options object
+ */
+function mergePlayerConfig(videoPlayerOptions, configurations, overrideGlobalConfigs) {
+    overrideGlobalConfigs = normalizeBoolean(overrideGlobalConfigs);
+    var mergedConfigs = {};
+    var defaults = videoPlayerOptions || {};
+    for (var key in defaults) {
+        if (defaults.hasOwnProperty(key)) {
+            mergedConfigs[key] = normalizeBoolean(defaults[key]);
+        }
+    }
+    for (var key in configurations) {
+        if (configurations.hasOwnProperty(key)) {
+            var overrideVal = normalizeBoolean(configurations[key]);
+            if (overrideGlobalConfigs === true) {
+                mergedConfigs[key] = overrideVal;
+            } else if(!defaults.hasOwnProperty(key)) {
+                mergedConfigs[key] = overrideVal;
+            }
+        }
+    }
+    return mergedConfigs;
+}
+
 module.exports.preRender = function (context, editorId) {
     var currentSite = require('dw/system/Site').getCurrent();
     var constants = require('~/cartridge/experience/utils/cloudinaryPDConstants').cloudinaryPDConstants;
@@ -222,16 +283,16 @@ module.exports.preRender = function (context, editorId) {
         viewmodel.public_id = publicId;
         viewmodel.id = idSafeString(randomString(16));
         const videoPosterTrans = getCloudinaryVideoTransformation(context);
+        const videoPlayerOptions = getContentVideoPlayerOptions();
         if (videoPosterTrans) {
             conf.playerConfig.posterOptions.transformation = videoPosterTrans;
             delete conf.sourceConfig.poster;
         }
-
         if ('videoAspectRatio' in context.content) {
             conf.playerConfig.aspectRatio = context.content.videoAspectRatio;
         }
-
-        var widgetOptions = { playerConfig: conf.playerConfig, sourceConfig: conf.sourceConfig };
+        const mergedConfig = mergePlayerConfig(videoPlayerOptions, conf.playerConfig, context.content.overrideGlobalConfigs);
+        var widgetOptions = { playerConfig: mergedConfig, sourceConfig: conf.sourceConfig };
         viewmodel.widgetOptions = JSON.stringify(widgetOptions);
     }
     return viewmodel;
