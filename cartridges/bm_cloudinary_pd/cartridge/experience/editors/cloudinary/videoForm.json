@@ -1,6 +1,6 @@
 {
-  "name": "Cloudinary Video Form",
-  "description": "Configure Image / Video with per-form-factor selection",
+  "name": "Cloudinary Video Config Form",
+  "description": "Configure Video",
   "resources": {
     "scripts": [
       "https://media-library.cloudinary.com/global/all.js",
