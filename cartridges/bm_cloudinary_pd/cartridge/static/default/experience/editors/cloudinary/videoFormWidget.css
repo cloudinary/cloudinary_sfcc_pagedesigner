@@ -1,0 +1,291 @@
+/* ── Root ──────────────────────────────────────────────────────────────── */
+#cld-widget-root {
+    font-family: "Salesforce Sans", Arial, sans-serif;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: #080707;
+    box-sizing: border-box;
+}
+
+/* ── Form Factor Tabs ──────────────────────────────────────────────────── */
+.cld-ff-tabs {
+    display: flex;
+    padding: 0 8px;
+}
+
+.cld-ff-tab {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 7px 14px;
+    margin-bottom: 4px;
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: none;
+    font-family: inherit;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #706e6b;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: color 0.12s, border-color 0.12s;
+}
+
+.cld-ff-tab:first-child {
+    padding-left: 4px;
+}
+
+.cld-ff-tab:hover { color: #0070d2; }
+
+.cld-ff-tab.active {
+    color: #0070d2;
+    border-bottom-color: #0070d2;
+    font-weight: 700;
+}
+
+.cld-ff-tab-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #4bca81;
+    flex-shrink: 0;
+}
+
+/* ── Media Picker Button ───────────────────────────────────────────────── */
+.cld-picker {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(100% - 16px);
+    height: 200px;
+    margin: 0 8px 0;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background-color: #1a1a1a;
+    cursor: pointer;
+    overflow: hidden;
+    transition: opacity 0.15s;
+}
+
+.cld-picker:hover { opacity: 0.9; }
+.cld-picker:focus-visible { outline: 2px solid #0070d2; outline-offset: -2px; }
+
+/* Empty state — dashed border hint */
+.cld-picker:not(.has-asset) {
+    border: 2px dashed #c9c7c5;
+    background-color: #fafaf9;
+    margin: 8px 0 0;
+}
+
+.cld-picker-thumb {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.cld-picker-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.15s;
+    pointer-events: none;
+}
+
+.cld-picker:not(.has-asset) .cld-picker-overlay,
+.cld-picker:hover .cld-picker-overlay,
+.cld-picker:focus-visible .cld-picker-overlay {
+    opacity: 1;
+}
+
+.cld-picker-badge {
+    position: absolute;
+    top: 6px;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 3px;
+    pointer-events: none;
+}
+
+.cld-picker-badge--inherited {
+    right: 6px;
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+}
+
+.cld-picker-badge--type {
+    left: 6px;
+    background: rgba(0, 112, 210, 0.85);
+    color: #fff;
+}
+
+/* ── File row ──────────────────────────────────────────────────────────── */
+.cld-file-row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px;
+}
+
+.cld-file-input {
+    flex: 1;
+    min-width: 0;
+    padding: 5px 8px;
+    border: 1px solid #dddbda;
+    border-radius: 4px;
+    background-color: #f3f2f2;
+    font-family: "Salesforce Sans", Arial, sans-serif;
+    font-size: 0.75rem;
+    color: #3e3e3c;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: default;
+}
+
+.cld-file-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: 1px solid #dddbda;
+    border-radius: 4px;
+    background: #fff;
+    color: #706e6b;
+    cursor: pointer;
+    transition: border-color 0.12s, color 0.12s;
+}
+
+.cld-file-btn:hover {
+    border-color: #0070d2;
+    color: #0070d2;
+}
+
+.cld-file-btn--clear:hover {
+    border-color: #c23934;
+    color: #c23934;
+}
+
+/* ── Poster image & Player options sections ────────────────────────────── */
+.cld-section {
+    padding: 10px 8px 4px;
+    border-bottom: 1px solid #dddbda;
+}
+
+.cld-section-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #080707;
+    margin-bottom: 8px;
+}
+
+.cld-radio-label,
+.cld-checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8125rem;
+    color: #3e3e3c;
+    cursor: pointer;
+    padding: 3px 0;
+    user-select: none;
+}
+
+.cld-radio-label input[type="radio"],
+.cld-checkbox-label input[type="checkbox"] {
+    margin: 0;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+/* ── Advanced section ──────────────────────────────────────────────────── */
+.cld-section--advanced {
+    border-bottom: none;
+}
+
+.cld-advanced-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    padding: 0 16px;
+    margin-bottom: 12px;
+    border: 1px solid #dddbda;
+    border-radius: 4px;
+    background: #fff;
+    color: #0070d2;
+    font-family: inherit;
+    font-size: 0.8125rem;
+    font-weight: 400;
+    line-height: 1;
+    cursor: pointer;
+    transition: border-color 0.12s;
+}
+
+.cld-advanced-btn:hover:not(:disabled) {
+    border-color: #0070d2;
+}
+
+.cld-advanced-btn:disabled,
+.cld-advanced-btn[aria-disabled="true"] {
+    color: #c9c7c5;
+    cursor: not-allowed;
+    background: #fff;
+}
+
+.cld-adv-applied {
+    display: inline-block;
+    margin-bottom: 8px;
+    padding: 2px 8px;
+    border-radius: 3px;
+    background: #e3f3e3;
+    color: #2e7d32;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+}
+
+.cld-adv-override {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.cld-adv-override-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #080707;
+}
+
+.cld-adv-override-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 6px 8px;
+    border: 1px solid #dddbda;
+    border-radius: 4px;
+    background: #f3f2f2;
+    font-family: "Salesforce Sans", Arial, sans-serif;
+    font-size: 0.8125rem;
+    color: #3e3e3c;
+    resize: vertical;
+    min-height: 70px;
+}
+

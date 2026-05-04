@@ -1,5 +1,48 @@
 'use strict';
 
+/**
+ * Returns true when the value was saved by the new per-form-factor widget.
+ * @param {Object} val SFCC value
+ * @returns {boolean}
+ */
+function isNewFormat(val) {
+    if (!val || !val.formValues) return false;
+    var fv = val.formValues;
+    return fv.mobile !== undefined || fv.tablet !== undefined || fv.desktop !== undefined;
+}
+
+/**
+ * Resolves the active form-factor based on the current request device.
+ * @returns {'mobile'|'tablet'|'desktop'}
+ */
+function getActiveFormFactor() {
+    try {
+        var device = request.getHttpHeaders().get('cloudinary-form-factor');
+        if (device) return device;
+        if (request.device) {
+            if (request.device.mobile) return 'mobile';
+            if (request.device.tablet) return 'tablet';
+        }
+    } catch (e) { // eslint-disable-line no-empty-blocks
+    }
+    return 'desktop';
+}
+
+/**
+ * Resolves the { asset, url } entry for the current device using the
+ * Mobile → Tablet → Desktop inheritance fallback.
+ * @param {Object} formValues
+ * @returns {{ asset: Object, url: string }|null}
+ */
+function resolveEntry(formValues) {
+    var order = ['mobile', 'tablet', 'desktop'];
+    var ff = getActiveFormFactor();
+    if (formValues[ff]) return formValues[ff];
+    for (var i = 0; i < order.length; i++) {
+        if (formValues[order[i]]) return formValues[order[i]];
+    }
+    return null;
+}
 
 /**
  * Replaces the global transformations so if they change
@@ -79,8 +122,94 @@ module.exports.preRender = function (context, editorId) {
     var URLUtils = require('dw/web/URLUtils');
     var constants = require('~/cartridge/experience/utils/cloudinaryPDConstants').cloudinaryPDConstants;
     var currentSite = require('dw/system/Site').getCurrent();
-    
+
     var viewmodel = {};
+    var val = context.content[editorId];
+
+    if (empty(val)) return viewmodel;
+
+    // ── New per-form-factor format ────────────────────────────────────────
+    if (isNewFormat(val)) {
+        var entry = resolveEntry(val.formValues);
+        if (!entry || !entry.asset) return viewmodel;
+
+        var asset     = entry.asset;
+        var publicId  = asset.public_id;
+        var cloudName = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCloudName');
+        var cname     = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCNAME');
+
+        var baseUrl = (cname && cname !== 'res.cloudinary.com')
+            ? 'https://' + cname.replace(/^https?:\/\//, '')
+            : 'https://res.cloudinary.com/' + cloudName;
+
+        // Transformation override: fall back through save-format generations
+        var legacyStudioTrans = val.studioConfig &&
+            val.studioConfig.transformation &&
+            val.studioConfig.transformation !== '[]'
+                ? val.studioConfig.transformation : '';
+        var transformationOverride = val.transformationOverride
+            || legacyStudioTrans
+            || '';
+        var isOverride = !!transformationOverride;
+
+        // Build transformation string for the delivery URL
+        var transPart = '';
+        var transformationArr = [];
+        if (isOverride) {
+            transPart = transformationOverride;
+            transformationArr = [{ raw_transformation: transformationOverride }];
+        } else {
+            // Apply global image transformations from site preferences
+            var globalObj = {};
+            var dprPref = currentSite.getCustomPreferenceValue('CloudinaryImageTransformationsDPR');
+            var fmtPref = currentSite.getCustomPreferenceValue('CloudinaryImageTransformationsFormat');
+            var qualPref = currentSite.getCustomPreferenceValue('CloudinaryImageTransformationsQuality');
+            var rawPref = currentSite.getCustomPreferenceValue('CloudinaryImageTransformations');
+
+            if (dprPref && dprPref.getValue() !== 'none') {
+                globalObj.dpr = dprPref.getValue();
+            }
+            if (fmtPref && fmtPref.getValue() !== 'none') {
+                globalObj.fetchFormat = fmtPref.getValue();
+            }
+            if (qualPref && qualPref.getValue() !== 'none') {
+                globalObj.quality = qualPref.getValue();
+            }
+            if (rawPref) {
+                globalObj.raw_transformation = rawPref;
+            }
+
+            // Build URL-syntax string for the delivery URL
+            var urlParts = [];
+            if (globalObj.dpr)         urlParts.push('dpr_' + globalObj.dpr);
+            if (globalObj.fetchFormat) urlParts.push('f_' + globalObj.fetchFormat);
+            if (globalObj.quality)     urlParts.push('q_' + globalObj.quality);
+            if (rawPref)               urlParts.push(rawPref);
+            transPart = urlParts.join(',');
+            transformationArr = [globalObj];
+        }
+
+        var ext      = asset.format ? '.' + asset.format : '';
+        var imageUrl = baseUrl + '/image/upload/' + (transPart ? transPart + '/' : '') + publicId + ext;
+
+        viewmodel.id        = idSafeString(publicId.replace(/\//g, '-') + randomString(12));
+        viewmodel.publicId  = publicId;
+        viewmodel.cloudName = cloudName;
+        if (cname && cname !== 'res.cloudinary.com') {
+            viewmodel.cname = cname;
+        }
+        viewmodel.CloudinaryPageDesignerCNAME = constants.SITE_PREFS.CloudinaryPageDesignerCNAME;
+
+        viewmodel.src            = imageUrl + constants.CLD_TRACKING_PARAM;
+        viewmodel.placeholder    = imageUrl + constants.CLD_TRACKING_PARAM;
+        viewmodel.transformation = JSON.stringify(transformationArr);
+        viewmodel.isTransformationOverride = isOverride;
+        viewmodel.srcset = generateBreakPoints(viewmodel);
+
+        return viewmodel;
+    }
+
+    // ── Legacy format ─────────────────────────────────────────────────────
     if (context.content[editorId] && context.content[editorId].imageUrl) {
         var cname = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCNAME');
         viewmodel.id = idSafeString(context.content[editorId].public_id + randomString(12));
