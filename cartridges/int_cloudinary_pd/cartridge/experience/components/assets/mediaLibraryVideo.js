@@ -168,6 +168,50 @@ function hasVideo(val) {
 }
 
 /**
+ * Returns true when the value was saved by the new per-form-factor widget.
+ * @param {Object} val SFCC value
+ * @returns {boolean}
+ */
+function isNewFormat(val) {
+    if (!val || !val.formValues) return false;
+    var fv = val.formValues;
+    return fv.mobile !== undefined || fv.tablet !== undefined || fv.desktop !== undefined;
+}
+
+/**
+ * Resolves the active form-factor string based on the current request device.
+ * @returns {'mobile'|'tablet'|'desktop'}
+ */
+function getActiveFormFactor() {
+    try {
+        var device = request.getHttpHeaders().get('cloudinary-form-factor');
+        if (device) return device;
+        if (request.device) {
+            if (request.device.mobile) return 'mobile';
+            if (request.device.tablet) return 'tablet';
+        }
+    } catch (e) { // eslint-disable-line no-empty-blocks
+    }
+    return 'desktop';
+}
+
+/**
+ * Resolves the { asset, url } entry for the current device, applying the
+ * Mobile → Tablet → Desktop inheritance fallback.
+ * @param {Object} formValues
+ * @returns {{ asset: Object, url: string }|null}
+ */
+function resolveEntry(formValues) {
+    var order = ['mobile', 'tablet', 'desktop'];
+    var ff = getActiveFormFactor();
+    if (formValues[ff]) return formValues[ff];
+    for (var i = 0; i < order.length; i++) {
+        if (formValues[order[i]]) return formValues[order[i]];
+    }
+    return null;
+}
+
+/**
  * Get cloudinary video transformations.
  *
  * @param {string} context - context
@@ -257,13 +301,16 @@ function mergePlayerConfig(videoPlayerOptions, configurations, overrideGlobalCon
     return mergedConfigs;
 }
 
-module.exports.preRender = function (context, editorId) {
-    var currentSite = require('dw/system/Site').getCurrent();
-    var constants = require('~/cartridge/experience/utils/cloudinaryPDConstants').cloudinaryPDConstants;
-
-    var val = context.content[editorId];
-    var viewmodel = {};
-    if (!empty(val) && !val.playerConf.empty && hasVideo(val)) {
+/**
+ * Handles pre-render for the legacy playerConf format
+ * @param {Object} context - component context
+ * @param {Object} val - the editor value
+ * @param {Object} viewmodel - the viewmodel to populate
+ * @param {Object} currentSite - the current SFCC site
+ * @param {Object} constants - cloudinary PD constants
+ */
+function preRenderLegacy(context, val, viewmodel, currentSite, constants) {
+    if (!val.playerConf.empty && hasVideo(val)) {
         var cname = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCNAME');
         var conf = JSON.parse(val.playerConf);
         var publicId = conf.publicId;
@@ -272,18 +319,18 @@ module.exports.preRender = function (context, editorId) {
             conf.sourceType = format;
         }
         if (cname !== 'res.cloudinary.com') {
-            viewmodel.cname = cname;
+            viewmodel.cname = cname; // eslint-disable-line no-param-reassign
         }
         conf = videoPlayerConfigs(conf);
         conf.playerConfig.posterOptions = {};
-        const queryParams = {};
+        var queryParams = {};
         queryParams[constants.CLD_TRACKING_PARAM.slice(1).split('=')[0]] = constants.CLD_TRACKING_PARAM.slice(1).split('=')[1];
         conf.sourceConfig.queryParams = queryParams;
-        viewmodel.cloudName = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCloudName');
-        viewmodel.public_id = publicId;
-        viewmodel.id = idSafeString(randomString(16));
-        const videoPosterTrans = getCloudinaryVideoTransformation(context);
-        const videoPlayerOptions = getContentVideoPlayerOptions();
+        viewmodel.cloudName = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCloudName'); // eslint-disable-line no-param-reassign
+        viewmodel.public_id = publicId; // eslint-disable-line no-param-reassign
+        viewmodel.id = idSafeString(randomString(16)); // eslint-disable-line no-param-reassign
+        var videoPosterTrans = getCloudinaryVideoTransformation(context);
+        var videoPlayerOptions = getContentVideoPlayerOptions();
         if (videoPosterTrans) {
             conf.playerConfig.posterOptions.transformation = videoPosterTrans;
             delete conf.sourceConfig.poster;
@@ -291,10 +338,112 @@ module.exports.preRender = function (context, editorId) {
         if ('videoAspectRatio' in context.content) {
             conf.playerConfig.aspectRatio = context.content.videoAspectRatio;
         }
-        const mergedConfig = mergePlayerConfig(videoPlayerOptions, conf.playerConfig, context.content.overrideGlobalConfigs);
-        var widgetOptions = { playerConfig: mergedConfig, sourceConfig: conf.sourceConfig };
-        viewmodel.widgetOptions = JSON.stringify(widgetOptions);
+        var mergedConfig = mergePlayerConfig(videoPlayerOptions, conf.playerConfig, context.content.overrideGlobalConfigs);
+        viewmodel.widgetOptions = JSON.stringify({ playerConfig: mergedConfig, sourceConfig: conf.sourceConfig }); // eslint-disable-line no-param-reassign
     }
+}
+
+module.exports.preRender = function (context, editorId) {
+    var currentSite = require('dw/system/Site').getCurrent();
+    var constants = require('~/cartridge/experience/utils/cloudinaryPDConstants').cloudinaryPDConstants;
+
+    var val = context.content[editorId];
+    var viewmodel = {};
+
+    if (empty(val)) return viewmodel;
+
+    // ── New per-form-factor format ────────────────────────────────────────
+    if (isNewFormat(val)) {
+        var cname = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCNAME');
+        if (cname !== 'res.cloudinary.com') {
+            viewmodel.cname = cname;
+        }
+
+        var videoPosterTrans = getCloudinaryVideoTransformation(context);
+        var videoPlayerOptions = getContentVideoPlayerOptions();
+
+        // Per-component transformation override (raw URL-syntax string)
+        var transformationOverride = val.transformationOverride || '';
+
+        // Per-component poster mode: 'first_frame' appends a so_0 transformation
+        var posterMode = val.posterMode || 'auto';
+        var effectivePosterTrans = (posterMode === 'first_frame')
+            ? videoPosterTrans.concat([{ raw_transformation: 'so_0' }])
+            : videoPosterTrans;
+
+        // Per-component player options saved by the widget
+        var componentPlayerOpts = val.playerOptions || {};
+        var playerOptKeys = ['autoplay', 'muted', 'loop', 'controls'];
+
+        var ffOrder = ['mobile', 'tablet', 'desktop'];
+        var ffOptions = {};
+
+        for (var fi = 0; fi < ffOrder.length; fi++) {
+            var ff = ffOrder[fi];
+            var ffEntry = val.formValues[ff];
+            if (!ffEntry || !ffEntry.asset) continue;
+
+            var ffAsset = ffEntry.asset;
+            var ffConf = {
+                publicId: ffAsset.public_id,
+                transStr: transformationOverride,
+                isTransformationOverride: !!transformationOverride,
+                playerConfig: {},
+                sourceConfig: { transformation: transformationOverride ? [{ raw_transformation: transformationOverride }] : [] }
+            };
+
+            var ffFormat = currentSite.getCustomPreferenceValue('CloudinaryVideoFormat');
+            if (ffFormat !== null && ffFormat.value !== 'none') {
+                ffConf.sourceType = ffFormat;
+            }
+
+            ffConf = videoPlayerConfigs(ffConf);
+            ffConf.playerConfig.posterOptions = {};
+
+            var ffQueryParams = {};
+            ffQueryParams[constants.CLD_TRACKING_PARAM.slice(1).split('=')[0]] = constants.CLD_TRACKING_PARAM.slice(1).split('=')[1];
+            ffConf.sourceConfig.queryParams = ffQueryParams;
+
+            if (effectivePosterTrans && effectivePosterTrans.length) {
+                ffConf.playerConfig.posterOptions.transformation = effectivePosterTrans;
+            }
+            if ('videoAspectRatio' in context.content) {
+                ffConf.playerConfig.aspectRatio = context.content.videoAspectRatio;
+            }
+
+            // Apply per-component player options (autoplay, muted, loop, controls)
+            for (var pi = 0; pi < playerOptKeys.length; pi++) {
+                var pk = playerOptKeys[pi];
+                if (pk in componentPlayerOpts) {
+                    ffConf.playerConfig[pk] = !!componentPlayerOpts[pk];
+                }
+            }
+
+            var ffMergedConfig = mergePlayerConfig(videoPlayerOptions, ffConf.playerConfig, context.content.overrideGlobalConfigs);
+            ffOptions[ff] = {
+                public_id: ffAsset.public_id,
+                widgetOptions: JSON.stringify({ playerConfig: ffMergedConfig, sourceConfig: ffConf.sourceConfig })
+            };
+        }
+
+        // Check at least one form factor has an asset
+        var hasAny = ffOptions.mobile || ffOptions.tablet || ffOptions.desktop;
+        if (!hasAny) return viewmodel;
+
+        // Server-side default: prefer desktop → tablet → mobile (client-side JS will override)
+        var defaultOpt = ffOptions.desktop || ffOptions.tablet || ffOptions.mobile;
+
+        viewmodel.cloudName = currentSite.getCustomPreferenceValue('CloudinaryPageDesignerCloudName');
+        viewmodel.public_id = defaultOpt.public_id;
+        viewmodel.id = idSafeString(randomString(16));
+        viewmodel.widgetOptions = defaultOpt.widgetOptions;
+        viewmodel.formFactorOptions = JSON.stringify(ffOptions);
+
+        return viewmodel;
+    }
+
+    // ── Legacy format ─────────────────────────────────────────────────────
+    preRenderLegacy(context, val, viewmodel, currentSite, constants);
     return viewmodel;
 };
 

@@ -1,0 +1,14 @@
+{
+  "name": "Cloudinary Studio Widget",
+  "description": "Advanced image editor via Cloudinary Studio Widget",
+  "resources": {
+    "scripts": [
+      "https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.2.10/iframeResizer.contentWindow.min.js",
+      "https://studio-widget.cloudinary.com/latest/all.js",
+      "/experience/editors/cloudinary/studioWidget.js"
+    ],
+    "styles": [
+      "/experience/editors/cloudinary/studioWidget.css"
+    ]
+  }
+}
