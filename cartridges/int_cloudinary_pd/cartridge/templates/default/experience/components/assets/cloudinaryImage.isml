@@ -15,14 +15,29 @@
         <isif condition="${pdict.viewmodel.imageLink}">
             <a href="${pdict.viewmodel.imageLink}">
         </isif>
-        <img class="component-media_library ml-image" src="${pdict.viewmodel.src}"
-            data-real-url="${pdict.viewmodel.src}" id="${pdict.viewmodel.id}" alt="${pdict.viewmodel.altText}"
-            <isif condition="${pdict.viewmodel.srcset && pdict.viewmodel.sizes}">
-                srcset="${pdict.viewmodel.srcset}"
-                sizes="${pdict.viewmodel.sizes}"
-            </isif>
-            onerror="this.onerror=null; this.src='${URLUtils.staticURL('/images/cloudinary-warning.png')}'; this.setAttribute('srcset', '${URLUtils.staticURL('/images/cloudinary-warning.png')}'); this.removeAttribute('sizes')"
-            style="max-width: 100%" />
+        <isif condition="${pdict.viewmodel.formFactorImages}">
+            <picture>
+                <isif condition="${pdict.viewmodel.formFactorImages.mobile}">
+                    <source media="(max-width: ${pdict.viewmodel.mobileBreakpoint}px)" srcset="${pdict.viewmodel.formFactorImages.mobile}"/>
+                </isif>
+                <isif condition="${pdict.viewmodel.formFactorImages.tablet}">
+                    <source media="(max-width: ${pdict.viewmodel.tabletBreakpoint}px)" srcset="${pdict.viewmodel.formFactorImages.tablet}"/>
+                </isif>
+                <img class="component-media_library ml-image" src="${pdict.viewmodel.src}"
+                    data-real-url="${pdict.viewmodel.src}" id="${pdict.viewmodel.id}" alt="${pdict.viewmodel.altText}"
+                    onerror="this.onerror=null; this.src='${URLUtils.staticURL('/images/cloudinary-warning.png')}'"
+                    style="max-width: 100%" />
+            </picture>
+        <iselse/>
+            <img class="component-media_library ml-image" src="${pdict.viewmodel.src}"
+                data-real-url="${pdict.viewmodel.src}" id="${pdict.viewmodel.id}" alt="${pdict.viewmodel.altText}"
+                <isif condition="${pdict.viewmodel.srcset && pdict.viewmodel.sizes}">
+                    srcset="${pdict.viewmodel.srcset}"
+                    sizes="${pdict.viewmodel.sizes}"
+                </isif>
+                onerror="this.onerror=null; this.src='${URLUtils.staticURL('/images/cloudinary-warning.png')}'; this.setAttribute('srcset', '${URLUtils.staticURL('/images/cloudinary-warning.png')}'); this.removeAttribute('sizes')"
+                style="max-width: 100%" />
+        </isif>
         <isif condition="${pdict.viewmodel.imageLink}">
             </a>
         </isif>
