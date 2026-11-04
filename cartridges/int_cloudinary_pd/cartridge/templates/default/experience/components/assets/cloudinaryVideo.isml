@@ -8,7 +8,7 @@
 <isif condition="${Object.keys(pdict.viewmodel).length > 0}">
     <script src="${sitePref.CLDPDVideoPlayerJSURL}" onload="window.cldPDVideoPlayer = cloudinary"></script>
     <div class="cloudinary-video-container sfdc-component-mock sfdc-component-assets-media_library_video-mock">
-        <video id="${pdict.viewmodel.id}"></video>
+        <video id="${pdict.viewmodel.id}"<isif condition="${pdict.viewmodel.posterURL}"> poster="${pdict.viewmodel.posterURL}"</isif>></video>
     </div>
     <script>
         var value = JSON.parse('<isprint value="${JSON.stringify(pdict.viewmodel)}" encoding="jsonvalue"/>');
@@ -26,6 +26,7 @@
         if (assets.styles.lastIndexOf(src) < 0) {
             assets.addCss(src);
         }
+        assets.addCss('/css/cloudinary.css');
         assets.addJs('/js/cloudinaryVideos.js');
     </isscript>
 <iselse/>
