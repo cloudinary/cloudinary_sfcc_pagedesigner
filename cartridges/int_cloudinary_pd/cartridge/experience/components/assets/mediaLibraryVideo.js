@@ -311,6 +311,23 @@ function mergePlayerConfig(videoPlayerOptions, configurations, overrideGlobalCon
     return mergedConfigs;
 }
 
+function getVideoPosterURL(context, cloudName, cname, publicId, firstFrame) {
+    var currentSite = require('dw/system/Site').getCurrent();
+    var constants = require('~/cartridge/experience/utils/cloudinaryPDConstants').cloudinaryPDConstants;
+    var posterTrans = 'videoPosterTransformation' in context.content ? context.content.videoPosterTransformation : currentSite.getCustomPreferenceValue('CloudinaryVideoPosterTransformations');
+    var parts = [];
+    if (!empty(posterTrans)) {
+        parts.push(posterTrans);
+    }
+    if (firstFrame) {
+        parts.push('so_0');
+    }
+    var baseUrl = (cname && cname !== 'res.cloudinary.com')
+        ? 'https://' + cname.replace(/^https?:\/\//, '')
+        : 'https://res.cloudinary.com/' + cloudName;
+    return baseUrl + '/video/upload/' + (parts.length ? parts.join('/') + '/' : '') + publicId + '.jpg' + constants.CLD_TRACKING_PARAM;
+}
+
 /**
  * Handles pre-render for the legacy playerConf format
  * @param {Object} context - component context
@@ -350,6 +367,7 @@ function preRenderLegacy(context, val, viewmodel, currentSite, constants) {
         }
         var mergedConfig = mergePlayerConfig(videoPlayerOptions, conf.playerConfig, context.content.overrideGlobalConfigs);
         viewmodel.widgetOptions = JSON.stringify({ playerConfig: mergedConfig, sourceConfig: conf.sourceConfig }); // eslint-disable-line no-param-reassign
+        viewmodel.posterURL = getVideoPosterURL(context, viewmodel.cloudName, cname, publicId, false); // eslint-disable-line no-param-reassign
     }
 }
 
@@ -447,6 +465,16 @@ module.exports.preRender = function (context, editorId) {
         viewmodel.id = idSafeString(randomString(16));
         viewmodel.widgetOptions = defaultOpt.widgetOptions;
         viewmodel.formFactorOptions = JSON.stringify(ffOptions);
+        var formFactorPosters = {};
+        for (var formFactor of ['mobile', 'tablet', 'desktop']) {
+            var formFactorVideo = ffOptions[formFactor] || ffOptions.mobile || ffOptions.tablet || ffOptions.desktop;
+            formFactorPosters[formFactor] = getVideoPosterURL(context, viewmodel.cloudName, cname, formFactorVideo.public_id, posterMode === 'first_frame');
+        }
+        if (formFactorPosters.mobile === formFactorPosters.tablet && formFactorPosters.tablet === formFactorPosters.desktop) {
+            viewmodel.posterURL = formFactorPosters.desktop;
+        } else {
+            viewmodel.formFactorPosters = formFactorPosters;
+        }
 
         viewmodel.formFactorBreakpoints = JSON.stringify(cloudinaryPDUtils.parseFormFactorBreakpoints());
 
