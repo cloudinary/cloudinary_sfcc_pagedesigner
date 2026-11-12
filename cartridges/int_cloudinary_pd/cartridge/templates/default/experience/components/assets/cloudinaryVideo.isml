@@ -16,6 +16,14 @@
         window.players.push(value);
         window.cloudName = value.cloudName;
         window.cname = value.cname || null;
+        if (value.formFactorPosters) {
+            (function (videoData) {
+                var breakpoints = JSON.parse(videoData.formFactorBreakpoints);
+                var screenWidth = window.innerWidth;
+                var formFactor = screenWidth <= breakpoints.mobile ? 'mobile' : (screenWidth <= breakpoints.tablet ? 'tablet' : 'desktop');
+                document.getElementById(videoData.id).poster = videoData.formFactorPosters[formFactor];
+            })(value);
+        }
     </script>
 
     <isscript>

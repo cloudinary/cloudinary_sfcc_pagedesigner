@@ -465,7 +465,16 @@ module.exports.preRender = function (context, editorId) {
         viewmodel.id = idSafeString(randomString(16));
         viewmodel.widgetOptions = defaultOpt.widgetOptions;
         viewmodel.formFactorOptions = JSON.stringify(ffOptions);
-        viewmodel.posterURL = getVideoPosterURL(context, viewmodel.cloudName, cname, defaultOpt.public_id, posterMode === 'first_frame');
+        var formFactorPosters = {};
+        for (var formFactor of ['mobile', 'tablet', 'desktop']) {
+            var formFactorVideo = ffOptions[formFactor] || ffOptions.mobile || ffOptions.tablet || ffOptions.desktop;
+            formFactorPosters[formFactor] = getVideoPosterURL(context, viewmodel.cloudName, cname, formFactorVideo.public_id, posterMode === 'first_frame');
+        }
+        if (formFactorPosters.mobile === formFactorPosters.tablet && formFactorPosters.tablet === formFactorPosters.desktop) {
+            viewmodel.posterURL = formFactorPosters.desktop;
+        } else {
+            viewmodel.formFactorPosters = formFactorPosters;
+        }
 
         viewmodel.formFactorBreakpoints = JSON.stringify(cloudinaryPDUtils.parseFormFactorBreakpoints());
 
